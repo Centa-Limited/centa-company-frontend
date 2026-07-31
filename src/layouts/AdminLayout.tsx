@@ -1,11 +1,14 @@
 import { Outlet } from "react-router-dom";
+import Sidebar from "../components/layout/Sidebar";
 
 export default function AdminLayout() {
   return (
-    <main>
-      {/* Sidebar */}
+    <div className="flex min-h-screen">
+      <Sidebar />
 
-      <Outlet />
-    </main>
+      <main className="flex-1">
+        <Outlet />
+      </main>
+    </div>
   );
 }
