@@ -1,14 +1,13 @@
 import axios from "axios";
 import { API_URL } from "../config/env";
 
-export const api = axios.create({
+const api = axios.create({
   baseURL: API_URL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
 });
-
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
@@ -22,7 +21,14 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(error)
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+    }
+
+    return Promise.reject(error);
+  }
 );
 
 export default api;

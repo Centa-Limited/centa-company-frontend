@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   Home, Folder, List, Users, Settings, HelpCircle, LogOut,
   Search, Bell, Download, Menu, ArrowUp, Minus, Star
-} from 'lucide-react';
+} from "lucide-react";
 
+import toast from "react-hot-toast";
+import { useAuth } from "../../context/AuthContext";
 interface Activity {
   user: string;
   action: string;
@@ -13,15 +15,13 @@ interface Activity {
   timestamp: number;
 }
 
-interface DashboardProps {
-  user: any;
-  onLogout: () => void;
-  showToast: (type: 'success' | 'error' | 'info', message: string) => void;
-}
+
 
 const ACTIVITIES_KEY = 'centa_activities';
 
-export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout, showToast }) => {
+export const Dashboard = () => {
+
+  const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState('Beranda');
   const [searchQuery, setSearchQuery] = useState('');
@@ -45,14 +45,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout, showToast 
   );
 
   const handleViewAll = () => {
-    if (activities.length === 0) {
-      showToast('info', 'Belum ada aktivitas');
-      return;
-    }
+  if (activities.length === 0) {
+    toast("Belum ada aktivitas");
+    return;
+  }
     const msg = activities
       .map((a, i) => `${i + 1}. ${a.user} - ${a.action} (${a.time} ${a.date}) - ${a.status}`)
       .join('\n');
-    alert(`📋 SEMUA LOG AKTIVITAS (${activities.length} data)\n\n${msg}`);
+    alert(`SEMUA LOG AKTIVITAS (${activities.length} data)\n\n${msg}`);
   };
 
   return (
@@ -128,11 +128,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout, showToast 
               {user?.name || 'Admin Centa'}
             </div>
             <div className="text-[10px] text-gray-400">
-              {user?.role === 'admin' ? 'Administrator' : 'User'}
+             user?.role === "ADMIN" || user?.role === "SUPER_ADMIN"
             </div>
           </div>
           <button
-            onClick={onLogout}
+  onClick={logout}
             className="ml-auto text-gray-400 hover:text-red-500 p-1 rounded-md transition-colors"
             title="Logout"
           >

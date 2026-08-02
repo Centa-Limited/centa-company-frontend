@@ -1,32 +1,34 @@
-import http from './api'
-import type { LoginPayload, RegisterPayload, AuthResponse, AuthUser } from '../types/auth'
+import http from "./api";
+import type {
+  LoginPayload,
+  AuthResponse,
+  ProfileResponse,
+} from "../types/auth";
 
-// Login: kirim email+password, terima token, lalu simpan token ke localStorage
-export async function login(payload: LoginPayload) {
-  const response = await http.post<AuthResponse>('/auth/login', payload)
-  localStorage.setItem('access_token', response.data.accessToken)
-  return response.data
+export async function login(
+  payload: LoginPayload
+): Promise<AuthResponse> {
+  const { data } = await http.post<AuthResponse>(
+    "/auth/login",
+    payload
+  );
+
+  return data;
 }
 
-// Register akun baru
-export async function register(payload: RegisterPayload) {
-  const response = await http.post<AuthResponse>('/auth/register', payload)
-  return response.data
+export async function getProfile(): Promise<ProfileResponse> {
+  const { data } = await http.get<ProfileResponse>(
+    "/auth/profile"
+  );
+
+  return data;
 }
 
-// Logout: hapus token dari localStorage (dan opsional kasih tau server)
-export async function logout() {
-  await http.post('/auth/logout')
-  localStorage.removeItem('access_token')
+export function logout(): void {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("user");
 }
 
-// Ambil data user yang sedang login (biasa dipanggil saat pertama kali app dibuka)
-export async function getCurrentUser() {
-  const response = await http.get<AuthUser>('/auth/me')
-  return response.data
-}
-
-// Cek cepat apakah user sudah login (berdasarkan ada/tidaknya token)
 export function isAuthenticated(): boolean {
-  return !!localStorage.getItem('access_token')
+  return !!localStorage.getItem("accessToken");
 }

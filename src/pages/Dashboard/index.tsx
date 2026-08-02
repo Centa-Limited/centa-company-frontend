@@ -1,3 +1,1 @@
-export default function Dashboard() {
-  return <h1>Dashboard Page</h1>;
-}
+export { Dashboard as default } from "./Dashboard";

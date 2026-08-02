@@ -1,26 +1,29 @@
-// Data yang dikirim saat login
+
 export interface LoginPayload {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
-// Data yang dikirim saat register akun baru
-export interface RegisterPayload {
-  name: string
-  email: string
-  password: string
-}
-
-// Bentuk data user yang disimpan di dalam response auth
 export interface AuthUser {
-  id: string
-  name: string
-  email: string
-  role: string
+  id: string;
+  name: string;
+  email: string;
+  role: "ADMIN" | "SUPER_ADMIN";
+  createdAt: string;
 }
 
-// Response yang dikembalikan backend setelah login/register berhasil
+export interface LoginData {
+  token: string;
+  user: AuthUser;
+}
+
 export interface AuthResponse {
-  accessToken: string
-  user: AuthUser
+  status: "success" | "error";
+  message: string;
+  data: LoginData;
+}
+
+export interface ProfileResponse {
+  status: "success" | "error";
+  data: AuthUser;
 }

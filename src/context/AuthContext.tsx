@@ -6,21 +6,20 @@ import {
   type ReactNode,
 } from "react";
 
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-};
+import { getProfile } from "../services/auth.service";
+import type { AuthUser } from "../types/auth";
 
 type AuthContextType = {
-  user: User | null;
+  user: AuthUser | null;
   token: string | null;
-  login: (token: string, user: User) => void;
+  loading: boolean;
+  login: (token: string, user: AuthUser) => void;
   logout: () => void;
 };
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
 export function AuthProvider({
   children,
@@ -31,13 +30,11 @@ export function AuthProvider({
     localStorage.getItem("accessToken")
   );
 
-  const [user, setUser] = useState<User | null>(() => {
-    const data = localStorage.getItem("user");
+  const [user, setUser] = useState<AuthUser | null>(null);
 
-    return data ? JSON.parse(data) : null;
-  });
+  const [loading, setLoading] = useState(true);
 
-  const login = (newToken: string, newUser: User) => {
+  const login = (newToken: string, newUser: AuthUser) => {
     localStorage.setItem("accessToken", newToken);
     localStorage.setItem("user", JSON.stringify(newUser));
 
@@ -54,19 +51,41 @@ export function AuthProvider({
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    const user = localStorage.getItem("user");
+    const initializeAuth = async () => {
+      const storedToken = localStorage.getItem("accessToken");
 
-    if (token) setToken(token);
+      if (!storedToken) {
+        setLoading(false);
+        return;
+      }
 
-    if (user) setUser(JSON.parse(user));
+      try {
+        setToken(storedToken);
+
+        const response = await getProfile();
+
+        setUser(response.data);
+
+        localStorage.setItem(
+          "user",
+          JSON.stringify(response.data)
+        );
+      } catch (error) {
+        logout();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializeAuth();
   }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        token,
         user,
+        token,
+        loading,
         login,
         logout,
       }}
@@ -80,7 +99,9 @@ export function useAuth() {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error("useAuth must be used inside AuthProvider");
+    throw new Error(
+      "useAuth must be used inside AuthProvider"
+    );
   }
 
   return context;

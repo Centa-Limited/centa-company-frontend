@@ -1,3 +1,1 @@
-export default function Login() {
-  return <h1>Login Page</h1>;
-}
+export { Login as default } from "./Login";
