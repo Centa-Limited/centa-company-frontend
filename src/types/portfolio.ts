@@ -1,5 +1,4 @@
 
-// Bentuk data satu item portofolio (project yang pernah dikerjakan)
 export interface Portfolio {
   id: string
   title: string
@@ -13,7 +12,6 @@ export interface Portfolio {
   updatedAt: string
 }
 
-// Data yang dikirim saat membuat/mengedit portofolio
 export interface PortfolioPayload {
   title: string
   description: string

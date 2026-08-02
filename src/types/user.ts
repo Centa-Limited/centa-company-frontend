@@ -1,4 +1,3 @@
-// Bentuk data satu user
 export interface User {
   id: string
   name: string
@@ -8,7 +7,6 @@ export interface User {
   createdAt: string
 }
 
-// Data yang dikirim saat mengubah profil user
 export interface UpdateUserPayload {
   name?: string
   email?: string
@@ -16,7 +14,7 @@ export interface UpdateUserPayload {
   role?: User['role']
 }
 
-// Data yang dikirim saat mengganti password
+
 export interface ChangePasswordPayload {
   oldPassword: string
   newPassword: string

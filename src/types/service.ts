@@ -1,4 +1,3 @@
-// Bentuk data satu layanan yang ditawarkan (misal: "Web Development", "UI/UX Design")
 export interface Service {
   id: string
   title: string
@@ -9,7 +8,6 @@ export interface Service {
   updatedAt: string
 }
 
-// Data yang dikirim saat membuat/mengedit layanan
 export interface ServicePayload {
   title: string
   description: string

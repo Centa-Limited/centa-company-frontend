@@ -1,13 +1,12 @@
 import http from './api'
 import type { DashboardSummary, DashboardChartPoint } from '../types/dashboard'
 
-// Ambil angka-angka ringkasan untuk kartu statistik di dashboard
+
 export async function getDashboardSummary() {
   const response = await http.get<DashboardSummary>('/dashboard/summary')
   return response.data
 }
 
-// Ambil data untuk grafik/chart di dashboard
 export async function getDashboardChart(type: 'articles' | 'visitors') {
   const response = await http.get<DashboardChartPoint[]>('/dashboard/chart', {
     params: { type },
