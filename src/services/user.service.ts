@@ -7,25 +7,23 @@ export async function getAllUsers() {
   return response.data
 }
 
-// Ambil satu user berdasarkan ID
+
 export async function getUserById(id: string) {
   const response = await http.get<User>(`/users/${id}`)
   return response.data
 }
 
-// Mengubah data profil user
 export async function updateUser(id: string, payload: UpdateUserPayload) {
   const response = await http.put<User>(`/users/${id}`, payload)
   return response.data
 }
 
-// Mengganti password user
+
 export async function changePassword(id: string, payload: ChangePasswordPayload) {
   const response = await http.patch(`/users/${id}/password`, payload)
   return response.data
 }
 
-// Menghapus akun user
 export async function deleteUser(id: string) {
   const response = await http.delete(`/users/${id}`)
   return response.data

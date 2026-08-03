@@ -1,38 +1,79 @@
-import http from './api'
-import type { Article, ArticlePayload } from '../types/article'
+import http from "./api";
 
+import type {
+  GetArticlesResponse,
+  GetArticleResponse,
+  CreateArticleDto,
+  UpdateArticleDto,
+  ArticleQuery,
+} from "../types/article";
 
-export async function getAllArticles(params?: Record<string, string | number>) {
-  const response = await http.get<Article[]>('/articles', { params })
-  return response.data
-}
+export const getArticles = async (params?: ArticleQuery) => {
+  const { data } = await http.get<GetArticlesResponse>(
+    "/articles",
+    {
+      params,
+    }
+  );
 
-// Ambil satu artikel berdasarkan ID
-export async function getArticleById(id: string) {
-  const response = await http.get<Article>(`/articles/${id}`)
-  return response.data
-}
+  return data;
+};
 
+export const getArticleById = async (id: string) => {
+  const { data } = await http.get<GetArticleResponse>(
+    `/articles/${id}`
+  );
 
-export async function getArticleBySlug(slug: string) {
-  const response = await http.get<Article>(`/articles/slug/${slug}`)
-  return response.data
-}
+  return data;
+};
 
+export const createArticle = async (
+  body: CreateArticleDto
+) => {
+  const { data } = await http.post(
+    "/articles",
+    body
+  );
 
-export async function createArticle(payload: ArticlePayload) {
-  const response = await http.post<Article>('/articles', payload)
-  return response.data
-}
+  return data;
+};
 
+export const updateArticle = async (
+  id: string,
+  body: UpdateArticleDto
+) => {
+  const { data } = await http.put(
+    `/articles/${id}`,
+    body
+  );
 
-export async function updateArticle(id: string, payload: Partial<ArticlePayload>) {
-  const response = await http.put<Article>(`/articles/${id}`, payload)
-  return response.data
-}
+  return data;
+};
 
+export const deleteArticle = async (id: string) => {
+  const { data } = await http.delete(
+    `/articles/${id}`
+  );
 
-export async function deleteArticle(id: string) {
-  const response = await http.delete(`/articles/${id}`)
-  return response.data
-}
+  return data;
+};
+
+export const publishArticle = async (
+  id: string
+) => {
+  const { data } = await http.patch(
+    `/articles/${id}/publish`
+  );
+
+  return data;
+};
+
+export const draftArticle = async (
+  id: string
+) => {
+  const { data } = await http.patch(
+    `/articles/${id}/draft`
+  );
+
+  return data;
+};
