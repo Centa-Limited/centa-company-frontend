@@ -73,145 +73,396 @@ export const Login = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-white z-[1000] flex items-center justify-center p-6 min-h-screen">
-      <div className="max-w-[420px] w-full bg-white rounded-[2rem] p-8 md:p-10 shadow-2xl border border-gray-100 animate-fadeUp">
+  <div
+    className="
+      fixed
+      inset-0
+      min-h-screen
+      bg-gradient-to-br
+      from-gray-950
+      via-slate-900
+      to-black
+      flex
+      items-center
+      justify-center
+      p-6
+      z-[1000]
+    "
+  >
 
-        <button
-          type="button"
-          className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-blue-600 mb-6 transition-colors"
+    <div
+      className="
+        w-full
+        max-w-[420px]
+        bg-white/10
+        backdrop-blur-xl
+        border
+        border-white/10
+        rounded-3xl
+        p-8
+        shadow-2xl
+      "
+    >
+
+
+      <button
+        type="button"
+        onClick={() => navigate("/")}
+        className="
+          flex
+          items-center
+          gap-2
+          text-sm
+          text-gray-400
+          hover:text-blue-400
+          transition
+          mb-8
+        "
+      >
+        <ArrowLeft size={16}/>
+        Kembali ke Beranda
+      </button>
+
+
+
+      <div className="text-center mb-10">
+
+        <h1
+          className="
+            text-4xl
+            font-black
+            tracking-wide
+            text-white
+          "
         >
-          <ArrowLeft size={16} />
-          Kembali ke Beranda
-        </button>
+          CENTA{" "}
+          <span
+            className="
+              bg-gradient-to-r
+              from-blue-400
+              to-purple-500
+              bg-clip-text
+              text-transparent
+            "
+          >
+            LIMITED
+          </span>
+        </h1>
 
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
-            CENTA{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              LIMITED
-            </span>
-          </h1>
 
-          <p className="text-sm text-gray-500 mt-1">
-            Login Admin
-          </p>
+        <p
+          className="
+            text-gray-400
+            mt-3
+            text-sm
+          "
+        >
+          Secure Admin Dashboard
+        </p>
+
+
+      </div>
+
+
+
+
+      <form
+        onSubmit={handleLogin}
+        className="
+          flex
+          flex-col
+          gap-5
+        "
+      >
+
+
+        <div>
+
+          <label
+            className="
+              text-xs
+              font-semibold
+              text-gray-300
+            "
+          >
+            Email
+          </label>
+
+
+          <input
+            type="email"
+            value={email}
+            onChange={(e)=>
+              setEmail(e.target.value)
+            }
+            placeholder="admin@centa.local"
+            className="
+              mt-2
+              w-full
+              px-4
+              py-3
+              rounded-xl
+              bg-black/40
+              border
+              border-white/10
+              text-white
+              placeholder-gray-500
+              outline-none
+              focus:border-blue-500
+              transition
+            "
+            required
+          />
+
         </div>
 
-        <form
-          onSubmit={handleLogin}
-          className="flex flex-col gap-5"
+
+
+
+
+        <div>
+
+          <label
+            className="
+              text-xs
+              font-semibold
+              text-gray-300
+            "
+          >
+            Password
+          </label>
+
+
+          <input
+            type="password"
+            value={password}
+            onChange={(e)=>
+              setPassword(e.target.value)
+            }
+            placeholder="Masukkan password"
+            className="
+              mt-2
+              w-full
+              px-4
+              py-3
+              rounded-xl
+              bg-black/40
+              border
+              border-white/10
+              text-white
+              placeholder-gray-500
+              outline-none
+              focus:border-blue-500
+              transition
+            "
+            required
+          />
+
+
+        </div>
+
+
+
+
+
+        <div
+          className="
+            flex
+            justify-between
+            items-center
+            text-xs
+          "
         >
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-gray-700">
-              Alamat Email
-            </label>
+
+          <label
+            className="
+              flex
+              items-center
+              gap-2
+              text-gray-400
+            "
+          >
+
+            <input
+              type="checkbox"
+              checked={remember}
+              onChange={(e)=>
+                setRemember(
+                  e.target.checked
+                )
+              }
+            />
+
+            Ingat saya
+
+          </label>
+
+
+
+
+          <button
+            type="button"
+            onClick={()=>
+              setIsForgotOpen(true)
+            }
+            className="
+              text-blue-400
+              hover:text-blue-300
+            "
+          >
+            Lupa password?
+          </button>
+
+
+        </div>
+
+
+
+
+
+        <button
+          type="submit"
+          className="
+            mt-3
+            w-full
+            py-3.5
+            rounded-xl
+            font-semibold
+            text-white
+            bg-gradient-to-r
+            from-blue-600
+            to-purple-600
+            hover:from-blue-500
+            hover:to-purple-500
+            shadow-lg
+            shadow-blue-900/40
+            transition
+          "
+        >
+          Login
+        </button>
+
+
+
+      </form>
+
+
+    </div>
+
+
+
+
+    {isForgotOpen && (
+
+      <div
+        className="
+          fixed
+          inset-0
+          bg-black/70
+          backdrop-blur-sm
+          flex
+          items-center
+          justify-center
+          p-4
+        "
+      >
+
+        <div
+          className="
+            bg-gray-900
+            border
+            border-white/10
+            rounded-2xl
+            p-8
+            max-w-md
+            w-full
+          "
+        >
+
+          <button
+            onClick={()=>
+              setIsForgotOpen(false)
+            }
+            className="
+              float-right
+              text-gray-400
+              hover:text-white
+            "
+          >
+            <X size={18}/>
+          </button>
+
+
+
+          <h2
+            className="
+              text-xl
+              font-bold
+              text-white
+              mb-5
+            "
+          >
+            Reset Password
+          </h2>
+
+
+
+          <form
+            onSubmit={handleForgotPassword}
+            className="
+              flex
+              flex-col
+              gap-4
+            "
+          >
 
             <input
               type="email"
-              value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
+              value={forgotEmail}
+              onChange={(e)=>
+                setForgotEmail(
+                  e.target.value
+                )
               }
               placeholder="admin@centa.local"
-              className="text-sm px-4 py-3 border border-gray-200 rounded-xl outline-none bg-gray-50 text-slate-900"
+              className="
+                px-4
+                py-3
+                rounded-xl
+                bg-black/40
+                border
+                border-white/10
+                text-white
+                outline-none
+              "
               required
             />
-          </div>
 
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-gray-700">
-              Kata Sandi
-            </label>
-
-            <input
-              type="password"
-              value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
-              placeholder="Masukkan kata sandi"
-              className="text-sm px-4 py-3 border border-gray-200 rounded-xl outline-none bg-gray-50 text-slate-900"
-              required
-            />
-          </div>
-
-          <div className="flex justify-between items-center text-xs">
-            <label className="flex items-center gap-2 text-gray-500 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={remember}
-                onChange={(e) =>
-                  setRemember(e.target.checked)
-                }
-              />
-
-              Ingat saya
-            </label>
 
             <button
-              type="button"
-              onClick={() =>
-                setIsForgotOpen(true)
-              }
-              className="text-blue-600 font-medium hover:underline"
+              className="
+                bg-blue-600
+                hover:bg-blue-500
+                text-white
+                py-3
+                rounded-xl
+                font-semibold
+              "
             >
-              Lupa kata sandi?
+              Kirim Link Reset
             </button>
-          </div>
 
-          <button
-            type="submit"
-            className="w-full text-sm font-semibold text-white bg-blue-600 hover:bg-indigo-600 py-3.5 rounded-full transition"
-          >
-            Masuk
-          </button>
-        </form>
+
+          </form>
+
+
+        </div>
+
+
       </div>
 
-      {isForgotOpen && (
-        <div className="fixed inset-0 bg-black/50 z-[1100] flex items-center justify-center p-4">
-          <div className="bg-white max-w-[440px] w-full rounded-2xl p-8 relative">
-            <button
-              type="button"
-              onClick={() =>
-                setIsForgotOpen(false)
-              }
-              className="absolute top-4 right-4"
-            >
-              <X size={18} />
-            </button>
+    )}
 
-            <h2 className="text-xl font-bold text-slate-900 mb-4">
-              Lupa Kata Sandi
-            </h2>
-
-            <form
-              onSubmit={handleForgotPassword}
-              className="flex flex-col gap-4"
-            >
-              <input
-                type="email"
-                value={forgotEmail}
-                onChange={(e) =>
-                  setForgotEmail(
-                    e.target.value
-                  )
-                }
-                placeholder="admin@centa.local"
-                className="px-4 py-3 border rounded-xl"
-                required
-              />
-
-              <button
-                type="submit"
-                className="bg-blue-600 text-white py-3 rounded-full"
-              >
-                Kirim Link Reset
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+  </div>
+);
 }

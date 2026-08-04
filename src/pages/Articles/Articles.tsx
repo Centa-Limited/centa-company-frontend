@@ -246,59 +246,115 @@ useEffect(() => {
 
 
  return (
-  <div className="p-8 min-h-screen bg-gray-100 text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+  <div
+  className="
+    min-h-screen
+    p-8
+    bg-gradient-to-br
+    from-slate-50
+    via-white
+    to-slate-100
+    dark:from-slate-950
+    dark:via-slate-950
+    dark:to-slate-900
+    text-slate-900
+    dark:text-white
+  "
+>
 
-      <div
+     <div
+  className="
+    flex
+    justify-between
+    items-center
+    mb-8
+    flex-wrap
+    gap-4
+  "
+>
+  <div>
+    <h1
+      className="
+        text-3xl
+        font-bold
+        tracking-tight
+      "
+    >
+      Articles
+    </h1>
+
+    <p
+      className="
+        mt-2
+        text-slate-500
+        dark:text-slate-400
+      "
+    >
+      Total Article : {pagination.total}
+    </p>
+
+    <div
+      className="
+        mt-4
+        flex
+        gap-2
+        flex-wrap
+      "
+    >
+      <span
         className="
-          flex
-          justify-between
-          items-center
-          mb-6
+          px-3
+          py-1
+          rounded-full
+          bg-blue-100
+          text-blue-600
+          text-xs
         "
       >
+        Live
+      </span>
 
-        <div>
+      <span
+        className="
+          px-3
+          py-1
+          rounded-full
+          bg-emerald-100
+          text-emerald-600
+          text-xs
+        "
+      >
+        CMS
+      </span>
+    </div>
+  </div>
 
-          <h1
-            className="
-              text-3xl
-              font-bold
-              text-gray-900
-dark:text-white
-            "
-          >
-            Articles
-          </h1>
-
-
-          <p className="text-gray-500 mt-2">
-            Total Article : {pagination.total}
-          </p>
-
-        </div>
-
-
-        <button
-  className="
-    bg-blue-600
-    hover:bg-blue-700
-    dark:hover:bg-blue-500
-    text-white
-    px-4
-    py-2
-    rounded-lg
-  "
-        >
-          + New Article
-        </button>
-
-      </div>
+  <button
+     onClick={() => navigate("/dashboard/articles/create")}
+    className="
+      px-5
+      py-3
+      rounded-xl
+      bg-gradient-to-r
+      from-blue-600
+      to-indigo-600
+      hover:shadow-lg
+      hover:shadow-blue-500/20
+      transition
+      text-white
+      font-semibold
+    "
+  >
+    + New Article
+  </button>
+</div>
 
 <div
   className="
     flex
+    flex-wrap
     gap-4
-    mb-6
+    mb-8
   "
 >
 
@@ -310,18 +366,28 @@ dark:text-white
     setSearch(e.target.value);
     setPage(1);
   }}
-  className="
-  border
-  border-gray-300
-  dark:border-gray-700
-  bg-white
-  dark:bg-gray-900
-  text-gray-900
-  dark:text-white
-  rounded-lg
-  px-4
-  py-2
-  flex-1
+ className="
+flex-1
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-900/70
+backdrop-blur-md
+px-4
+py-2.5
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
 "
 />
 
@@ -333,19 +399,25 @@ dark:text-white
     setPage(1);
   }}
   className="
-    border
-    border-gray-300
-    dark:border-gray-700
-    bg-white
-    dark:bg-gray-900
-    text-gray-900
-    dark:text-white<select
-  value={categoryId}
-    rounded-lg
-    px-4
-    py-2
-  "
->
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-900/70
+backdrop-blur-md
+px-4
+py-2.5
+text-sm
+text-slate-900
+dark:text-white
+shadow-sm
+transition-all
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+">
 
 <option value="">
   All Status
@@ -370,18 +442,26 @@ dark:text-white
     setPage(1);
   }}
   className="
-    border
-    border-gray-300
-    dark:border-gray-700
-    bg-white
-    dark:bg-gray-900
-    text-gray-900
-    dark:text-white
-    rounded-lg
-    px-4
-    py-2
-  "
->
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-900/70
+backdrop-blur-md
+px-4
+py-2.5
+text-sm
+text-slate-900
+dark:text-white
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+">
 
 <option value="">
   All Category
@@ -406,20 +486,33 @@ dark:text-white
 </div>
      
      
-     <div
+   <div
   className="
-    overflow-x-auto
-    bg-white
-    dark:bg-gray-900
-    rounded-lg
-    shadow
-    border
-    border-gray-200
-    dark:border-gray-800
-  "
+relative
+overflow-hidden
+rounded-2xl
+bg-white/80
+dark:bg-slate-900/80
+backdrop-blur-xl
+border
+border-slate-200/70
+dark:border-slate-800
+shadow-sm
+transition-all
+duration-300
 
-      >
-
+before:absolute
+before:inset-0
+before:bg-gradient-to-r
+before:from-blue-500/0
+before:via-blue-500/5
+before:to-indigo-500/0
+before:opacity-0
+hover:before:opacity-100
+before:transition
+"
+>
+<div className="relative z-10">
         <table
           className="
             w-full
@@ -427,31 +520,97 @@ dark:text-white
           "
         >
 
-         <thead className="bg-gray-100 dark:bg-gray-800">
+        <thead
+  className="
+bg-slate-100/70
+dark:bg-slate-800/60
+backdrop-blur-md
+"
+>
 
             <tr>
 
-              <th className="p-4">
+             <th
+  className="
+p-5
+text-xs
+font-bold
+uppercase
+tracking-wider
+text-slate-500
+dark:text-slate-400
+"
+>
                 Thumbnail
               </th>
 
-              <th className="p-4">
+             <th
+  className="
+p-5
+text-xs
+font-bold
+uppercase
+tracking-wider
+text-slate-500
+dark:text-slate-400
+"
+>
                 Title
               </th>
 
-              <th className="p-4">
+            <th
+  className="
+p-5
+text-xs
+font-bold
+uppercase
+tracking-wider
+text-slate-500
+dark:text-slate-400
+"
+>
                 Category
               </th>
 
-              <th className="p-4">
+            <th
+  className="
+p-5
+text-xs
+font-bold
+uppercase
+tracking-wider
+text-slate-500
+dark:text-slate-400
+"
+>
                 Status
               </th>
 
-              <th className="p-4">
+             <th
+  className="
+p-5
+text-xs
+font-bold
+uppercase
+tracking-wider
+text-slate-500
+dark:text-slate-400
+"
+>
                 Author
               </th>
 
-              <th className="p-4">
+             <th
+  className="
+p-5
+text-xs
+font-bold
+uppercase
+tracking-wider
+text-slate-500
+dark:text-slate-400
+"
+>
                 Action
               </th>
 
@@ -483,14 +642,17 @@ dark:text-white
 
               articles.map((article) => (
 
-               <tr
+<tr
   key={article.id}
   className="
+    group
     border-b
-    border-gray-200
-    dark:border-gray-800
-    hover:bg-gray-50
-    dark:hover:bg-gray-800
+    border-slate-200/70
+    dark:border-slate-800
+    transition-all
+    duration-300
+    hover:bg-blue-50/40
+    dark:hover:bg-slate-800/40
   "
 >
 
@@ -501,12 +663,16 @@ dark:text-white
                       <img
                         src={article.thumbnail}
                         alt={article.title}
-                        className="
-                          w-16
-                          h-16
-                          object-cover
-                          rounded
-                        "
+                     className="
+w-16
+h-16
+rounded-xl
+object-cover
+border
+border-slate-200
+dark:border-slate-700
+shadow-sm
+"
                       />
 
                     ) : (
@@ -536,12 +702,14 @@ dark:text-gray-400
 
                   <td className="p-4">
 
-                   <p
-  className="
-    font-semibold
-    text-gray-900
-    dark:text-white
-  "
+                  <p
+className="
+font-semibold
+text-slate-900
+dark:text-white
+group-hover:text-blue-600
+transition-colors
+"
 >
   {article.title}
 </p>
@@ -562,22 +730,25 @@ dark:text-gray-400
 
                   <td className="p-4">
 
-                    <span
-                      className={`
-                        px-3
-                        py-1
-                        rounded-full
-                        text-sm
-                        ${
-                          article.status === "PUBLISHED"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-yellow-100 text-yellow-700"
-                        }
-                      `}
-                    >
-                      {article.status}
-                    </span>
-
+               <span
+  className={`
+    inline-flex
+    items-center
+    rounded-full
+    px-3
+    py-1
+    text-xs
+    font-bold
+    backdrop-blur-sm
+    ${
+      article.status === "PUBLISHED"
+        ? "bg-indigo-500/15 text-indigo-600 dark:text-indigo-300"
+        : "bg-blue-500/15 text-blue-600 dark:text-blue-300"
+    }
+  `}
+>
+  {article.status}
+</span>
                   </td>
 
 
@@ -656,9 +827,11 @@ dark:text-gray-400
     justify-between
     p-4
     border-t
-    border-gray-200
-    dark:border-gray-800
+    border-slate-200
+    dark:border-slate-800
   "
+
+
 >
 
   <button
@@ -688,27 +861,32 @@ dark:text-gray-400
     Page {page} of {pagination.totalPages}
   </span>
 
-  <button
+ 
+
+<button
     disabled={page >= pagination.totalPages}
     onClick={() => setPage((prev) => prev + 1)}
-   className="
-  px-4
-  py-2
-  border
-  border-gray-300
-  dark:border-gray-700
-  dark:text-gray-200
-  rounded-lg
-  disabled:opacity-50
-"
+    className="
+      px-4
+      py-2
+      border
+      border-gray-300
+      dark:border-gray-700
+      dark:text-gray-200
+      rounded-lg
+      disabled:opacity-50
+    "
   >
     Next
   </button>
 
-</div>
-      </div>
+</div> 
 
-    </div>
+</div> 
+
+</div>
+
+</div>
   );
 };
 

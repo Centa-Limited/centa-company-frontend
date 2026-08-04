@@ -155,14 +155,18 @@ setForm((prev) => ({
 
   return (
 
-    <div className="p-8">
+   <div className="min-h-screen p-8 bg-gray-100 text-gray-900 dark:bg-gray-950 dark:text-gray-100">
 
 
-      <h1 className="
-        text-3xl
-        font-bold
-        mb-6
-      ">
+   <h1
+  className="
+    text-3xl
+    font-bold
+    mb-6
+    text-gray-900
+    dark:text-white
+  "
+>
         Create Article
       </h1>
 
@@ -171,12 +175,16 @@ setForm((prev) => ({
       <form
         onSubmit={handleSubmit}
         className="
-          space-y-5
-          bg-white
-          p-6
-          rounded-lg
-          shadow
-        "
+  space-y-5
+  bg-white
+  dark:bg-gray-900
+  border
+  border-gray-200
+  dark:border-gray-800
+  p-6
+  rounded-lg
+  shadow
+"
       >
 
 
@@ -197,9 +205,15 @@ setForm((prev) => ({
             className="
               w-full
               border
-              rounded-lg
-              px-4
-              py-2
+  border-gray-300
+  dark:border-gray-700
+  bg-white
+  dark:bg-gray-900
+  text-gray-900
+  dark:text-white
+  rounded-lg
+  px-4
+  py-2
             "
           />
 
@@ -224,9 +238,15 @@ setForm((prev) => ({
             className="
               w-full
               border
-              rounded-lg
-              px-4
-              py-2
+  border-gray-300
+  dark:border-gray-700
+  bg-white
+  dark:bg-gray-900
+  text-gray-900
+  dark:text-white
+  rounded-lg
+  px-4
+  py-2
             "
           >
 
@@ -270,13 +290,20 @@ setForm((prev) => ({
             value={form.excerpt}
             onChange={handleChange}
             rows={3}
-            className="
-              w-full
-              border
-              rounded-lg
-              px-4
-              py-2
-            "
+         className="
+  w-full
+  border
+  border-gray-300
+  dark:border-gray-700
+  bg-white
+  dark:bg-gray-900
+  text-gray-900
+  dark:text-white
+  rounded-lg
+  px-4
+  py-2
+  min-h-[250px]
+"
           />
 
         </div>
@@ -298,13 +325,20 @@ setForm((prev) => ({
             value={form.content}
             onChange={handleChange}
             rows={8}
-            className="
-              w-full
-              border
-              rounded-lg
-              px-4
-              py-2
-            "
+         className="
+  w-full
+  border
+  border-gray-300
+  dark:border-gray-700
+  bg-white
+  dark:bg-gray-900
+  text-gray-900
+  dark:text-white
+  rounded-lg
+  px-4
+  py-2
+  min-h-[250px]
+"
           />
 
         </div>
@@ -326,16 +360,22 @@ setForm((prev) => ({
     accept="image/*"
     onChange={handleUpload}
     className="
-      w-full
-      border
-      rounded-lg
-      px-4
-      py-2
-    "
+  w-full
+  border
+  border-gray-300
+  dark:border-gray-700
+  bg-white
+  dark:bg-gray-900
+  text-gray-900
+  dark:text-white
+  rounded-lg
+  px-4
+  py-2
+"
   />
 
   {uploading && (
-    <p className="mt-2 text-blue-600">
+    <p className="mt-2 text-blue-600 dark:text-blue-400">
       Uploading image...
     </p>
   )}
@@ -345,11 +385,13 @@ setForm((prev) => ({
       src={`${API_BASE_URL}${form.thumbnail}`}
       alt="Thumbnail Preview"
       className="
-        mt-4
-        w-48
-        rounded-lg
-        border
-      "
+  mt-4
+  w-48
+  rounded-lg
+  border
+  border-gray-300
+  dark:border-gray-700
+"
     />
   )}
 
@@ -362,12 +404,15 @@ setForm((prev) => ({
         <button
   type="submit"
   disabled={submitting}
-  className="
+   className="
     bg-blue-600
+    hover:bg-blue-700
+    dark:hover:bg-blue-500
     text-white
     px-6
     py-2
     rounded-lg
+    transition-colors
     disabled:opacity-50
   "
 >
