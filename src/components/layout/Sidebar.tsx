@@ -3,7 +3,6 @@ import {
   FileText,
   FolderOpen,
   Users,
-  Settings,
   Briefcase,
 ShieldCheck,
 } from "lucide-react";
@@ -35,15 +34,11 @@ const Sidebar = () => {
       icon: Briefcase,
     },
     {
-      name: "Users",
+      name: "Admin",
       path: "/dashboard/users",
       icon: Users,
     },
-    {
-      name: "Settings",
-      path: "/dashboard/settings",
-      icon: Settings,
-    },
+    
   ];
 
 

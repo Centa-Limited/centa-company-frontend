@@ -73,22 +73,62 @@ export const Login = () => {
   };
 
   return (
-  <div
-    className="
-      fixed
+ <div
+  className="
+    fixed
+    inset-0
+    overflow-hidden
+    flex
+    items-center
+    justify-center
+    p-6
+    bg-[#030712]
+  "
+>
+
+  {/* Background */}
+  <div className="absolute inset-0">
+
+    {/* Main Gradient */}
+    <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-[#071220] to-black"/>
+
+    {/* Cyber Grid */}
+    <div
+      className="
+      absolute
       inset-0
-      min-h-screen
-      bg-gradient-to-br
-      from-gray-950
-      via-slate-900
-      to-black
-      flex
-      items-center
-      justify-center
-      p-6
-      z-[1000]
-    "
-  >
+      opacity-20
+      bg-[linear-gradient(rgba(0,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,.08)_1px,transparent_1px)]
+      bg-[size:45px_45px]
+      "
+    />
+
+    
+
+    {/* Scanline */}
+    <div
+      className="
+      absolute
+      inset-0
+      opacity-20
+      bg-[linear-gradient(transparent_50%,rgba(0,255,255,.04)_50%)]
+      bg-[length:100%_4px]
+      "
+    />
+
+    {/* Binary */}
+    <div className="absolute top-16 right-10 text-[180px] font-black text-cyan-500/5 select-none">
+      Centa
+    </div>
+
+    <div className="absolute bottom-0 left-0 text-[160px] font-black text-blue-500/5 select-none">
+      Limited
+    </div>
+
+  </div>
+
+  {/* Content */}
+  <div className="relative z-10">
 
     <div
       className="
@@ -350,7 +390,7 @@ export const Login = () => {
     </div>
 
 
-
+</div>
 
     {isForgotOpen && (
 

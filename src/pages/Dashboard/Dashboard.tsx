@@ -13,8 +13,10 @@ import {
  ArrowUp,
  Minus,
  Star,
+ ShieldCheck,
+ Mail,
+ Plus,
 } from "lucide-react";
-
 
 
 
@@ -46,12 +48,20 @@ interface Activity {
   timestamp: number;
 }
 
+type MenuItem =
+  | "Beranda"
+  | "Proyek"
+  | "Tim"
+  | "Pengaturan"
+  | "Bantuan";
+
 export const Dashboard = () => {
   const { user, logout } = useAuth();
   const { theme } = useTheme();
  console.log(theme);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeMenu, setActiveMenu] = useState("Beranda");
+ const [activeMenu, setActiveMenu] =
+  useState<MenuItem>("Beranda");
   const [searchQuery, setSearchQuery] = useState("");
 
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -123,6 +133,115 @@ export const Dashboard = () => {
         .toLowerCase()
         .includes(searchQuery.toLowerCase())
   );
+
+  const projects = [
+  {
+    name: "Website Company Profile",
+    status: "Production",
+    progress: "100%",
+  },
+  {
+    name: "Centa CMS",
+    status: "Development",
+    progress: "80%",
+  },
+  {
+    name: "Security Assessment",
+    status: "Testing",
+    progress: "60%",
+  },
+];
+
+
+const teamMembers = [
+  {
+    department: "Founder",
+    members: [
+      {
+        name: "Yudi Ardata",
+        role: "Founder ",
+      },
+    ],
+  },
+
+  {
+    department: "App Development",
+    members: [
+      {
+        name: "Yudi Ardata",
+        role: "App Development",
+      },
+    ],
+  },
+
+  {
+    department: "Web Development X Cyber Security",
+    members: [
+      {
+        name: "Goestaf Nurhidayat",
+        role: "Leader WebDev",
+      },
+      {
+        name: "Desvita Putri Varizka",
+        role: "Team Member",
+      },
+    ],
+  },
+
+  {
+    department: "Marketing",
+    members: [
+      {
+        name: "Fakhrian Zain",
+        role: "Lead Marketing",
+      },
+      {
+        name: "Moh. Rifqi",
+        role: "Team Member",
+      },
+      {
+        name: "Ach. Nur Wahyudi",
+        role: "Team Member",
+      },
+    ],
+  },
+
+  {
+    department: "Finance",
+    members: [
+      {
+        name: "Desvita Putri Varizka",
+        role: "Finance",
+      },
+    ],
+  },
+];
+
+const menus: {
+  label: MenuItem;
+  icon: React.ReactNode;
+}[] = [
+  {
+    label: "Beranda",
+    icon: <Home size={16} />,
+  },
+  {
+    label: "Proyek",
+    icon: <Folder size={16} />,
+  },
+  {
+    label: "Tim",
+    icon: <Users size={16} />,
+  },
+  {
+    label: "Pengaturan",
+    icon: <Settings size={16} />,
+  },
+  {
+    label: "Bantuan",
+    icon: <HelpCircle size={16} />,
+  },
+];
 
   const handleViewAll = () => {
     if (activities.length === 0) {
@@ -255,12 +374,8 @@ backdrop-blur-xl
 </div>
 
         <ul className="space-y-1">
-          {[
-            { label: 'Beranda', icon: <Home size={16} /> },
-            { label: 'Proyek', icon: <Folder size={16} /> },
-            { label: 'Layanan', icon: <List size={16} /> },
-            { label: 'Tim', icon: <Users size={16} /> },
-          ].map((item) => (
+   
+        {menus.map((item) => (
             <li
               key={item.label}
               onClick={() => {
@@ -279,26 +394,7 @@ backdrop-blur-xl
           ))}
         </ul>
 
-        <div className="border-t border-gray-100 pt-3 mt-4">
-         <div className="
-text-[10px]
-uppercase
-text-slate-500
-dark:text-slate-400
-dark:text-gray-500
-">
-          </div>
-          <ul className="space-y-1">
-            <li className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-gray-500 hover:bg-gray-100 hover:text-slate-900
-dark:text-white cursor-pointer">
-              <Settings size={16} /> Pengaturan
-            </li>
-            <li className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-gray-500 hover:bg-gray-100 hover:text-slate-900
-dark:text-white cursor-pointer">
-              <HelpCircle size={16} /> Bantuan
-            </li>
-          </ul>
-        </div>
+       
 
         {/* User Profile Component */}
         <div className="mt-auto border-t border-gray-100 pt-3 flex items-center gap-2.5">
@@ -496,6 +592,339 @@ flex-shrink-0
           </div>
         </header>
 
+      
+      
+      {
+activeMenu === "Proyek" && (
+
+<section
+className="
+mb-8
+rounded-2xl
+bg-white/80
+dark:bg-slate-900/80
+border
+border-slate-200/70
+dark:border-slate-800
+p-6
+"
+>
+
+<div className="flex justify-between items-center mb-5">
+
+<h2 className="font-bold text-lg">
+Daftar Proyek
+</h2>
+
+<button
+className="
+bg-blue-600
+text-white
+px-4
+py-2
+rounded-lg
+text-xs
+flex
+items-center
+gap-2
+"
+>
+<Plus size={14}/>
+Tambah Proyek
+</button>
+
+
+</div>
+
+
+<div className="grid md:grid-cols-3 gap-4">
+
+{
+projects.map((project)=>(
+<div
+key={project.name}
+className="
+rounded-xl
+border
+dark:border-slate-700
+p-5
+"
+>
+
+<h3 className="font-bold">
+{project.name}
+</h3>
+
+
+<p className="
+text-xs
+text-slate-500
+mt-2
+">
+Status : {project.status}
+</p>
+
+
+<div className="mt-4">
+
+<div className="flex justify-between text-xs">
+<span>
+Progress
+</span>
+
+<span>
+{project.progress}
+</span>
+
+</div>
+
+
+<div className="
+h-2
+bg-slate-200
+dark:bg-slate-700
+rounded-full
+mt-2
+">
+
+<div
+className="
+h-full
+bg-blue-600
+rounded-full
+w-[80%]
+"
+/>
+
+
+</div>
+
+</div>
+
+
+</div>
+))
+}
+
+
+</div>
+
+
+</section>
+
+)
+}
+
+
+
+{
+activeMenu === "Tim" && (
+
+<section
+className="
+mb-8
+rounded-2xl
+bg-white/80
+dark:bg-slate-900/80
+border
+dark:border-slate-800
+p-6
+"
+>
+
+<h2 className="font-bold text-lg mb-5">
+Centa Limited | Internal
+</h2>
+
+
+<div className="grid md:grid-cols-3 gap-4">
+
+{
+teamMembers.map((department)=>(
+<div
+key={department.department}
+className="
+border
+dark:border-slate-700
+rounded-xl
+p-5
+"
+>
+
+<h3 className="
+font-bold
+text-lg
+mb-4
+text-indigo-600
+dark:text-indigo-400
+">
+{department.department}
+</h3>
+
+
+<div className="space-y-3">
+
+{
+department.members.map((member)=>(
+<div
+key={member.name}
+className="
+flex
+items-center
+gap-4
+"
+>
+
+<div
+className="
+w-12
+h-12
+rounded-full
+bg-indigo-600
+text-white
+flex
+items-center
+justify-center
+font-bold
+"
+>
+{member.name[0]}
+</div>
+
+
+<div>
+
+<h4 className="font-semibold">
+{member.name}
+</h4>
+
+
+<p className="
+text-xs
+text-slate-500
+dark:text-slate-400
+">
+{member.role}
+</p>
+
+
+</div>
+
+</div>
+))
+}
+
+</div>
+
+</div>
+))
+}
+
+
+</div>
+
+</section>
+
+)
+}
+
+
+
+{
+activeMenu === "Pengaturan" && (
+
+<section
+className="
+mb-8
+rounded-2xl
+bg-white/80
+dark:bg-slate-900/80
+border
+dark:border-slate-800
+p-6
+"
+>
+
+<h2 className="font-bold text-lg mb-5">
+Pengaturan Sistem
+</h2>
+
+
+<div className="space-y-4">
+
+
+<div
+className="
+flex
+justify-between
+items-center
+border-b
+dark:border-slate-700
+pb-4
+"
+>
+
+<div>
+
+<p className="font-semibold">
+Mode Website
+</p>
+
+<p className="text-xs text-slate-500">
+Aktifkan website publik Centa
+</p>
+
+</div>
+
+
+<input
+type="checkbox"
+defaultChecked
+/>
+
+</div>
+
+
+
+
+<div
+className="
+flex
+justify-between
+items-center
+"
+>
+
+<div>
+
+<p className="font-semibold">
+Security Mode
+</p>
+
+<p className="text-xs text-slate-500">
+Enable audit keamanan
+</p>
+
+</div>
+
+
+<ShieldCheck
+className="text-green-500"
+/>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+)
+}
+      
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
          <div
@@ -717,7 +1146,7 @@ hover:border-blue-400/40
       tracking-wider
     "
   >
-    Total User
+    Total Admin
   </span>
 </div>
 

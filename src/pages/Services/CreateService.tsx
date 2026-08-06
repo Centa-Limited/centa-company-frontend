@@ -144,22 +144,50 @@ const CreateService = () => {
 
   return (
 
-    <div
-      className="
-        p-6
-      "
-    >
+   <div
+  className="
+    min-h-screen
+    p-8
+    bg-gradient-to-br
+    from-slate-50
+    via-white
+    to-slate-100
+    dark:from-slate-950
+    dark:via-slate-950
+    dark:to-slate-900
+    text-slate-900
+    dark:text-white
+  "
+>
 
 
-      <h1
-        className="
-          text-2xl
-          font-bold
-          mb-6
-        "
-      >
-        Create Service
-      </h1>
+  <div
+  className="
+    mb-8
+  "
+>
+
+  <h1
+    className="
+      text-3xl
+      font-bold
+      tracking-tight
+    "
+  >
+    Create Service
+  </h1>
+
+  <p
+    className="
+      mt-2
+      text-slate-500
+      dark:text-slate-400
+    "
+  >
+    Create a new company service.
+  </p>
+
+</div>
 
 
 
@@ -167,13 +195,17 @@ const CreateService = () => {
       <form
         onSubmit={handleSubmit}
         className="
-          space-y-5
-          bg-white
-          dark:bg-gray-800
-          p-6
-          rounded-xl
-          shadow
-        "
+space-y-6
+rounded-2xl
+bg-white/80
+dark:bg-slate-900/80
+backdrop-blur-xl
+border
+border-slate-200/70
+dark:border-slate-800
+shadow-sm
+p-8
+"
       >
 
 
@@ -204,14 +236,28 @@ const CreateService = () => {
             placeholder="Service title"
 
             className="
-              w-full
-              px-4
-              py-2
-              rounded-lg
-              border
-              dark:bg-gray-900
-              dark:border-gray-700
-            "
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
 
           />
 
@@ -246,16 +292,29 @@ const CreateService = () => {
 
             placeholder="Short description"
 
-            className="
-              w-full
-              px-4
-              py-2
-              rounded-lg
-              border
-              dark:bg-gray-900
-              dark:border-gray-700
-            "
-
+           className="
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
           />
 
 
@@ -292,15 +351,29 @@ const CreateService = () => {
 
             placeholder="Full description"
 
-            className="
-              w-full
-              px-4
-              py-2
-              rounded-lg
-              border
-              dark:bg-gray-900
-              dark:border-gray-700
-            "
+           className="
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
 
           />
 
@@ -339,14 +412,28 @@ const CreateService = () => {
             placeholder="icon name / url"
 
             className="
-              w-full
-              px-4
-              py-2
-              rounded-lg
-              border
-              dark:bg-gray-900
-              dark:border-gray-700
-            "
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
 
           />
 
@@ -386,14 +473,28 @@ const CreateService = () => {
             placeholder="thumbnail url"
 
             className="
-              w-full
-              px-4
-              py-2
-              rounded-lg
-              border
-              dark:bg-gray-900
-              dark:border-gray-700
-            "
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
 
           />
 
@@ -430,14 +531,28 @@ const CreateService = () => {
             onChange={handleChange}
 
             className="
-              w-full
-              px-4
-              py-2
-              rounded-lg
-              border
-              dark:bg-gray-900
-              dark:border-gray-700
-            "
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
 
           />
 

@@ -262,7 +262,7 @@ gap-4
     tracking-tight
   "
 >
-      Users
+      Admin
     </h1>
 
 
@@ -273,7 +273,7 @@ gap-4
 dark:text-slate-400
       "
     >
-      Total Users : {pagination.total}
+      Total Admin : {pagination.total}
     </p>
 
   </div>

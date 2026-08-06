@@ -222,9 +222,23 @@ const EditService = () => {
 
     return (
 
-      <div className="p-6">
+     <div
+  className="
+    min-h-screen
+    p-8
+    bg-gradient-to-br
+    from-slate-50
+    via-white
+    to-slate-100
+    dark:from-slate-950
+    dark:via-slate-950
+    dark:to-slate-900
+    text-slate-900
+    dark:text-white
+  "
+>
 
-        Loading...
+        Loading Service
 
       </div>
 
@@ -237,20 +251,47 @@ const EditService = () => {
 
 
 
-  return (
+    return (
+  <div
+    className="
+      min-h-screen
+      p-8
+      bg-gradient-to-br
+      from-slate-50
+      via-white
+      to-slate-100
+      dark:from-slate-950
+      dark:via-slate-950
+      dark:to-slate-900
+      text-slate-900
+      dark:text-white
+    "
+  >
 
-    <div className="p-6">
 
+      <div className="mb-8">
 
-      <h1
-        className="
-          text-2xl
-          font-bold
-          mb-6
-        "
-      >
-        Edit Service
-      </h1>
+  <h1
+    className="
+      text-3xl
+      font-bold
+      tracking-tight
+    "
+  >
+    Edit Service
+  </h1>
+
+  <p
+    className="
+      mt-2
+      text-slate-500
+      dark:text-slate-400
+    "
+  >
+    Update service information.
+  </p>
+
+</div>
 
 
 
@@ -259,14 +300,18 @@ const EditService = () => {
 
         onSubmit={handleSubmit}
 
-        className="
-          space-y-5
-          bg-white
-          dark:bg-gray-800
-          p-6
-          rounded-xl
-          shadow
-        "
+       className="
+space-y-6
+rounded-2xl
+bg-white/80
+dark:bg-slate-900/80
+backdrop-blur-xl
+border
+border-slate-200/70
+dark:border-slate-800
+shadow-sm
+p-8
+"
 
       >
 
@@ -283,13 +328,28 @@ const EditService = () => {
           placeholder="Title"
 
           className="
-            w-full
-            px-4
-            py-2
-            border
-            rounded-lg
-            dark:bg-gray-900
-          "
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
 
         />
 
@@ -308,13 +368,29 @@ const EditService = () => {
           placeholder="Short Description"
 
           className="
-            w-full
-            px-4
-            py-2
-            border
-            rounded-lg
-            dark:bg-gray-900
-          "
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+resize-none
+focus:ring-blue-500/10
+outline-none
+"
 
         />
 
@@ -337,13 +413,29 @@ const EditService = () => {
           placeholder="Description"
 
           className="
-            w-full
-            px-4
-            py-2
-            border
-            rounded-lg
-            dark:bg-gray-900
-          "
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+resize-none
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
 
         />
 
@@ -363,14 +455,29 @@ const EditService = () => {
 
           placeholder="Icon"
 
-          className="
-            w-full
-            px-4
-            py-2
-            border
-            rounded-lg
-            dark:bg-gray-900
-          "
+         className="
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
 
         />
 
@@ -390,15 +497,29 @@ const EditService = () => {
 
           placeholder="Thumbnail"
 
-          className="
-            w-full
-            px-4
-            py-2
-            border
-            rounded-lg
-            dark:bg-gray-900
-          "
-
+        className="
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
         />
 
 
@@ -417,14 +538,29 @@ const EditService = () => {
 
           onChange={handleChange}
 
-          className="
-            w-full
-            px-4
-            py-2
-            border
-            rounded-lg
-            dark:bg-gray-900
-          "
+        className="
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
 
         />
 
@@ -448,13 +584,28 @@ const EditService = () => {
           onChange={handleChange}
 
           className="
-            w-full
-            px-4
-            py-2
-            border
-            rounded-lg
-            dark:bg-gray-900
-          "
+w-full
+rounded-xl
+border
+border-slate-200/70
+dark:border-slate-700
+bg-white/70
+dark:bg-slate-950/60
+backdrop-blur
+px-4
+py-3
+text-sm
+text-slate-900
+dark:text-white
+placeholder:text-slate-400
+shadow-sm
+transition-all
+duration-300
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-500/10
+outline-none
+"
 
         >
 
@@ -482,12 +633,21 @@ const EditService = () => {
           disabled={loading}
 
           className="
-            bg-blue-600
-            text-white
-            px-6
-            py-2
-            rounded-lg
-          "
+w-full
+py-3
+rounded-xl
+bg-gradient-to-r
+from-blue-600
+to-indigo-600
+hover:shadow-lg
+hover:shadow-blue-500/20
+transition-all
+duration-300
+text-white
+font-semibold
+disabled:opacity-50
+disabled:cursor-not-allowed
+"
 
         >
 
