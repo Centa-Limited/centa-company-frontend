@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 import AdminLayout from "../layouts/AdminLayout";
-
+import LandingPage from "../landing-page/LandingPage";
 import Home from "../pages/Home";
 import About from "../pages/About";
 import PublicServices from "../pages/PublicServices";
@@ -33,7 +33,7 @@ export default function AppRouter() {
       <Routes>
         {/* Public Website */}
         <Route element={<MainLayout />}>
-          <Route index element={<Home />} />
+          <Route index element={<LandingPage />} />
           <Route path="about" element={<About />} />
         <Route path="services" element={<PublicServices />} />
           <Route path="portfolio" element={<Portfolio />} />

@@ -9,38 +9,16 @@ export default function AdminLayout() {
       <Sidebar />
 
       <div className="flex-1 flex flex-col">
-
-        <header
-          className="
-            h-16
-            px-6
-            border-b
-            bg-white
-            dark:bg-gray-800
-            dark:border-gray-700
-            flex
-            items-center
-            justify-end
-            transition-colors
-            duration-300
-          "
-        >
+      
+        <header className="h-16 px-6 border-b bg-white dark:bg-gray-800 transition-colors duration-300 flex items-center justify-between">
+          <h1 className="font-semibold text-gray-700 dark:text-gray-200">Admin Dashboard</h1>
           <ThemeToggle />
         </header>
 
-        <main
-  className="
-    flex-1
-    p-6
-    bg-gray-100
-    dark:bg-gray-900
-    transition-colors
-    duration-300
-  "
->
+        
+        <main className="flex-1 p-6">
           <Outlet />
         </main>
-
       </div>
     </div>
   );
