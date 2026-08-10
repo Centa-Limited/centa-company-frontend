@@ -116,14 +116,7 @@ export const Login = () => {
       "
     />
 
-    {/* Binary */}
-    <div className="absolute top-16 right-10 text-[180px] font-black text-cyan-500/5 select-none">
-      Centa
-    </div>
-
-    <div className="absolute bottom-0 left-0 text-[160px] font-black text-blue-500/5 select-none">
-      Limited
-    </div>
+   
 
   </div>
 
@@ -167,27 +160,16 @@ export const Login = () => {
 
       <div className="text-center mb-10">
 
-        <h1
-          className="
-            text-4xl
-            font-black
-            tracking-wide
-            text-white
-          "
-        >
-          CENTA{" "}
-          <span
-            className="
-              bg-gradient-to-r
-              from-blue-400
-              to-purple-500
-              bg-clip-text
-              text-transparent
-            "
-          >
-            LIMITED
-          </span>
-        </h1>
+       <h1
+  className="
+    text-4xl
+    font-black
+    tracking-wide
+    text-white
+  "
+>
+  CENTA LIMITED
+</h1>
 
 
         <p
@@ -394,30 +376,35 @@ export const Login = () => {
 
     {isForgotOpen && (
 
-      <div
-        className="
-          fixed
-          inset-0
-          bg-black/70
-          backdrop-blur-sm
-          flex
-          items-center
-          justify-center
-          p-4
-        "
-      >
+     <div
+  className="
+    relative
+    z-[10000]
+    bg-gray-900
+    border
+    border-white/10
+    rounded-2xl
+    p-8
+    max-w-md
+    w-full
+    shadow-2xl
+  "
+>
 
-        <div
-          className="
-            bg-gray-900
-            border
-            border-white/10
-            rounded-2xl
-            p-8
-            max-w-md
-            w-full
-          "
-        >
+    <div
+  className="
+    relative
+    z-[10000]
+    bg-gray-900
+    border
+    border-white/10
+    rounded-2xl
+    p-8
+    max-w-md
+    w-full
+    shadow-2xl
+  "
+>
 
           <button
             onClick={()=>

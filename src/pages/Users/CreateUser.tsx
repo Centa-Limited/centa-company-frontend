@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useAuth } from "../../context/AuthContext";
 
 import {
   createUser,
@@ -15,6 +16,7 @@ const CreateUser = () => {
 
 
   const navigate = useNavigate();
+  const { user } = useAuth();
 
 
   const [form, setForm] =
@@ -28,9 +30,15 @@ const CreateUser = () => {
 
 
   const [loading, setLoading] =
-    useState(false);
+  useState(false);
 
-
+useEffect(() => {
+  if (user && user.role !== "SUPER_ADMIN") {
+    toast.error("Akses hanya untuk SUPER_ADMIN");
+    navigate("/dashboard");
+  }
+}, [user, navigate]);
+   
 
 
 
@@ -127,7 +135,13 @@ const CreateUser = () => {
 
 
 
+if (!user) {
+  return null;
+}
 
+if (user.role !== "SUPER_ADMIN") {
+  return null;
+}
 
 
   return (

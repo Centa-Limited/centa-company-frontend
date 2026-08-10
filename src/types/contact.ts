@@ -1,17 +1,16 @@
-
 export interface ContactMessage {
-  id: string
-  name: string
-  email: string
-  subject: string
-  message: string
-  isRead: boolean
-  createdAt: string
+  id: number;
+  name: string;
+  email: string;
+  subject?: string | null;
+  message: string;
+  createdAt: string;
+  updatedAt?: string;
 }
 
 export interface ContactPayload {
-  name: string
-  email: string
-  subject: string
-  message: string
+  name: string;
+  email: string;
+  subject?: string;
+  message: string;
 }

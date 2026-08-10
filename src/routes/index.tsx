@@ -6,169 +6,178 @@ import AdminLayout from "../layouts/AdminLayout";
 import Home from "../pages/Home";
 import About from "../pages/About";
 import PublicServices from "../pages/PublicServices";
-import AdminServices from "../pages/Services/Services";
-import Portfolio from "../pages/Portfolio";
 import Articles from "../pages/Articles/Articles";
 import Contact from "../pages/Contact";
 import Login from "../pages/Login";
+
 import Dashboard from "../pages/Dashboard";
+import Contacts from "../pages/DashboardContacts";
+
 import NotFound from "../pages/NotFound";
+
 import ProtectedRoute from "../components/common/ProtectedRoute";
+
 import CreateArticle from "../pages/Articles/CreateArticle";
 import EditArticle from "../pages/Articles/EditArticle";
+
 import Categories from "../pages/Categories";
 import CreateCategory from "../pages/Categories/CreateCategory";
 import EditCategory from "../pages/Categories/EditCategory";
+
 import Users from "../pages/Users/Users";
 import CreateUser from "../pages/Users/CreateUser";
 import EditUser from "../pages/Users/EditUser";
+
 import CreateService from "../pages/Services/CreateService";
 import EditService from "../pages/Services/EditService";
-
+import AdminServices from "../pages/Services/Services";
 
 export default function AppRouter() {
- 
-    return (
+  return (
     <BrowserRouter>
       <Routes>
-        {/* Public Website */}
+
+        {/* ========================================= */}
+        {/* PUBLIC WEBSITE */}
+        {/* ========================================= */}
+
         <Route element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-        <Route path="services" element={<PublicServices />} />
-          <Route path="portfolio" element={<Portfolio />} />
-          <Route path="contact" element={<Contact />} />
+
+          <Route
+            path="about"
+            element={<About />}
+          />
+
+          <Route
+            path="services"
+            element={<PublicServices />}
+          />
+
+          <Route
+            path="articles"
+            element={<Articles />}
+          />
+
+          <Route
+            path="contact"
+            element={<Contact />}
+          />
         </Route>
 
-        {/* Authentication */}
-        <Route path="/login" element={<Login />} />
+        {/* ========================================= */}
+        {/* AUTHENTICATION */}
+        {/* ========================================= */}
 
-        {/* Admin */}
-<Route element={<AdminLayout />}>
+        <Route
+          path="/login"
+          element={<Login />}
+        />
 
-  <Route
-    path="/dashboard"
-    element={
-      <ProtectedRoute>
-        <Dashboard />
-      </ProtectedRoute>
-    }
-  />
+        {/* ========================================= */}
+        {/* ADMIN / CMS */}
+        {/* ========================================= */}
 
+        <Route
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          {/* Dashboard */}
 
-  <Route
-    path="/dashboard/articles"
-    element={
-      <ProtectedRoute>
-        <Articles />
-      </ProtectedRoute>
-    }
-  />
+          <Route
+            path="/dashboard"
+            element={<Dashboard />}
+          />
 
-<Route
-  path="/dashboard/articles/create"
-  element={
-    <ProtectedRoute>
-      <CreateArticle />
-    </ProtectedRoute>
-  }
-/>
+          {/* Contacts */}
 
-<Route
-  path="/dashboard/articles/:id/edit"
-  element={
-    <ProtectedRoute>
-      <EditArticle />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/dashboard/contacts"
+            element={<Contacts />}
+          />
 
-<Route
-  path="/dashboard/categories"
-  element={
-    <ProtectedRoute>
-      <Categories />
-    </ProtectedRoute>
-  }
-/>
+          {/* Articles */}
 
-<Route
-  path="/dashboard/categories/create"
-  element={
-    <ProtectedRoute>
-      <CreateCategory />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/dashboard/articles"
+            element={<Articles />}
+          />
 
-<Route
-  path="/dashboard/categories/:id/edit"
-  element={
-    <ProtectedRoute>
-      <EditCategory />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/dashboard/articles/create"
+            element={<CreateArticle />}
+          />
 
-<Route
-  path="/dashboard/users"
-  element={
-    <ProtectedRoute>
-      <Users />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/dashboard/articles/:id/edit"
+            element={<EditArticle />}
+          />
 
-<Route
-  path="/dashboard/users/create"
-  element={
-    <ProtectedRoute>
-      <CreateUser />
-    </ProtectedRoute>
-  }
-/>
+          {/* Categories */}
 
-<Route
-  path="/dashboard/users/:id/edit"
-  element={
-    <ProtectedRoute>
-      <EditUser />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/dashboard/categories"
+            element={<Categories />}
+          />
 
-<Route
-  path="/dashboard/services"
-  element={
-    <ProtectedRoute>
-      <AdminServices />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/dashboard/categories/create"
+            element={<CreateCategory />}
+          />
 
-<Route
-  path="/dashboard/services/create"
-  element={
-    <ProtectedRoute>
-      <CreateService />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/dashboard/categories/:id/edit"
+            element={<EditCategory />}
+          />
 
-<Route
-  path="/dashboard/services/:id/edit"
-  element={
-    <ProtectedRoute>
-      <EditService />
-    </ProtectedRoute>
-  }
-/>
+          {/* Users */}
 
-</Route>
+          <Route
+            path="/dashboard/users"
+            element={<Users />}
+          />
+
+          <Route
+            path="/dashboard/users/create"
+            element={<CreateUser />}
+          />
+
+          <Route
+            path="/dashboard/users/:id/edit"
+            element={<EditUser />}
+          />
+
+          {/* Services */}
+
+          <Route
+            path="/dashboard/services"
+            element={<AdminServices />}
+          />
+
+          <Route
+            path="/dashboard/services/create"
+            element={<CreateService />}
+          />
+
+          <Route
+            path="/dashboard/services/:id/edit"
+            element={<EditService />}
+          />
+        </Route>
+
+        {/* ========================================= */}
         {/* 404 */}
-        <Route path="*" element={<NotFound />} />
+        {/* ========================================= */}
+
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
+
       </Routes>
     </BrowserRouter>
   );
 }
-

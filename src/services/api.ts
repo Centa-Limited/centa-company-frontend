@@ -4,9 +4,6 @@ import { API_URL } from "../config/env";
 const api = axios.create({
   baseURL: API_URL,
   timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 api.interceptors.request.use((config) => {
@@ -14,6 +11,12 @@ api.interceptors.request.use((config) => {
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  if (config.data instanceof FormData) {
+    delete config.headers["Content-Type"];
+  } else {
+    config.headers["Content-Type"] = "application/json";
   }
 
   return config;

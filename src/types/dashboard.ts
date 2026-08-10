@@ -9,7 +9,6 @@ export interface DashboardStatistics {
   draftArticles: number;
 
   totalServices: number;
-  totalPortfolios: number;
 }
 
 export interface LatestContact {

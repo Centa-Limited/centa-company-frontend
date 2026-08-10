@@ -15,6 +15,7 @@ type AuthContextType = {
   loading: boolean;
   login: (token: string, user: AuthUser) => void;
   logout: () => void;
+  refreshProfile: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -34,13 +35,33 @@ export function AuthProvider({
 
   const [loading, setLoading] = useState(true);
 
-  const login = (newToken: string, newUser: AuthUser) => {
-    localStorage.setItem("accessToken", newToken);
-    localStorage.setItem("user", JSON.stringify(newUser));
+  
+
+  // ========================================
+  // LOGIN
+  // ========================================
+
+  const login = (
+    newToken: string,
+    newUser: AuthUser
+  ) => {
+    localStorage.setItem(
+      "accessToken",
+      newToken
+    );
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify(newUser)
+    );
 
     setToken(newToken);
     setUser(newUser);
   };
+
+  // ========================================
+  // LOGOUT
+  // ========================================
 
   const logout = () => {
     localStorage.removeItem("accessToken");
@@ -50,9 +71,38 @@ export function AuthProvider({
     setUser(null);
   };
 
+  // ========================================
+  // REFRESH PROFILE
+  // ========================================
+
+  const refreshProfile = async (): Promise<void> => {
+    try {
+      const response = await getProfile();
+
+      setUser(response.data);
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(response.data)
+      );
+    } catch (error) {
+      console.error(
+        "REFRESH PROFILE ERROR:",
+        error
+      );
+
+      throw error;
+    }
+  };
+
+  // ========================================
+  // INITIALIZE AUTH
+  // ========================================
+
   useEffect(() => {
     const initializeAuth = async () => {
-      const storedToken = localStorage.getItem("accessToken");
+      const storedToken =
+        localStorage.getItem("accessToken");
 
       if (!storedToken) {
         setLoading(false);
@@ -62,14 +112,7 @@ export function AuthProvider({
       try {
         setToken(storedToken);
 
-        const response = await getProfile();
-
-        setUser(response.data);
-
-        localStorage.setItem(
-          "user",
-          JSON.stringify(response.data)
-        );
+        await refreshProfile();
       } catch (error) {
         logout();
       } finally {
@@ -88,6 +131,7 @@ export function AuthProvider({
         loading,
         login,
         logout,
+        refreshProfile,
       }}
     >
       {children}

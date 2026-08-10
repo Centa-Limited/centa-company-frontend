@@ -1,1612 +1,1333 @@
 import { useEffect, useState } from "react";
 import {
- Home,
- Folder,
- List,
- Users,
- Settings,
- HelpCircle,
- LogOut,
- Search,
- Bell,
- Download,
- ArrowUp,
- Minus,
- Star,
- ShieldCheck,
- Mail,
- Plus,
+  ArrowRight,
+  List,
+  Mail,
+  Save,
+  ShieldCheck,
+  Users,
 } from "lucide-react";
 
-
-
-
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 import { useAuth } from "../../context/AuthContext";
 import { getDashboard } from "../../services/dashboard.service";
 
 import type {
+  DashboardData,
   DashboardResponse,
   DashboardStatistics,
-  LatestContact,
 } from "../../types/dashboard";
-import useTheme from "../../hooks/useTheme";
-
-
-
-
-
-const ACTIVITIES_KEY = "centa_activities";
-
-interface Activity {
-  user: string;
-  action: string;
-  time: string;
-  date: string;
-  status: string;
-  timestamp: number;
-}
-
-type MenuItem =
-  | "Beranda"
-  | "Proyek"
-  | "Tim"
-  | "Pengaturan"
-  | "Bantuan";
 
 export const Dashboard = () => {
-  const { user, logout } = useAuth();
-  const { theme } = useTheme();
- console.log(theme);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
- const [activeMenu, setActiveMenu] =
-  useState<MenuItem>("Beranda");
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const [activities, setActivities] = useState<Activity[]>([]);
+  const { user } = useAuth();
 
   const [statistics, setStatistics] =
     useState<DashboardStatistics | null>(null);
 
   const [latestContacts, setLatestContacts] =
-    useState<LatestContact[]>([]);
+    useState<DashboardData["latestContacts"]>([]);
 
   const [loading, setLoading] = useState(true);
 
-  const loadActivities = () => {
-    const data = localStorage.getItem(ACTIVITIES_KEY);
-
-    if (data) {
-      setActivities(JSON.parse(data));
-    }
-  };
-
-  const loadDashboard = async () => {
-    try {
-      setLoading(true);
-
-      const response: DashboardResponse =
-        await getDashboard();
-
-      setStatistics(response.data.statistics);
-
-      setLatestContacts(response.data.latestContacts);
-    } catch (error: any) {
-      toast.error(
-        error?.response?.data?.message ??
-          "Gagal memuat dashboard."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    loadActivities();
+    const loadDashboard = async () => {
+      try {
+        setLoading(true);
+
+        const response: DashboardResponse = await getDashboard();
+
+        setStatistics(response.data.statistics);
+        setLatestContacts(response.data.latestContacts);
+      } catch (error: any) {
+        console.error("LOAD DASHBOARD ERROR:", error);
+
+        toast.error(
+          error?.response?.data?.message ??
+            "Gagal memuat dashboard."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
     loadDashboard();
   }, []);
 
+  /* ========================================================
+     LOADING
+  ======================================================== */
+
   if (loading) {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-950">
-      <div className="text-center">
-        <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-
-       <p className="mt-4 text-gray-500 dark:text-gray-400">
-  Memuat dashboard...
-</p>
-      </div>
-    </div>
-  );
-}
-
-  const filteredActivities = activities.filter(
-    (act) =>
-      act.user
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      act.action
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      act.status
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase())
-  );
-
-  const projects = [
-  {
-    name: "Website Company Profile",
-    status: "Production",
-    progress: "100%",
-  },
-  {
-    name: "Centa CMS",
-    status: "Development",
-    progress: "80%",
-  },
-  {
-    name: "Security Assessment",
-    status: "Testing",
-    progress: "60%",
-  },
-];
-
-
-const teamMembers = [
-  {
-    department: "Founder",
-    members: [
-      {
-        name: "Yudi Ardata",
-        role: "Founder ",
-      },
-    ],
-  },
-
-  {
-    department: "App Development",
-    members: [
-      {
-        name: "Yudi Ardata",
-        role: "App Development",
-      },
-    ],
-  },
-
-  {
-    department: "Web Development X Cyber Security",
-    members: [
-      {
-        name: "Goestaf Nurhidayat",
-        role: "Leader WebDev",
-      },
-      {
-        name: "Desvita Putri Varizka",
-        role: "Team Member",
-      },
-    ],
-  },
-
-  {
-    department: "Marketing",
-    members: [
-      {
-        name: "Fakhrian Zain",
-        role: "Lead Marketing",
-      },
-      {
-        name: "Moh. Rifqi",
-        role: "Team Member",
-      },
-      {
-        name: "Ach. Nur Wahyudi",
-        role: "Team Member",
-      },
-    ],
-  },
-
-  {
-    department: "Finance",
-    members: [
-      {
-        name: "Desvita Putri Varizka",
-        role: "Finance",
-      },
-    ],
-  },
-];
-
-const menus: {
-  label: MenuItem;
-  icon: React.ReactNode;
-}[] = [
-  {
-    label: "Beranda",
-    icon: <Home size={16} />,
-  },
-  {
-    label: "Proyek",
-    icon: <Folder size={16} />,
-  },
-  {
-    label: "Tim",
-    icon: <Users size={16} />,
-  },
-  {
-    label: "Pengaturan",
-    icon: <Settings size={16} />,
-  },
-  {
-    label: "Bantuan",
-    icon: <HelpCircle size={16} />,
-  },
-];
-
-  const handleViewAll = () => {
-    if (activities.length === 0) {
-      toast("Belum ada aktivitas");
-      return;
-    }
-
-    const msg = activities
-      .map(
-        (a, i) =>
-          `${i + 1}. ${a.user} - ${a.action} (${a.time} ${a.date}) - ${a.status}`
-      )
-      .join("\n");
-
-    alert(
-      `SEMUA LOG AKTIVITAS (${activities.length} data)\n\n${msg}`
-    );
-  };
-  
-  return (
-  <div
-  className="
-    flex
-    min-h-screen
-    bg-gradient-to-br
-    from-slate-50
-    via-white
-    to-slate-100
-    dark:from-slate-950
-    dark:via-slate-950
-    dark:to-slate-900
-    text-slate-900
-    dark:text-white
-    font-sans
-  "
-
-    >
-    
-
-      {/* Sidebar */}
-     <aside
-  className={`
-    fixed
-    lg:sticky
-    top-0
-    left-0
-    h-screen
-    w-[260px]
-    bg-white/80
-dark:bg-slate-900/80
-backdrop-blur-xl
-    border-r
-    border-slate-200/60
-    dark:border-gray-800
-    p-6
-    flex
-    flex-col
-    z-[100]
-    transition-transform
-    duration-300
-    ${
-      sidebarOpen
-        ? "translate-x-0"
-        : "-translate-x-full lg:translate-x-0"
-    }
-  `}
->
+    return (
+      <div className="min-h-[70vh]">
         <div
-  className="
-    flex
-    items-center
-    gap-3
-    pb-6
-    mb-8
-    border-b
-    border-slate-200
-    dark:border-slate-800
-  "
->
-  <div
-    className="
-      w-11
-      h-11
-      rounded-2xl
-      bg-gradient-to-br
-      from-blue-600
-      via-indigo-600
-      to-violet-600
-      flex
-      items-center
-      justify-center
-      shadow-lg
-      shadow-blue-500/20
-    "
-  >
-    <span
-      className="
-        text-white
-        text-lg
-        font-black
-      "
-    >
-      C
-    </span>
-  </div>
-
-  <div>
-    <h1
-      className="
-        text-xl
-        font-extrabold
-        tracking-tight
-        text-slate-900
-        dark:text-white
-      "
-    >
-      Centa CMS
-    </h1>
-
-    <p
-      className="
-        text-xs
-        text-slate-500
-        dark:text-slate-400
-      "
-    >
-      Content Management System
-    </p>
-  </div>
-</div>
-
-        <ul className="space-y-1">
-   
-        {menus.map((item) => (
-            <li
-              key={item.label}
-              onClick={() => {
-                setActiveMenu(item.label);
-                setSidebarOpen(false);
-              }}
-              className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium cursor-pointer transition-all ${
-                activeMenu === item.label
-                  ? 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300'
-                  : 'text-gray-500 hover:bg-gray-100 hover:text-slate-900 dark:text-white'
-              }`}
+          className="
+            flex
+            min-h-[520px]
+            items-center
+            justify-center
+            rounded-3xl
+            border
+            border-slate-200/70
+            bg-white
+            shadow-sm
+            dark:border-white/[0.06]
+            dark:bg-slate-950/40
+          "
+        >
+          <div className="flex flex-col items-center">
+            <div
+              className="
+                relative
+                flex
+                h-14
+                w-14
+                items-center
+                justify-center
+                rounded-2xl
+                border
+                border-blue-500/20
+                bg-blue-500/[0.08]
+              "
             >
-              <span className="w-4 text-center">{item.icon}</span>
-              {item.label}
-            </li>
-          ))}
-        </ul>
-
-       
-
-        {/* User Profile Component */}
-        <div className="mt-auto border-t border-gray-100 pt-3 flex items-center gap-2.5">
-          <div
-className="
-w-12
-h-12
-rounded-2xl
-bg-gradient-to-br
-from-indigo-500
-to-blue-600
-text-white
-flex
-items-center
-justify-center
-shadow-lg
-"
->
-            {user?.name?.[0]?.toUpperCase() || 'A'}
-          </div>
-          <div className="overflow-hidden">
-            <div className="text-xs font-semibold text-slate-900
-dark:text-white truncate">
-              {user?.name || 'Admin Centa'}
-            </div>
-            <div className="
-text-[10px]
-text-slate-500
-dark:text-slate-400
-">
-  {user?.role === "SUPER_ADMIN"
-    ? "Super Admin"
-    : "Administrator"}
-</div>
-          </div>
-          <button
-  type="button"
-  onClick={() => {
-    logout();
-    toast.success("Logout berhasil");
-  }}
-            className="
-ml-auto
-text-slate-500
-dark:text-slate-400
-hover:text-red-500
-p-1
-rounded-md
-transition-colors
-"
-            title="Logout"
-          >
-            <LogOut size={16} />
-          </button>
-        </div>
-      </aside>
-
-      {/* Main Content Area */}
-      <main className="flex-1 p-4 md:p-8 min-h-screen overflow-x-hidden">
-        {/* Header */}
-        <header className="flex items-center justify-between gap-4 mb-8 flex-wrap lg:flex-nowrap">
-         <div>
-
-<h1
-className="
-text-3xl
-font-bold
-tracking-tight
-"
->
-Beranda
-</h1>
-
-
-<p
-className="
-text-sm
-text-slate-500
-dark:text-slate-400
-mt-2
-"
->
-Summary Activity Centa Limited
-</p>
-
-</div>
-        
-
-          <div className="flex items-center gap-3">
-            {/* Search Input */}
-          <div
-className="
-flex
-items-center
-bg-white/70
-dark:bg-slate-900/70
-backdrop-blur-md
-shadow-sm
-border
-border-slate-200/70
-dark:border-slate-700
-rounded-xl
-px-3
-py-2
-gap-2
-w-36
-md:w-64
-transition-all
-duration-300
-focus-within:border-blue-500
-focus-within:ring-4
-focus-within:ring-blue-500/10
-"
->
-              <Search size={14} className="text-slate-500
-dark:text-slate-400" />
-              <input
-                type="text"
-                placeholder="Cari aktivitas..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+              <div
                 className="
-border-none
-outline-none
-bg-transparent
-text-xs
-text-gray-900
-dark:text-white
-placeholder:text-gray-400
-dark:placeholder:text-gray-500
-w-full
-"
+                  h-6
+                  w-6
+                  animate-spin
+                  rounded-full
+                  border-2
+                  border-blue-500/20
+                  border-t-blue-500
+                "
               />
             </div>
 
-            {/* Notification Bell */}
-           <button
-  onClick={() => alert('Notifikasi')}
- className="
-relative
-bg-white
-dark:bg-gray-900
-border
-border-gray-200
-dark:border-gray-700
-rounded-lg
-w-9
-h-9
-flex
-items-center
-justify-center
-hover:border-blue-600
-hover:bg-blue-50
-dark:hover:bg-gray-800
-text-gray-500
-dark:text-gray-300
-transition-all
-flex-shrink-0
-"
->
-              <Bell size={16} />
-              <span
-className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center"
->
-{latestContacts.length}
-</span>
-            </button>
-
-            {/* Export Report */}
-            <button
-              onClick={() => {
-  toast("Fitur export akan segera tersedia.");
-}}
+            <p
               className="
-bg-blue-600
-hover:bg-blue-700
-dark:bg-blue-500
-dark:hover:bg-blue-600
-text-white
-font-semibold
-text-xs
-px-3
-md:px-4
-py-2
-rounded-lg
-flex
-items-center
-gap-2
-transition-colors
-flex-shrink-0
-"
+                mt-4
+                text-sm
+                font-semibold
+                text-slate-900
+                dark:text-white
+              "
             >
-              <Download size={14} /> <span className="hidden sm:inline">Unduh Laporan</span>
-            </button>
+              Memuat dashboard
+            </p>
+
+            <p
+              className="
+                mt-1
+                text-xs
+                text-slate-500
+                dark:text-slate-400
+              "
+            >
+              Menyiapkan data Centa...
+            </p>
           </div>
-        </header>
-
-      
-      
-      {
-activeMenu === "Proyek" && (
-
-<section
-className="
-mb-8
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-border
-border-slate-200/70
-dark:border-slate-800
-p-6
-"
->
-
-<div className="flex justify-between items-center mb-5">
-
-<h2 className="font-bold text-lg">
-Daftar Proyek
-</h2>
-
-<button
-className="
-bg-blue-600
-text-white
-px-4
-py-2
-rounded-lg
-text-xs
-flex
-items-center
-gap-2
-"
->
-<Plus size={14}/>
-Tambah Proyek
-</button>
-
-
-</div>
-
-
-<div className="grid md:grid-cols-3 gap-4">
-
-{
-projects.map((project)=>(
-<div
-key={project.name}
-className="
-rounded-xl
-border
-dark:border-slate-700
-p-5
-"
->
-
-<h3 className="font-bold">
-{project.name}
-</h3>
-
-
-<p className="
-text-xs
-text-slate-500
-mt-2
-">
-Status : {project.status}
-</p>
-
-
-<div className="mt-4">
-
-<div className="flex justify-between text-xs">
-<span>
-Progress
-</span>
-
-<span>
-{project.progress}
-</span>
-
-</div>
-
-
-<div className="
-h-2
-bg-slate-200
-dark:bg-slate-700
-rounded-full
-mt-2
-">
-
-<div
-className="
-h-full
-bg-blue-600
-rounded-full
-w-[80%]
-"
-/>
-
-
-</div>
-
-</div>
-
-
-</div>
-))
-}
-
-
-</div>
-
-
-</section>
-
-)
-}
-
-
-
-{
-activeMenu === "Tim" && (
-
-<section
-className="
-mb-8
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-border
-dark:border-slate-800
-p-6
-"
->
-
-<h2 className="font-bold text-lg mb-5">
-Centa Limited | Internal
-</h2>
-
-
-<div className="grid md:grid-cols-3 gap-4">
-
-{
-teamMembers.map((department)=>(
-<div
-key={department.department}
-className="
-border
-dark:border-slate-700
-rounded-xl
-p-5
-"
->
-
-<h3 className="
-font-bold
-text-lg
-mb-4
-text-indigo-600
-dark:text-indigo-400
-">
-{department.department}
-</h3>
-
-
-<div className="space-y-3">
-
-{
-department.members.map((member)=>(
-<div
-key={member.name}
-className="
-flex
-items-center
-gap-4
-"
->
-
-<div
-className="
-w-12
-h-12
-rounded-full
-bg-indigo-600
-text-white
-flex
-items-center
-justify-center
-font-bold
-"
->
-{member.name[0]}
-</div>
-
-
-<div>
-
-<h4 className="font-semibold">
-{member.name}
-</h4>
-
-
-<p className="
-text-xs
-text-slate-500
-dark:text-slate-400
-">
-{member.role}
-</p>
-
-
-</div>
-
-</div>
-))
-}
-
-</div>
-
-</div>
-))
-}
-
-
-</div>
-
-</section>
-
-)
-}
-
-
-
-{
-activeMenu === "Pengaturan" && (
-
-<section
-className="
-mb-8
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-border
-dark:border-slate-800
-p-6
-"
->
-
-<h2 className="font-bold text-lg mb-5">
-Pengaturan Sistem
-</h2>
-
-
-<div className="space-y-4">
-
-
-<div
-className="
-flex
-justify-between
-items-center
-border-b
-dark:border-slate-700
-pb-4
-"
->
-
-<div>
-
-<p className="font-semibold">
-Mode Website
-</p>
-
-<p className="text-xs text-slate-500">
-Aktifkan website publik Centa
-</p>
-
-</div>
-
-
-<input
-type="checkbox"
-defaultChecked
-/>
-
-</div>
-
-
-
-
-<div
-className="
-flex
-justify-between
-items-center
-"
->
-
-<div>
-
-<p className="font-semibold">
-Security Mode
-</p>
-
-<p className="text-xs text-slate-500">
-Enable audit keamanan
-</p>
-
-</div>
-
-
-<ShieldCheck
-className="text-green-500"
-/>
-
-
-</div>
-
-
-
-</div>
-
-
-</section>
-
-)
-}
-      
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-         <div
-className="
-group
-relative
-overflow-hidden
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-backdrop-blur-xl
-border
-border-slate-200/70
-dark:border-slate-800
-p-5
-shadow-sm
-transition-all
-duration-300
-hover:-translate-y-1
-hover:shadow-xl
-hover:border-blue-400/40
-"
->
-           <div className="flex items-center gap-2 mb-2">
-  <div
-    className="
-      w-10
-      h-10
-      rounded-xl
-      bg-gradient-to-br
-      from-indigo-500/15
-      to-blue-500/20
-      text-indigo-600
-      flex
-      items-center
-      justify-center
-    "
-  >
-    <Folder size={18} />
-  </div>
-
-  <span
-    className="
-      text-[10px]
-      md:text-xs
-      font-semibold
-      uppercase
-      text-slate-500
-      dark:text-slate-400
-      tracking-wider
-    "
-  >
-    Total Article
-  </span>
-</div>
-            <div className="text-4xl
-font-black
-tracking-tight font-black text-slate-900
-dark:text-white tracking-tight">
-  {statistics?.totalArticles ?? 0}
-</div>
-           <div className="mt-4 flex items-center justify-between">
-
-  <span className="text-xs text-slate-500">
-    Unit
-  </span>
-
-  <span
-    className="
-      inline-flex
-      items-center
-      gap-1
-      rounded-full
-      bg-emerald-100
-      dark:bg-emerald-900/40
-      px-3
-      py-1
-      text-xs
-      font-bold
-      text-emerald-600
-    "
-  >
-    <ArrowUp size={12} />
-    12.4%
-  </span>
-
-</div>
-
-<div className="mt-5">
-
-  <div className="flex justify-between text-xs mb-2">
-
-    <span className="text-slate-500">
-      Progress
-    </span>
-
-    <span className="font-semibold">
-      72%
-    </span>
-
-  </div>
-
-  <div className="h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-
-    <div
-      className="
-        h-full
-        w-[72%]
-        rounded-full
-        bg-gradient-to-r
-        from-blue-500
-        to-indigo-600
-      "
-    />
-
-  </div>
-
-</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6 pb-8">
+
+      {/* ====================================================
+          HERO
+      ===================================================== */}
+
+      <section
+        className="
+          relative
+          overflow-hidden
+          rounded-[28px]
+          border
+          border-slate-200/70
+          bg-white
+          shadow-sm
+          dark:border-white/[0.06]
+          dark:bg-slate-950/50
+        "
+      >
+        {/* Grid */}
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            opacity-[0.035]
+            dark:opacity-[0.045]
+          "
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
+
+        {/* Blue glow */}
+        <div
+          className="
+            pointer-events-none
+            absolute
+            -right-32
+            -top-32
+            h-96
+            w-96
+            rounded-full
+            bg-blue-500/[0.10]
+            blur-3xl
+            dark:bg-blue-400/[0.08]
+          "
+        />
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            bottom-[-140px]
+            right-[20%]
+            h-72
+            w-72
+            rounded-full
+            bg-indigo-500/[0.06]
+            blur-3xl
+          "
+        />
+
+        <div
+          className="
+            relative
+            z-10
+            flex
+            min-h-[250px]
+            flex-col
+            justify-between
+            gap-8
+            p-6
+            sm:p-8
+            lg:p-10
+          "
+        >
+          <div>
+            {/* Status */}
+            <div
+              className="
+                inline-flex
+                items-center
+                gap-2
+                rounded-full
+                border
+                border-blue-500/15
+                bg-blue-500/[0.06]
+                px-3
+                py-1.5
+                text-[10px]
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                text-blue-600
+                dark:border-blue-400/10
+                dark:bg-blue-400/[0.06]
+                dark:text-blue-400
+              "
+            >
+              <span
+                className="
+                  relative
+                  flex
+                  h-1.5
+                  w-1.5
+                "
+              >
+                <span
+                  className="
+                    absolute
+                    inline-flex
+                    h-full
+                    w-full
+                    animate-ping
+                    rounded-full
+                    bg-blue-500
+                    opacity-50
+                  "
+                />
+
+                <span
+                  className="
+                    relative
+                    inline-flex
+                    h-1.5
+                    w-1.5
+                    rounded-full
+                    bg-blue-500
+                  "
+                />
+              </span>
+
+              Internal Overview
+            </div>
+
+            {/* Heading */}
+            <h1
+              className="
+                mt-5
+                max-w-3xl
+                text-3xl
+                font-bold
+                tracking-tight
+                text-slate-900
+                sm:text-4xl
+                lg:text-[42px]
+                lg:leading-[1.1]
+                dark:text-white
+              "
+            >
+             Welcome ,{" "}
+              <span className="text-blue-500">
+                {user?.name || "Admin"}
+              </span>
+            </h1>
+
+            <p
+              className="
+                mt-4
+                max-w-2xl
+                text-sm
+                leading-6
+                text-slate-500
+                sm:text-[15px]
+                dark:text-slate-400
+              "
+            >
+              Your centralized hub for Centa's activity,
+              insights, and performance.
+            </p>
           </div>
 
-          <div className="
-group
-relative
-overflow-hidden
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-backdrop-blur-xl
-border
-border-slate-200/70
-dark:border-slate-800
-p-5
-shadow-sm
-transition-all
-duration-300
-hover:-translate-y-1
-hover:shadow-xl
-hover:border-blue-400/40
-">
-            <div className="flex items-center gap-2 mb-2">
+          {/* Bottom information */}
+          <div
+            className="
+              flex
+              flex-wrap
+              items-center
+              gap-x-6
+              gap-y-3
+              border-t
+              border-slate-200/70
+              pt-5
+              dark:border-white/[0.06]
+            "
+          >
+            <div className="flex items-center gap-2">
               <div
-  className="
-    w-10
-    h-10
-    rounded-xl
-    bg-gradient-to-br
-    from-emerald-500/15
-    to-green-500/20
-    text-emerald-600
-    flex
-    items-center
-    justify-center
-  "
->
-  <List size={20} />
-</div>
-              <span className="text-[10px] md:text-xs font-semibold uppercase  text-slate-500
-    dark:text-slate-400 tracking-wider">
-                Total Layanan
+                className="
+                  h-2
+                  w-2
+                  rounded-full
+                  bg-emerald-500
+                  shadow-[0_0_10px_rgba(16,185,129,0.6)]
+                "
+              />
+
+              <span
+                className="
+                  text-xs
+                  font-medium
+                  text-slate-500
+                  dark:text-slate-400
+                "
+              >
+                System operational
               </span>
             </div>
-            <div className="text-4xl
-font-black
-tracking-tight font-black text-slate-900
-dark:text-white tracking-tight">{statistics?.totalServices ?? 0}</div>
-            <div className="flex items-center gap-2 mt-2 text-xs">
-              <span className="text-gray-500 text-[10px]">Katalog</span>
-              <span className="text-emerald-500 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-0.5">
-                <ArrowUp size={10} /> +4%
-              </span>
-            </div>
+
+            <div
+              className="
+                hidden
+                h-3
+                w-px
+                bg-slate-200
+                sm:block
+                dark:bg-slate-700
+              "
+            />
+
+            <span
+              className="
+                text-xs
+                text-slate-400
+                dark:text-slate-500
+              "
+            >
+              Centa Administration
+            </span>
           </div>
+        </div>
+      </section>
 
-          <div className="
-group
-relative
-overflow-hidden
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-backdrop-blur-xl
-border
-border-slate-200/70
-dark:border-slate-800
-p-5
-shadow-sm
-transition-all
-duration-300
-hover:-translate-y-1
-hover:shadow-xl
-hover:border-blue-400/40
-">
-           <div className="flex items-center gap-2 mb-2">
-  <div
-    className="
-      w-10
-      h-10
-      rounded-xl
-      bg-gradient-to-br
-      from-purple-500/15
-      to-indigo-500/20
-      text-purple-600
-      flex
-      items-center
-      justify-center
-    "
-  >
-    <Users size={18} />
-  </div>
+      {/* ====================================================
+          STATISTICS
+      ===================================================== */}
 
-  <span
-    className="
-      text-[10px]
-      md:text-xs
-      font-semibold
-      uppercase
-      text-slate-500
-      dark:text-slate-400
-      tracking-wider
-    "
-  >
-    Total Admin
-  </span>
-</div>
+      <section
+        className="
+          grid
+          grid-cols-1
+          gap-4
+          sm:grid-cols-2
+          xl:grid-cols-4
+        "
+      >
+        {/* ARTICLES */}
+        <div
+          className="
+            group
+            relative
+            overflow-hidden
+            rounded-2xl
+            border
+            border-slate-200/70
+            bg-white
+            p-5
+            shadow-sm
+            transition-all
+            duration-300
+            hover:-translate-y-1
+            hover:shadow-xl
+            hover:shadow-blue-500/5
+            dark:border-white/[0.06]
+            dark:bg-slate-950/50
+          "
+        >
+          <div
+            className="
+              absolute
+              -right-10
+              -top-10
+              h-28
+              w-28
+              rounded-full
+              bg-blue-500/[0.07]
+              blur-2xl
+            "
+          />
 
-<div
-  className="
-    text-4xl
-    font-black
-    tracking-tight
-    tabular-nums
-    text-slate-900
-    dark:text-white
-  "
->
-  {statistics?.totalUsers ?? 0}
-</div>
+          <div className="relative">
+            <div className="flex items-start justify-between">
+              <div
+                className="
+                  flex
+                  h-11
+                  w-11
+                  items-center
+                  justify-center
+                  rounded-xl
+                  bg-blue-500/10
+                  text-blue-500
+                  ring-1
+                  ring-blue-500/10
+                  transition-transform
+                  duration-300
+                  group-hover:scale-110
+                "
+              >
+                <List size={19} />
+              </div>
 
-<div className="flex items-center gap-2 mt-2 text-xs">
-  <span className="text-gray-500 text-[10px]">
-    Professional
-  </span>
-
-  <span
-    className="
-      text-amber-500
-      bg-amber-50
-      dark:bg-amber-900/30
-      px-2
-      py-0.5
-      rounded-full
-      text-[10px]
-      font-bold
-      flex
-      items-center
-      gap-0.5
-    "
-  >
-    <Minus size={10} />
-    Stabil
-  </span>
-</div>
-            <div className="text-4xl
-font-black
-tracking-tight font-black text-slate-900 dark:text-white tracking-tight">{statistics?.totalUsers ?? 0}</div>
-            <div className="flex items-center gap-2 mt-2 text-xs">
-              <span className="text-gray-500 text-[10px]">Professional</span>
-              <span className="text-amber-500 bg-amber-50 dark:bg-amber-900/30 px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-0.5">
-                <Minus size={10} /> Stabil
+              <span
+                className="
+                  rounded-full
+                  bg-blue-500/5
+                  px-2.5
+                  py-1
+                  text-[9px]
+                  font-bold
+                  uppercase
+                  tracking-[0.15em]
+                  text-blue-500
+                "
+              >
+                Content
               </span>
             </div>
-          </div>
 
-          <div className="
-group
-relative
-overflow-hidden
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-backdrop-blur-xl
-border
-border-slate-200/70
-dark:border-slate-800
-p-5
-shadow-sm
-transition-all
-duration-300
-hover:-translate-y-1
-hover:shadow-xl
-hover:border-blue-400/40
-">
-          <div className="flex items-center gap-2 mb-2">
-  <div
-    className="
-      w-10
-      h-10
-      rounded-xl
-      bg-gradient-to-br
-      from-amber-500/15
-      to-orange-500/20
-      text-amber-600
-      flex
-      items-center
-      justify-center
-    "
-  >
-    <Star size={18} />
-  </div>
+            <div className="mt-7">
+              <p
+                className="
+                  text-3xl
+                  font-bold
+                  tracking-tight
+                  text-slate-900
+                  dark:text-white
+                "
+              >
+                {statistics?.totalArticles ?? 0}
+              </p>
 
-  <span
-    className="
-      text-[10px]
-      md:text-xs
-      font-semibold
-      uppercase
-      text-slate-500
-      dark:text-slate-400
-      tracking-wider
-    "
-  >
-    Total Portfolio
-  </span>
-</div>
-            <div className="text-4xl
-font-black
-tracking-tight font-black text-slate-900
-dark:text-white
-tracking-tight">
-  {statistics?.totalPortfolios ?? 0}
-</div>
-            <div className="flex items-center gap-2 mt-2 text-xs">
-             <span className="text-gray-500 text-[10px]">
-  Project
-              </span>
+              <p
+                className="
+                  mt-1
+                  text-xs
+                  text-slate-500
+                  dark:text-slate-400
+                "
+              >
+                Total articles
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="
-group
-relative
-overflow-hidden
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-backdrop-blur-xl
-border
-border-slate-200/70
-dark:border-slate-800
-p-5
-shadow-sm
-transition-all
-duration-300
-hover:-translate-y-1
-hover:shadow-xl
-hover:border-blue-400/40
-">
-  <div className="flex items-center gap-2 mb-2">
-  <div
-    className="
-      w-10
-      h-10
-      rounded-xl
-      bg-gradient-to-br
-      from-cyan-500/15
-      to-sky-500/20
-      text-cyan-600
-      flex
-      items-center
-      justify-center
-    "
-  >
-    <List size={18} />
-  </div>
+        {/* USERS */}
+        <div
+          className="
+            group
+            relative
+            overflow-hidden
+            rounded-2xl
+            border
+            border-slate-200/70
+            bg-white
+            p-5
+            shadow-sm
+            transition-all
+            duration-300
+            hover:-translate-y-1
+            hover:shadow-xl
+            hover:shadow-emerald-500/5
+            dark:border-white/[0.06]
+            dark:bg-slate-950/50
+          "
+        >
+          <div
+            className="
+              absolute
+              -right-10
+              -top-10
+              h-28
+              w-28
+              rounded-full
+              bg-emerald-500/[0.07]
+              blur-2xl
+            "
+          />
 
-  <span
-    className="
-      text-[10px]
-      md:text-xs
-      font-semibold
-      uppercase
-      text-slate-500
-      dark:text-slate-400
-      tracking-wider
-    "
-  >
-    Total Category
-  </span>
-</div>
+          <div className="relative">
+            <div className="flex items-start justify-between">
+              <div
+                className="
+                  flex
+                  h-11
+                  w-11
+                  items-center
+                  justify-center
+                  rounded-xl
+                  bg-emerald-500/10
+                  text-emerald-500
+                  ring-1
+                  ring-emerald-500/10
+                  transition-transform
+                  duration-300
+                  group-hover:scale-110
+                "
+              >
+                <Users size={19} />
+              </div>
 
-  <div className="text-4xl
-font-black
-tracking-tight font-black text-slate-900 dark:text-white">
-  {statistics?.totalCategories ?? 0}
-</div>
-</div>
+              <span
+                className="
+                  rounded-full
+                  bg-emerald-500/5
+                  px-2.5
+                  py-1
+                  text-[9px]
+                  font-bold
+                  uppercase
+                  tracking-[0.15em]
+                  text-emerald-500
+                "
+              >
+                Access
+              </span>
+            </div>
 
-<div className="
-group
-relative
-overflow-hidden
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-backdrop-blur-xl
-border
-border-slate-200/70
-dark:border-slate-800
-p-5
-shadow-sm
-transition-all
-duration-300
-hover:-translate-y-1
-hover:shadow-xl
-hover:border-blue-400/40
-">
-  <div className="flex items-center gap-2 mb-2">
-  <div
-    className="
-      w-10
-      h-10
-      rounded-xl
-      bg-gradient-to-br
-      from-pink-500/15
-      to-rose-500/20
-      text-pink-600
-      flex
-      items-center
-      justify-center
-    "
-  >
-    <Users size={18} />
-  </div>
+            <div className="mt-7">
+              <p
+                className="
+                  text-3xl
+                  font-bold
+                  tracking-tight
+                  text-slate-900
+                  dark:text-white
+                "
+              >
+                {statistics?.totalUsers ?? 0}
+              </p>
 
-  <span
-    className="
-      text-[10px]
-      md:text-xs
-      font-semibold
-      uppercase
-      text-slate-500
-      dark:text-slate-400
-      tracking-wider
-    "
-  >
-    Total Contact
-  </span>
-</div>
+              <p
+                className="
+                  mt-1
+                  text-xs
+                  text-slate-500
+                  dark:text-slate-400
+                "
+              >
+                Registered users
+              </p>
+            </div>
+          </div>
+        </div>
 
-  <div className="text-4xl
-font-black
-tracking-tight font-black text-slate-900 dark:text-white">
-  {statistics?.totalContacts ?? 0}
-</div>
-</div>
+        {/* SERVICES */}
+        <div
+          className="
+            group
+            relative
+            overflow-hidden
+            rounded-2xl
+            border
+            border-slate-200/70
+            bg-white
+            p-5
+            shadow-sm
+            transition-all
+            duration-300
+            hover:-translate-y-1
+            hover:shadow-xl
+            hover:shadow-violet-500/5
+            dark:border-white/[0.06]
+            dark:bg-slate-950/50
+          "
+        >
+          <div
+            className="
+              absolute
+              -right-10
+              -top-10
+              h-28
+              w-28
+              rounded-full
+              bg-violet-500/[0.07]
+              blur-2xl
+            "
+          />
 
-<div className="
-group
-relative
-overflow-hidden
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-backdrop-blur-xl
-border
-border-slate-200/70
-dark:border-slate-800
-p-5
-shadow-sm
-transition-all
-duration-300
-hover:-translate-y-1
-hover:shadow-xl
-hover:border-blue-400/40
-">
-  <div className="flex items-center gap-2 mb-2">
-  <div
-    className="
-      w-10
-      h-10
-      rounded-xl
-      bg-gradient-to-br
-      from-green-500/15
-      to-emerald-500/20
-      text-green-600
-      flex
-      items-center
-      justify-center
-    "
-  >
-    <Folder size={18} />
-  </div>
+          <div className="relative">
+            <div className="flex items-start justify-between">
+              <div
+                className="
+                  flex
+                  h-11
+                  w-11
+                  items-center
+                  justify-center
+                  rounded-xl
+                  bg-violet-500/10
+                  text-violet-500
+                  ring-1
+                  ring-violet-500/10
+                  transition-transform
+                  duration-300
+                  group-hover:scale-110
+                "
+              >
+                <ShieldCheck size={19} />
+              </div>
 
-  <span
-    className="
-      text-[10px]
-      md:text-xs
-      font-semibold
-      uppercase
-      text-slate-500
-      dark:text-slate-400
-      tracking-wider
-    "
-  >
-    Published
-  </span>
-</div>
+              <span
+                className="
+                  rounded-full
+                  bg-violet-500/5
+                  px-2.5
+                  py-1
+                  text-[9px]
+                  font-bold
+                  uppercase
+                  tracking-[0.15em]
+                  text-violet-500
+                "
+              >
+                Business
+              </span>
+            </div>
 
- <div
-  className="
-    text-4xl
-    font-black
-    tracking-tight
-    tabular-nums
-    text-slate-900
-    dark:text-white
-  "
->
-  {statistics?.publishedArticles ?? 0}
-</div>
-</div>
+            <div className="mt-7">
+              <p
+                className="
+                  text-3xl
+                  font-bold
+                  tracking-tight
+                  text-slate-900
+                  dark:text-white
+                "
+              >
+                {statistics?.totalServices ?? 0}
+              </p>
 
-<div className="
-group
-relative
-overflow-hidden
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-backdrop-blur-xl
-border
-border-slate-200/70
-dark:border-slate-800
-p-5
-shadow-sm
-transition-all
-duration-300
-hover:-translate-y-1
-hover:shadow-xl
-hover:border-blue-400/40
-">
-  <div className="flex items-center gap-2 mb-2">
-  <div
-    className="
-      w-10
-      h-10
-      rounded-xl
-      bg-gradient-to-br
-      from-yellow-500/15
-      to-amber-500/20
-      text-yellow-600
-      flex
-      items-center
-      justify-center
-    "
-  >
-    <Folder size={18} />
-  </div>
+              <p
+                className="
+                  mt-1
+                  text-xs
+                  text-slate-500
+                  dark:text-slate-400
+                "
+              >
+                Active services
+              </p>
+            </div>
+          </div>
+        </div>
 
-  <span
-    className="
-      text-[10px]
-      md:text-xs
-      font-semibold
-      uppercase
-      text-slate-500
-      dark:text-slate-400
-      tracking-wider
-    "
-  >
-    Draft
-  </span>
-</div>
+        {/* CONTACTS */}
+        <div
+          className="
+            group
+            relative
+            overflow-hidden
+            rounded-2xl
+            border
+            border-slate-200/70
+            bg-white
+            p-5
+            shadow-sm
+            transition-all
+            duration-300
+            hover:-translate-y-1
+            hover:shadow-xl
+            hover:shadow-rose-500/5
+            dark:border-white/[0.06]
+            dark:bg-slate-950/50
+          "
+        >
+          <div
+            className="
+              absolute
+              -right-10
+              -top-10
+              h-28
+              w-28
+              rounded-full
+              bg-rose-500/[0.07]
+              blur-2xl
+            "
+          />
 
- <div
-  className="
-    text-4xl
-    font-black
-    tracking-tight
-    tabular-nums
-    text-slate-900
-    dark:text-white
-  "
->
-  {statistics?.draftArticles ?? 0}
-</div>
-</div>
+          <div className="relative">
+            <div className="flex items-start justify-between">
+              <div
+                className="
+                  flex
+                  h-11
+                  w-11
+                  items-center
+                  justify-center
+                  rounded-xl
+                  bg-rose-500/10
+                  text-rose-500
+                  ring-1
+                  ring-rose-500/10
+                  transition-transform
+                  duration-300
+                  group-hover:scale-110
+                "
+              >
+                <Mail size={19} />
+              </div>
 
-        {/* Recent Activity Table */}
+              <span
+                className="
+                  rounded-full
+                  bg-rose-500/5
+                  px-2.5
+                  py-1
+                  text-[9px]
+                  font-bold
+                  uppercase
+                  tracking-[0.15em]
+                  text-rose-500
+                "
+              >
+                Inbox
+              </span>
+            </div>
+
+            <div className="mt-7">
+              <p
+                className="
+                  text-3xl
+                  font-bold
+                  tracking-tight
+                  text-slate-900
+                  dark:text-white
+                "
+              >
+                {statistics?.totalContacts ?? 0}
+              </p>
+
+              <p
+                className="
+                  mt-1
+                  text-xs
+                  text-slate-500
+                  dark:text-slate-400
+                "
+              >
+                Incoming contacts
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ====================================================
+          ARTICLE OVERVIEW
+      ===================================================== */}
+
       <section
-className="
-mt-8
-rounded-2xl
-bg-white/80
-dark:bg-slate-900/80
-backdrop-blur-xl
-border
-border-slate-200/70
-dark:border-slate-800
-shadow-sm
-overflow-hidden
-"
->
-         <div
-className="
-flex
-items-center
-justify-between
-px-6
-py-5
-border-b
-border-slate-200
-dark:border-slate-800
-"
->
-            <h2 className="text-sm md:text-base font-bold text-slate-900
-dark:text-white">Log Aktivitas Terbaru</h2>
-            <button
-              onClick={handleViewAll}
-              className="text-xs text-blue-600 font-semibold hover:text-indigo-600 hover:underline"
+        className="
+          grid
+          grid-cols-1
+          gap-4
+          lg:grid-cols-2
+        "
+      >
+        {/* Published */}
+        <div
+          className="
+            group
+            relative
+            overflow-hidden
+            rounded-2xl
+            border
+            border-slate-200/70
+            bg-white
+            p-5
+            shadow-sm
+            transition-all
+            duration-300
+            hover:shadow-lg
+            dark:border-white/[0.06]
+            dark:bg-slate-950/50
+          "
+        >
+          <div
+            className="
+              absolute
+              -right-16
+              -top-16
+              h-40
+              w-40
+              rounded-full
+              bg-emerald-500/[0.06]
+              blur-3xl
+            "
+          />
+
+          <div className="relative flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div
+                className="
+                  flex
+                  h-12
+                  w-12
+                  items-center
+                  justify-center
+                  rounded-xl
+                  bg-emerald-500/10
+                  text-emerald-500
+                  ring-1
+                  ring-emerald-500/10
+                "
+              >
+                <ShieldCheck size={20} />
+              </div>
+
+              <div>
+                <p
+                  className="
+                    text-xs
+                    font-medium
+                    text-slate-500
+                    dark:text-slate-400
+                  "
+                >
+                  Published Articles
+                </p>
+
+                <p
+                  className="
+                    mt-1
+                    text-2xl
+                    font-bold
+                    tracking-tight
+                    text-slate-900
+                    dark:text-white
+                  "
+                >
+                  {statistics?.publishedArticles ?? 0}
+                </p>
+              </div>
+            </div>
+
+            <span
+              className="
+                inline-flex
+                items-center
+                gap-1.5
+                rounded-full
+                bg-emerald-500/10
+                px-3
+                py-1.5
+                text-[10px]
+                font-bold
+                uppercase
+                tracking-wider
+                text-emerald-500
+              "
             >
-              Lihat Semua →
-            </button>
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              Live
+            </span>
+          </div>
+        </div>
+
+        {/* Draft */}
+        <div
+          className="
+            group
+            relative
+            overflow-hidden
+            rounded-2xl
+            border
+            border-slate-200/70
+            bg-white
+            p-5
+            shadow-sm
+            transition-all
+            duration-300
+            hover:shadow-lg
+            dark:border-white/[0.06]
+            dark:bg-slate-950/50
+          "
+        >
+          <div
+            className="
+              absolute
+              -right-16
+              -top-16
+              h-40
+              w-40
+              rounded-full
+              bg-slate-500/[0.05]
+              blur-3xl
+            "
+          />
+
+          <div className="relative flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div
+                className="
+                  flex
+                  h-12
+                  w-12
+                  items-center
+                  justify-center
+                  rounded-xl
+                  bg-slate-500/10
+                  text-slate-500
+                  dark:text-slate-400
+                "
+              >
+                <Save size={20} />
+              </div>
+
+              <div>
+                <p
+                  className="
+                    text-xs
+                    font-medium
+                    text-slate-500
+                    dark:text-slate-400
+                  "
+                >
+                  Draft Articles
+                </p>
+
+                <p
+                  className="
+                    mt-1
+                    text-2xl
+                    font-bold
+                    tracking-tight
+                    text-slate-900
+                    dark:text-white
+                  "
+                >
+                  {statistics?.draftArticles ?? 0}
+                </p>
+              </div>
+            </div>
+
+            <span
+              className="
+                rounded-full
+                bg-slate-500/10
+                px-3
+                py-1.5
+                text-[10px]
+                font-bold
+                uppercase
+                tracking-wider
+                text-slate-500
+                dark:text-slate-400
+              "
+            >
+              Draft
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* ====================================================
+          LATEST CONTACTS
+      ===================================================== */}
+
+      <section
+        className="
+          overflow-hidden
+          rounded-2xl
+          border
+          border-slate-200/70
+          bg-white
+          shadow-sm
+          dark:border-white/[0.06]
+          dark:bg-slate-950/50
+        "
+      >
+        {/* Header */}
+        <div
+          className="
+            flex
+            flex-col
+            gap-4
+            border-b
+            border-slate-200/70
+            p-5
+            sm:flex-row
+            sm:items-center
+            sm:justify-between
+            dark:border-white/[0.06]
+          "
+        >
+          <div>
+            <div className="flex items-center gap-3">
+              <div
+                className="
+                  flex
+                  h-9
+                  w-9
+                  items-center
+                  justify-center
+                  rounded-xl
+                  bg-blue-500/10
+                  text-blue-500
+                  ring-1
+                  ring-blue-500/10
+                "
+              >
+                <Mail size={16} />
+              </div>
+
+              <div>
+                <h2
+                  className="
+                    text-sm
+                    font-bold
+                    text-slate-900
+                    dark:text-white
+                  "
+                >
+                  Latest Contacts
+                </h2>
+
+                <p
+                  className="
+                    mt-0.5
+                    text-[11px]
+                    text-slate-500
+                    dark:text-slate-400
+                  "
+                >
+                  Recent messages from your website
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="overflow-x-auto px-6">
-            <table className="w-full text-left border-collapse text-xs">
-              <thead>
-  <tr className="
-    border-b
-    border-gray-100
-    dark:border-gray-800
-    text-slate-500
-dark:text-slate-400
-    uppercase
-    tracking-wider
-    text-[10px]
-">
-                  <th className="pb-3 font-semibold">Pengguna</th>
-                  <th className="pb-3 font-semibold">Tindakan</th>
-                  <th className="pb-3 font-semibold">Waktu</th>
-                  <th className="pb-3 font-semibold">Status</th>
+          <Link
+            to="/dashboard/contacts"
+            className="
+              inline-flex
+              items-center
+              justify-center
+              gap-1.5
+              rounded-xl
+              border
+              border-slate-200
+              px-3.5
+              py-2
+              text-xs
+              font-semibold
+              text-slate-600
+              transition-all
+              duration-200
+              hover:border-blue-500/20
+              hover:bg-blue-500/5
+              hover:text-blue-500
+              dark:border-slate-800
+              dark:text-slate-300
+              dark:hover:border-blue-500/20
+              dark:hover:bg-blue-500/5
+              dark:hover:text-blue-400
+            "
+          >
+            View all
+            <ArrowRight size={14} />
+          </Link>
+        </div>
+
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[720px] text-left text-xs">
+            <thead>
+              <tr
+                className="
+                  border-b
+                  border-slate-200/70
+                  bg-slate-50/60
+                  text-slate-500
+                  dark:border-white/[0.06]
+                  dark:bg-slate-900/40
+                  dark:text-slate-400
+                "
+              >
+                <th className="px-5 py-3.5 font-semibold">
+                  Name
+                </th>
+
+                <th className="px-5 py-3.5 font-semibold">
+                  Email
+                </th>
+
+                <th className="px-5 py-3.5 font-semibold">
+                  Subject
+                </th>
+
+                <th className="px-5 py-3.5 font-semibold">
+                  Time
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {latestContacts.slice(0, 5).map((contact) => (
+                <tr
+                  key={contact.id}
+                  className="
+                    group/row
+                    border-b
+                    border-slate-100
+                    transition-colors
+                    hover:bg-slate-50/70
+                    dark:border-slate-800/70
+                    dark:hover:bg-slate-900/60
+                  "
+                >
+                  {/* Name */}
+                  <td className="px-5 py-4">
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="
+                          flex
+                          h-9
+                          w-9
+                          shrink-0
+                          items-center
+                          justify-center
+                          rounded-xl
+                          bg-slate-100
+                          text-xs
+                          font-bold
+                          text-slate-500
+                          dark:bg-slate-800
+                          dark:text-slate-300
+                        "
+                      >
+                        {contact.name
+                          ?.charAt(0)
+                          ?.toUpperCase() || "?"}
+                      </div>
+
+                      <span
+                        className="
+                          font-semibold
+                          text-slate-900
+                          dark:text-white
+                        "
+                      >
+                        {contact.name}
+                      </span>
+                    </div>
+                  </td>
+
+                  {/* Email */}
+                  <td
+                    className="
+                      px-5
+                      py-4
+                      text-slate-600
+                      dark:text-slate-300
+                    "
+                  >
+                    {contact.email}
+                  </td>
+
+                  {/* Subject */}
+                  <td className="max-w-[280px] px-5 py-4">
+                    <span
+                      className="
+                        block
+                        truncate
+                        text-slate-600
+                        dark:text-slate-300
+                      "
+                    >
+                      {contact.subject || "-"}
+                    </span>
+                  </td>
+
+                  {/* Time */}
+                  <td
+                    className="
+                      whitespace-nowrap
+                      px-5
+                      py-4
+                      text-slate-500
+                      dark:text-slate-400
+                    "
+                  >
+                    {new Date(
+                      contact.createdAt
+                    ).toLocaleString("id-ID")}
+                  </td>
                 </tr>
-              </thead>
-             <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
-                {filteredActivities.slice(0, 5).map((item, index) => {
-                  let badgeStyle = 'bg-emerald-50 text-emerald-500';
-                  if (item.status === 'Tertunda') badgeStyle = 'bg-amber-50 text-amber-500';
-                  if (item.status === 'Gagal') badgeStyle = 'bg-red-50 text-red-500';
+              ))}
 
-                  return (
-                   <tr key={index} className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                      <td className="py-3 font-semibold text-slate-900
-dark:text-white">{item.user}</td>
-                      <td className="py-3 text-gray-500 dark:text-gray-300">{item.action}</td>
-                     <td className="py-3 text-slate-500
-dark:text-slate-400 text-[11px]">
-                        {item.time} · {item.date}
-                      </td>
-                      <td className="py-3">
-                        <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold ${badgeStyle}`}>
-                          {item.status}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
+              {latestContacts.length === 0 && (
+                <tr>
+                  <td
+                    colSpan={4}
+                    className="px-5 py-16"
+                  >
+                    <div className="flex flex-col items-center text-center">
+                      <div
+                        className="
+                          flex
+                          h-12
+                          w-12
+                          items-center
+                          justify-center
+                          rounded-2xl
+                          bg-slate-100
+                          text-slate-400
+                          dark:bg-slate-800
+                          dark:text-slate-500
+                        "
+                      >
+                        <Mail size={19} />
+                      </div>
 
-                {filteredActivities.length === 0 && (
-                  <tr>
-                    <td colSpan={4} className="text-center text-slate-500
-dark:text-slate-400 py-8">
-                      Tidak ada aktivitas ditemukan
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                      <p
+                        className="
+                          mt-4
+                          text-sm
+                          font-semibold
+                          text-slate-700
+                          dark:text-slate-300
+                        "
+                      >
+                        No contacts yet
+                      </p>
+
+                      <p
+                        className="
+                          mt-1
+                          max-w-xs
+                          text-xs
+                          leading-5
+                          text-slate-500
+                          dark:text-slate-400
+                        "
+                      >
+                        Messages submitted through
+                        the website will appear here.
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Footer */}
+        {latestContacts.length > 0 && (
+          <div
+            className="
+              flex
+              items-center
+              justify-between
+              border-t
+              border-slate-200/70
+              px-5
+              py-3
+              dark:border-white/[0.06]
+            "
+          >
+            <span
+              className="
+                text-[11px]
+                text-slate-400
+                dark:text-slate-500
+              "
+            >
+              Showing latest {Math.min(
+                latestContacts.length,
+                5
+              )} contacts
+            </span>
+
+            <Link
+              to="/dashboard/contacts"
+              className="
+                text-[11px]
+                font-semibold
+                text-blue-500
+                transition
+                hover:text-blue-600
+                dark:text-blue-400
+              "
+            >
+              Manage contacts →
+            </Link>
           </div>
-        </section>
-      </main>
+        )}
+      </section>
     </div>
   );
 };

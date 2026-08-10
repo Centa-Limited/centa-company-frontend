@@ -1,4 +1,3 @@
-
 export interface LoginPayload {
   email: string;
   password: string;
@@ -9,6 +8,7 @@ export interface AuthUser {
   name: string;
   email: string;
   role: "ADMIN" | "SUPER_ADMIN";
+  avatar?: string | null;
   createdAt: string;
 }
 

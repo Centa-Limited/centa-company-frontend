@@ -11,9 +11,10 @@ import {
   updateUser,
 } from "../../services/user.service";
 
-import type {
-  UserPayload,
-} from "../../types/user";
+import type { Role } from "../../types/user";
+
+
+import { useAuth } from "../../context/AuthContext";
 
 
 
@@ -23,15 +24,19 @@ const EditUser = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
+  const { user: currentUser } = useAuth();
 
 
 
-  const [form, setForm] =
-    useState<UserPayload>({
-      name: "",
-      email: "",
-      role: "ADMIN",
-    });
+ const [form, setForm] = useState<{
+  name: string;
+  email: string;
+  role: Role;
+}>({
+  name: "",
+  email: "",
+  role: "ADMIN",
+});
 
 
 
@@ -42,6 +47,16 @@ const EditUser = () => {
 
   const [saving, setSaving] =
     useState(false);
+
+    useEffect(() => {
+  if (
+    currentUser &&
+    currentUser.role !== "SUPER_ADMIN"
+  ) {
+    toast.error("Akses hanya untuk SUPER_ADMIN");
+    navigate("/dashboard");
+  }
+}, [currentUser, navigate]);
 
 
 
@@ -228,6 +243,13 @@ const EditUser = () => {
 
 
   if (loading) {
+    if (!currentUser) {
+  return null;
+}
+
+if (currentUser.role !== "SUPER_ADMIN") {
+  return null;
+}
 
 
     return (
@@ -443,13 +465,11 @@ const EditUser = () => {
 
 
 
-            <select
-
-              name="role"
-
-              value={form.role}
-
-              onChange={handleChange}
+          <select
+  name="role"
+  value={form.role}
+  onChange={handleChange}
+  disabled={currentUser?.id === id}
 
               className="
                 w-full
@@ -477,7 +497,11 @@ const EditUser = () => {
 
 
             </select>
-
+{currentUser?.id === id && (
+  <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+    Role akun sendiri tidak dapat diubah.
+  </p>
+)}
 
           </div>
 
