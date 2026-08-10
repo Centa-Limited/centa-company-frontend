@@ -4,7 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import AdminLayout from "../layouts/AdminLayout";
 
 import Home from "../pages/Home";
-import About from "../pages/About";
+
 import PublicServices from "../pages/PublicServices";
 import Articles from "../pages/Articles/Articles";
 import Contact from "../pages/Contact";
@@ -31,6 +31,9 @@ import EditUser from "../pages/Users/EditUser";
 import CreateService from "../pages/Services/CreateService";
 import EditService from "../pages/Services/EditService";
 import AdminServices from "../pages/Services/Services";
+import Settings from "../pages/Settings/Settings";
+import Team from "../pages/Team";
+import About from "../pages/About";
 
 export default function AppRouter() {
   return (
@@ -92,6 +95,11 @@ export default function AppRouter() {
             element={<Dashboard />}
           />
 
+          <Route
+  path="/dashboard/about"
+  element={<About />}
+/>
+
           {/* Contacts */}
 
           <Route
@@ -150,6 +158,23 @@ export default function AppRouter() {
             element={<EditUser />}
           />
 
+         
+         
+     {/* Team */}
+
+{/* Team */}
+
+<Route
+  path="/dashboard/team"
+  element={<Team />}
+/>
+
+      {/* Settings */}
+
+<Route
+  path="/dashboard/settings"
+  element={<Settings />}
+/>
           {/* Services */}
 
           <Route
