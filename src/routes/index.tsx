@@ -3,83 +3,116 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import AdminLayout from "../layouts/AdminLayout";
 
-import Home from "../pages/Home";
+import ProtectedRoute from "../components/common/ProtectedRoute";
 
-import PublicServices from "../pages/PublicServices";
-import Articles from "../pages/Articles/Articles";
-import Contact from "../pages/Contact";
+// Public Website
+import LandingPage from "../landing-page/LandingPage";
+import PublicArticles from "../landing-page/Articles";
+import ArticleDetail from "../landing-page/ArticleDetail";
+import Team from "../landing-page/Team";
+import Approach from "../landing-page/Approach";
+
+// Auth
 import Login from "../pages/Login";
 
+// Error
+import NotFound from "../pages/NotFound";
+
+
+// Dashboard
 import Dashboard from "../pages/Dashboard";
 import Contacts from "../pages/DashboardContacts";
 
-import NotFound from "../pages/NotFound";
 
-import ProtectedRoute from "../components/common/ProtectedRoute";
-
+// Admin Articles
+import Articles from "../pages/Articles/Articles";
 import CreateArticle from "../pages/Articles/CreateArticle";
 import EditArticle from "../pages/Articles/EditArticle";
 
+
+// Categories
 import Categories from "../pages/Categories";
 import CreateCategory from "../pages/Categories/CreateCategory";
 import EditCategory from "../pages/Categories/EditCategory";
 
+
+// Users
 import Users from "../pages/Users/Users";
 import CreateUser from "../pages/Users/CreateUser";
 import EditUser from "../pages/Users/EditUser";
 
+
+// Services
+import AdminServices from "../pages/Services/Services";
 import CreateService from "../pages/Services/CreateService";
 import EditService from "../pages/Services/EditService";
-import AdminServices from "../pages/Services/Services";
+
+
+// Admin
 import Settings from "../pages/Settings/Settings";
-import Team from "../pages/Team";
+import AdminTeam from "../pages/Team";
 import About from "../pages/About";
+
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
+
       <Routes>
 
-        {/* ========================================= */}
-        {/* PUBLIC WEBSITE */}
-        {/* ========================================= */}
+        {/* =====================================================
+            PUBLIC WEBSITE
+        ====================================================== */}
 
         <Route element={<MainLayout />}>
-          <Route index element={<Home />} />
 
           <Route
-            path="about"
-            element={<About />}
+            index
+            element={<LandingPage />}
           />
 
-          <Route
-            path="services"
-            element={<PublicServices />}
-          />
 
           <Route
             path="articles"
-            element={<Articles />}
+            element={<PublicArticles />}
           />
+
 
           <Route
-            path="contact"
-            element={<Contact />}
+            path="articles/:id"
+            element={<ArticleDetail />}
           />
+
+
+          <Route
+            path="team"
+            element={<Team />}
+          />
+
+
+          <Route
+            path="approach"
+            element={<Approach />}
+          />
+
         </Route>
 
-        {/* ========================================= */}
-        {/* AUTHENTICATION */}
-        {/* ========================================= */}
+
+
+        {/* =====================================================
+            AUTHENTICATION
+        ====================================================== */}
 
         <Route
           path="/login"
           element={<Login />}
         />
 
-        {/* ========================================= */}
-        {/* ADMIN / CMS */}
-        {/* ========================================= */}
+
+
+        {/* =====================================================
+            ADMIN / CMS
+        ====================================================== */}
 
         <Route
           element={
@@ -88,6 +121,8 @@ export default function AppRouter() {
             </ProtectedRoute>
           }
         >
+
+
           {/* Dashboard */}
 
           <Route
@@ -95,10 +130,16 @@ export default function AppRouter() {
             element={<Dashboard />}
           />
 
+
+
+          {/* About */}
+
           <Route
-  path="/dashboard/about"
-  element={<About />}
-/>
+            path="/dashboard/about"
+            element={<About />}
+          />
+
+
 
           {/* Contacts */}
 
@@ -107,7 +148,11 @@ export default function AppRouter() {
             element={<Contacts />}
           />
 
-          {/* Articles */}
+
+
+          {/* =====================
+              ARTICLES
+          ====================== */}
 
           <Route
             path="/dashboard/articles"
@@ -124,7 +169,11 @@ export default function AppRouter() {
             element={<EditArticle />}
           />
 
-          {/* Categories */}
+
+
+          {/* =====================
+              CATEGORIES
+          ====================== */}
 
           <Route
             path="/dashboard/categories"
@@ -141,7 +190,11 @@ export default function AppRouter() {
             element={<EditCategory />}
           />
 
-          {/* Users */}
+
+
+          {/* =====================
+              USERS
+          ====================== */}
 
           <Route
             path="/dashboard/users"
@@ -158,24 +211,33 @@ export default function AppRouter() {
             element={<EditUser />}
           />
 
-         
-         
-     {/* Team */}
 
-{/* Team */}
 
-<Route
-  path="/dashboard/team"
-  element={<Team />}
-/>
+          {/* =====================
+              TEAM
+          ====================== */}
 
-      {/* Settings */}
+          <Route
+            path="/dashboard/team"
+            element={<AdminTeam />}
+          />
 
-<Route
-  path="/dashboard/settings"
-  element={<Settings />}
-/>
-          {/* Services */}
+
+
+          {/* =====================
+              SETTINGS
+          ====================== */}
+
+          <Route
+            path="/dashboard/settings"
+            element={<Settings />}
+          />
+
+
+
+          {/* =====================
+              SERVICES
+          ====================== */}
 
           <Route
             path="/dashboard/services"
@@ -191,18 +253,24 @@ export default function AppRouter() {
             path="/dashboard/services/:id/edit"
             element={<EditService />}
           />
+
+
         </Route>
 
-        {/* ========================================= */}
-        {/* 404 */}
-        {/* ========================================= */}
+
+
+        {/* =====================================================
+            404
+        ====================================================== */}
 
         <Route
           path="*"
           element={<NotFound />}
         />
 
+
       </Routes>
+
     </BrowserRouter>
   );
 }
