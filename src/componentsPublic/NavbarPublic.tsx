@@ -15,7 +15,7 @@ export const NavbarPublic: React.FC = () => {
             alt="Centa Limited" 
             className="h-10 w-auto hover:scale-105 transition-transform rounded" 
             onError={(e) => {
-              n
+              
               (e.target as HTMLElement).style.display = 'none';
             }}
           />
