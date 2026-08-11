@@ -1,685 +1,464 @@
 import { useEffect, useState } from "react";
 import {
-  ArrowRight,
   Menu,
   X,
+  ArrowRight,
 } from "lucide-react";
 import {
   Link,
   useLocation,
-  useNavigate,
 } from "react-router-dom";
 
-export default function Navbar() {
-  const location = useLocation();
-  const navigate = useNavigate();
 
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function NavbarPublic() {
+
+  const location = useLocation();
+
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+
 
   useEffect(() => {
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 24);
+      setScrolled(window.scrollY > 20);
     };
 
-    handleScroll();
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener(
+      "scroll",
+      handleScroll
+    );
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+
+    return () =>
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
+
   }, []);
 
+
+
   useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location.pathname]);
+    setMobileOpen(false);
+  }, [location]);
+  const handleAnchorClick = (
+  e: React.MouseEvent,
+  href: string
+) => {
+  if (!href.startsWith("/#")) return;
 
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
+  e.preventDefault();
 
-  /*
-   * =====================================================
-   * SERVICES NAVIGATION
-   * =====================================================
-   *
-   * If already on landing page:
-   *   -> smooth scroll to #services
-   *
-   * If on another public page:
-   *   -> navigate back to landing page with #services
-   */
-  const handleServicesClick = () => {
-    setMobileMenuOpen(false);
+  const id = href.replace("/#", "");
 
-    if (location.pathname === "/") {
-      document.getElementById("services")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+  if (location.pathname !== "/") {
+    window.location.href = href;
+    return;
+  }
 
-      return;
-    }
+  const element = document.getElementById(id);
 
-    navigate("/#services");
-  };
+  if (element) {
+    element.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+};
 
-  const navLinkClass = (path: string) => `
-    relative
-    flex
-    items-center
-    h-full
-    text-[13px]
-    font-semibold
-    tracking-[-0.01em]
-    transition-all
-    duration-200
 
-    ${
-      isActive(path)
-        ? "text-white"
-        : "text-slate-400 hover:text-white"
-    }
-  `;
+
+  const navItems = [
+  {
+    label: "Platform",
+    href: "#about",
+    type: "anchor",
+  },
+
+
+  {
+    label: "Capabilities",
+    href: "#services",
+    type: "anchor",
+  },
+
+
+  {
+    label: "Security",
+    href: "#security",
+    type: "anchor",
+  },
+
+
+  {
+    label: "Approach",
+    href: "/approach",
+    type: "route",
+  },
+
+
+  {
+    label: "Insights",
+    href: "/articles",
+    type: "route",
+  },
+
+
+  {
+    label: "Team",
+    href: "/team",
+    type: "route",
+  },
+
+
+  {
+    label: "Company",
+    href: "#about",
+    type: "anchor",
+  },
+
+
+  {
+    label: "Contact",
+    href: "#contact",
+    type: "anchor",
+  },
+];
+
+
 
   return (
+
     <header
       className={`
         fixed
-        inset-x-0
         top-0
         z-50
+        w-full
         transition-all
-        duration-500
+        duration-300
 
         ${
-          isScrolled
-            ? `
-              border-b
-              border-white/[0.08]
-              bg-slate-950/65
-              shadow-[0_12px_45px_rgba(2,6,23,0.22)]
-              backdrop-blur-2xl
-            `
-            : `
-              bg-transparent
-            `
+          scrolled
+          ? `
+            border-b
+            border-white/[0.08]
+            bg-[#050816]/80
+            backdrop-blur-xl
+          `
+          :
+          `
+            bg-transparent
+          `
         }
       `}
     >
-      {/* =====================================================
-          AMBIENT NAVBAR GLOW
-      ====================================================== */}
 
-      <div
+
+      <nav
         className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          top-0
-          h-24
-          overflow-hidden
-        "
-      >
-        <div
-          className="
-            absolute
-            left-[18%]
-            top-[-5rem]
-            h-32
-            w-64
-            rounded-full
-            bg-cyan-400/[0.06]
-            blur-3xl
-          "
-        />
-
-        <div
-          className="
-            absolute
-            right-[20%]
-            top-[-6rem]
-            h-36
-            w-72
-            rounded-full
-            bg-violet-500/[0.055]
-            blur-3xl
-          "
-        />
-      </div>
-
-      <div
-        className="
-          relative
           mx-auto
           flex
-          h-[82px]
-          max-w-[1440px]
+          max-w-7xl
           items-center
           justify-between
-          gap-8
           px-6
+          py-5
+          sm:px-8
           lg:px-10
-          xl:px-12
         "
       >
-        {/* =====================================================
-            BRAND
-        ====================================================== */}
+
+
+        {/* Brand */}
 
         <Link
           to="/"
           className="
             group
             flex
-            shrink-0
-            items-baseline
-            gap-3
+            flex-col
           "
         >
+
           <span
             className="
-              text-xl
+              text-sm
               font-black
-              tracking-[0.12em]
+              tracking-[0.35em]
               text-white
-              transition-colors
-              duration-300
-              group-hover:text-slate-100
-              sm:text-2xl
-              lg:text-[27px]
             "
           >
             CENTA
           </span>
 
+
           <span
             className="
-              text-xl
-              font-black
-              tracking-[0.12em]
-              text-cyan-400
-              transition-colors
-              duration-300
+              mt-1
+              text-[9px]
+              tracking-[0.5em]
+              text-cyan-400/70
+              transition
               group-hover:text-cyan-300
-              sm:text-2xl
-              lg:text-[27px]
             "
           >
             LIMITED
           </span>
+
+
         </Link>
 
-        {/* =====================================================
-            DESKTOP NAVIGATION
-        ====================================================== */}
 
-        <nav
+
+
+        {/* Desktop Menu */}
+
+        <div
           className="
             hidden
-            h-full
             items-center
             gap-8
             lg:flex
           "
         >
-          {/* HOME */}
 
-          <Link
-            to="/"
-            className={navLinkClass("/")}
-          >
-            Home
+         {navItems.map((item) => (
 
-            {isActive("/") && (
-              <span
-                className="
-                  absolute
-                  bottom-[17px]
-                  left-1/2
-                  h-[2px]
-                  w-5
-                  -translate-x-1/2
-                  rounded-full
-                  bg-cyan-300
-                  shadow-[0_0_12px_rgba(103,232,249,0.8)]
-                "
-              />
-            )}
-          </Link>
+  <Link
+    key={item.label}
+    to={item.href}
+    onClick={(e) =>
+      handleAnchorClick(e, item.href)
+    }
+    className="
+      text-sm
+      text-white/60
+      transition
+      hover:text-white
+    "
+  >
+    {item.label}
+  </Link>
 
-          {/* ARTICLES */}
+))}
 
-          <Link
-            to="/articles"
-            className={navLinkClass("/articles")}
-          >
-            Articles
 
-            {isActive("/articles") && (
-              <span
-                className="
-                  absolute
-                  bottom-[17px]
-                  left-1/2
-                  h-[2px]
-                  w-5
-                  -translate-x-1/2
-                  rounded-full
-                  bg-cyan-300
-                  shadow-[0_0_12px_rgba(103,232,249,0.8)]
-                "
-              />
-            )}
-          </Link>
+        </div>
 
-          {/* APPROACH */}
 
-          <Link
-            to="/approach"
-            className={navLinkClass("/approach")}
-          >
-            Approach
 
-            {isActive("/approach") && (
-              <span
-                className="
-                  absolute
-                  bottom-[17px]
-                  left-1/2
-                  h-[2px]
-                  w-5
-                  -translate-x-1/2
-                  rounded-full
-                  bg-cyan-300
-                  shadow-[0_0_12px_rgba(103,232,249,0.8)]
-                "
-              />
-            )}
-          </Link>
 
-          {/* TEAM */}
+        {/* Right */}
 
-          <Link
-            to="/team"
-            className={navLinkClass("/team")}
-          >
-            Team
-
-            {isActive("/team") && (
-              <span
-                className="
-                  absolute
-                  bottom-[17px]
-                  left-1/2
-                  h-[2px]
-                  w-5
-                  -translate-x-1/2
-                  rounded-full
-                  bg-cyan-300
-                  shadow-[0_0_12px_rgba(103,232,249,0.8)]
-                "
-              />
-            )}
-          </Link>
-
-          {/* =================================================
-              SERVICES
-          ================================================== */}
-
-          <button
-            type="button"
-            onClick={handleServicesClick}
-            className="
-              flex
-              h-full
-              items-center
-              border-0
-              bg-transparent
-              p-0
-              text-[13px]
-              font-semibold
-              tracking-[-0.01em]
-              text-slate-400
-              transition-colors
-              duration-200
-              hover:text-white
-            "
-          >
-            Services
-          </button>
-
-          {/* ABOUT */}
-
-          <a
-            href="/#about"
-            className="
-              flex
-              h-full
-              items-center
-              text-[13px]
-              font-semibold
-              tracking-[-0.01em]
-              text-slate-400
-              transition-colors
-              duration-200
-              hover:text-white
-            "
-          >
-            About
-          </a>
-
-          {/* FAQ */}
-
-          <a
-            href="/#faq"
-            className="
-              flex
-              h-full
-              items-center
-              text-[13px]
-              font-semibold
-              tracking-[-0.01em]
-              text-slate-400
-              transition-colors
-              duration-200
-              hover:text-white
-            "
-          >
-            FAQ
-          </a>
-        </nav>
-
-        {/* =====================================================
-            CTA
-        ====================================================== */}
-
-        <a
-          href="/#contact"
+        <div
           className="
-            group
             hidden
             items-center
-            gap-2.5
-            rounded-2xl
-            border
-            border-cyan-300/20
-            bg-gradient-to-r
-            from-cyan-300
-            via-cyan-200
-            to-sky-300
-            px-5
-            py-3
-            text-[11px]
-            font-black
-            tracking-wide
-            text-slate-950
-            shadow-[0_8px_30px_rgba(34,211,238,0.12)]
-            transition-all
-            duration-300
-            hover:-translate-y-0.5
-            hover:shadow-[0_12px_40px_rgba(34,211,238,0.22)]
-            lg:inline-flex
+            gap-5
+            lg:flex
           "
         >
-          Let's Work Together
 
-          <ArrowRight
+
+          <div
             className="
-              h-3.5
-              w-3.5
-              transition-transform
-              duration-300
-              group-hover:translate-x-1
-            "
-          />
-        </a>
-
-        {/* =====================================================
-            MOBILE BUTTON
-        ====================================================== */}
-
-        <button
-          type="button"
-          aria-label={
-            mobileMenuOpen
-              ? "Close navigation menu"
-              : "Open navigation menu"
-          }
-          onClick={() =>
-            setMobileMenuOpen((open) => !open)
-          }
-          className="
-            flex
-            h-11
-            w-11
-            items-center
-            justify-center
-            rounded-2xl
-            border
-            border-white/[0.09]
-            bg-white/[0.045]
-            text-slate-300
-            shadow-[0_8px_25px_rgba(0,0,0,0.12)]
-            backdrop-blur-xl
-            transition-all
-            duration-300
-            hover:border-cyan-300/20
-            hover:bg-cyan-300/[0.06]
-            hover:text-white
-            lg:hidden
-          "
-        >
-          {mobileMenuOpen ? (
-            <X className="h-5 w-5" />
-          ) : (
-            <Menu className="h-5 w-5" />
-          )}
-        </button>
-      </div>
-
-      {/* =====================================================
-          MOBILE MENU
-      ====================================================== */}
-
-      <div
-        className={`
-          overflow-hidden
-          border-t
-          border-white/[0.07]
-          bg-slate-950/90
-          shadow-[0_20px_60px_rgba(2,6,23,0.3)]
-          backdrop-blur-2xl
-          transition-all
-          duration-300
-          lg:hidden
-
-          ${
-            mobileMenuOpen
-              ? "max-h-[520px] opacity-100"
-              : "max-h-0 border-t-transparent opacity-0"
-          }
-        `}
-      >
-        <nav
-          className="
-            mx-auto
-            flex
-            max-w-[1440px]
-            flex-col
-            gap-1.5
-            px-6
-            py-5
-          "
-        >
-          {/* HOME */}
-
-          <Link
-            to="/"
-            className="
-              rounded-2xl
-              px-4
-              py-3.5
-              text-sm
-              font-semibold
-              text-slate-300
-              transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
-            "
-          >
-            Home
-          </Link>
-
-          {/* ARTICLES */}
-
-          <Link
-            to="/articles"
-            className="
-              rounded-2xl
-              px-4
-              py-3.5
-              text-sm
-              font-semibold
-              text-slate-300
-              transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
-            "
-          >
-            Articles
-          </Link>
-
-          {/* APPROACH */}
-
-          <Link
-            to="/approach"
-            className="
-              rounded-2xl
-              px-4
-              py-3.5
-              text-sm
-              font-semibold
-              text-slate-300
-              transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
-            "
-          >
-            Approach
-          </Link>
-
-          {/* TEAM */}
-
-          <Link
-            to="/team"
-            className="
-              rounded-2xl
-              px-4
-              py-3.5
-              text-sm
-              font-semibold
-              text-slate-300
-              transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
-            "
-          >
-            Team
-          </Link>
-
-          {/* =================================================
-              SERVICES
-          ================================================== */}
-
-          <button
-            type="button"
-            onClick={handleServicesClick}
-            className="
-              rounded-2xl
-              px-4
-              py-3.5
-              text-left
-              text-sm
-              font-semibold
-              text-slate-300
-              transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
-            "
-          >
-            Services
-          </button>
-
-          {/* ABOUT */}
-
-          <a
-            href="/#about"
-            className="
-              rounded-2xl
-              px-4
-              py-3.5
-              text-sm
-              font-semibold
-              text-slate-300
-              transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
-            "
-          >
-            About
-          </a>
-
-          {/* FAQ */}
-
-          <a
-            href="/#faq"
-            className="
-              rounded-2xl
-              px-4
-              py-3.5
-              text-sm
-              font-semibold
-              text-slate-300
-              transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
-            "
-          >
-            FAQ
-          </a>
-
-          {/* CTA */}
-
-          <a
-            href="/#contact"
-            className="
-              mt-2
               flex
               items-center
-              justify-center
               gap-2
-              rounded-2xl
-              bg-gradient-to-r
-              from-cyan-300
-              to-sky-300
-              px-4
-              py-3.5
-              text-sm
-              font-black
-              text-slate-950
-              shadow-[0_10px_35px_rgba(34,211,238,0.12)]
-              transition-all
-              hover:shadow-[0_12px_40px_rgba(34,211,238,0.2)]
+              rounded-full
+              border
+              border-cyan-400/20
+              bg-cyan-400/[0.05]
+              px-3
+              py-1.5
             "
           >
-            Let's Work Together
 
-            <ArrowRight className="h-4 w-4" />
-          </a>
-        </nav>
-      </div>
+            <span
+              className="
+                h-1.5
+                w-1.5
+                rounded-full
+                bg-cyan-400
+                shadow-[0_0_12px_rgba(34,211,238,0.8)]
+              "
+            />
+
+            <span
+              className="
+                text-[10px]
+                tracking-wide
+                text-white/50
+              "
+            >
+              SYSTEM ONLINE
+            </span>
+
+          </div>
+
+
+
+         <Link
+  to="/#contact"
+  onClick={(e) =>
+    handleAnchorClick(e, "/#contact")
+  }
+            className="
+              group
+              inline-flex
+              items-center
+              gap-2
+              rounded-xl
+              border
+              border-cyan-400/30
+              bg-cyan-400/10
+              px-5
+              py-2.5
+              text-sm
+              font-semibold
+              text-cyan-300
+              transition
+              hover:bg-cyan-400/20
+            "
+          >
+
+            Start Project
+
+            <ArrowRight
+              className="
+                h-4
+                w-4
+                transition
+                group-hover:translate-x-1
+              "
+            />
+
+          </Link>
+
+
+        </div>
+
+
+
+
+
+        {/* Mobile Button */}
+
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="
+            lg:hidden
+            text-white
+          "
+        >
+
+          {
+            mobileOpen
+            ?
+            <X />
+            :
+            <Menu />
+          }
+
+        </button>
+
+
+      </nav>
+
+
+
+
+
+      {/* Mobile Menu */}
+
+      {
+        mobileOpen && (
+
+          <div
+            className="
+              border-t
+              border-white/[0.08]
+              bg-[#050816]/95
+              px-6
+              py-8
+              backdrop-blur-xl
+              lg:hidden
+            "
+          >
+
+            <div
+              className="
+                flex
+                flex-col
+                gap-6
+              "
+            >
+{navItems.map((item) => (
+
+  <Link
+    key={item.label}
+    to={item.href}
+    onClick={(e) =>
+      handleAnchorClick(e, item.href)
+    }
+    className="
+      text-sm
+      text-white/70
+      hover:text-cyan-400
+    "
+  >
+    {item.label}
+  </Link>
+
+))}
+
+
+
+<Link
+  to="/#contact"
+  onClick={(e) =>
+    handleAnchorClick(e, "/#contact")
+  }
+                className="
+                  mt-4
+                  inline-flex
+                  items-center
+                  justify-center
+                  gap-2
+                  rounded-xl
+                  border
+                  border-cyan-400/30
+                  bg-cyan-400/10
+                  px-5
+                  py-3
+                  text-sm
+                  font-semibold
+                  text-cyan-300
+                "
+              >
+
+                Start Project
+
+                <ArrowRight className="h-4 w-4" />
+
+              </Link>
+
+
+            </div>
+
+
+          </div>
+
+        )
+      }
+
+
     </header>
+
   );
 }

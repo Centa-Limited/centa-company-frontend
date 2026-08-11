@@ -1,251 +1,248 @@
-import React from "react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export const FooterPublic: React.FC = () => {
-  const currentYear = new Date().getFullYear();
-
+export default function FooterPublic() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/5 bg-[#030611] text-white">
-      {/* =========================================================
-          BACKGROUND
-      ========================================================== */}
+    <footer className="border-t border-white/[0.08] bg-[#050816]">
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10">
 
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-[15%] top-[-250px] h-[400px] w-[400px] rounded-full bg-[#00BFFF]/5 blur-[140px]" />
+        {/* Main */}
+        <div className="grid gap-12 lg:grid-cols-[1.6fr_1fr_1fr]">
 
-        <div className="absolute right-[-150px] bottom-[-250px] h-[450px] w-[450px] rounded-full bg-blue-600/5 blur-[140px]" />
-      </div>
+          {/* Brand */}
+          <div>
+            <Link to="/" className="inline-flex items-center gap-3">
+              
+              <div
+                className="
+                  flex h-11 w-11 items-center justify-center
+                  rounded-xl
+                  border border-cyan-400/20
+                  bg-cyan-400/10
+                  shadow-[0_0_30px_rgba(34,211,238,0.15)]
+                "
+              >
+                <span className="font-black text-cyan-400">
+                  C
+                </span>
+              </div>
 
-      {/* =========================================================
-          MAIN FOOTER
-      ========================================================== */}
 
-      <div className="relative mx-auto max-w-7xl px-6 pb-10 pt-16 sm:px-8 lg:px-10 lg:pt-20">
-        {/* Top CTA */}
-        <div className="mb-16 flex flex-col justify-between gap-8 border-b border-white/5 pb-12 lg:flex-row lg:items-end">
-          <div className="max-w-2xl">
-            <div className="mb-4 text-[10px] font-bold uppercase tracking-[0.25em] text-[#00BFFF]">
-              Centa Limited
+              <div>
+                <div className="text-sm font-black tracking-[0.35em] text-white">
+                  CENTA
+                </div>
+
+                <div className="text-[10px] tracking-[0.45em] text-white/40">
+                  LIMITED
+                </div>
+              </div>
+
+            </Link>
+
+
+            <p className="mt-6 max-w-md text-sm leading-7 text-white/50">
+              Engineering secure digital products, software systems,
+              infrastructure, and cybersecurity solutions for modern
+              businesses.
+            </p>
+
+
+            {/* Status */}
+            <div
+              className="
+                mt-6 inline-flex items-center gap-3
+                rounded-full
+                border border-cyan-400/15
+                bg-cyan-400/[0.05]
+                px-4 py-2
+              "
+            >
+
+              <span
+                className="
+                  h-2 w-2 rounded-full
+                  bg-cyan-400
+                  shadow-[0_0_12px_rgba(34,211,238,0.8)]
+                "
+              />
+
+              <span className="text-xs tracking-wide text-white/60">
+                All systems operational
+              </span>
+
             </div>
 
-            <h2 className="text-3xl font-black tracking-tight sm:text-4xl">
-              Build better.
-              <br />
-              <span className="text-slate-500">
-                Build securely.
-              </span>
-            </h2>
 
-            <p className="mt-4 max-w-xl text-sm leading-6 text-slate-500">
-              Software, web, application, and cybersecurity solutions
-              designed to help your business move forward with confidence.
-            </p>
           </div>
+
+
+
+          {/* Company */}
+          <div>
+
+            <h4 className="text-xs font-semibold tracking-[0.3em] text-white">
+              COMPANY
+            </h4>
+
+
+            <ul className="mt-6 space-y-4 text-sm text-white/50">
+
+              {[
+                "About",
+                "Approach",
+                "Team",
+                "Articles",
+                "Contact",
+              ].map((item) => (
+
+                <li
+                  key={item}
+                  className="transition hover:text-cyan-400"
+                >
+                  {item}
+                </li>
+
+              ))}
+
+            </ul>
+
+          </div>
+
+
+
+          {/* Services */}
+          <div>
+
+            <h4 className="text-xs font-semibold tracking-[0.3em] text-white">
+              CAPABILITIES
+            </h4>
+
+
+            <ul className="mt-6 space-y-4 text-sm text-white/50">
+
+              {[
+                "Software Engineering",
+                "Web Development",
+                "Application Development",
+                "Cyber Security",
+                "Cloud Infrastructure",
+                "Security Advisory",
+              ].map((item) => (
+
+                <li
+                  key={item}
+                  className="transition hover:text-cyan-400"
+                >
+                  {item}
+                </li>
+
+              ))}
+
+            </ul>
+
+          </div>
+
+
+        </div>
+
+
+
+        {/* CTA */}
+        <div
+          className="
+            mt-14
+            flex flex-col gap-5
+            rounded-2xl
+            border border-white/[0.08]
+            bg-white/[0.02]
+            p-6
+            md:flex-row
+            md:items-center
+            md:justify-between
+          "
+        >
+
+          <div>
+
+            <div className="flex items-center gap-2 text-sm font-semibold text-white">
+
+              <ShieldCheck className="h-4 w-4 text-cyan-400" />
+
+              Need a secure digital solution?
+
+            </div>
+
+
+            <p className="mt-2 text-sm text-white/40">
+              Tell us what you are building and we will design
+              the right engineering approach.
+            </p>
+
+          </div>
+
+
 
           <Link
             to="/contact"
-            className="group inline-flex w-fit items-center gap-3 rounded-xl bg-[#00BFFF] px-6 py-3.5 text-sm font-bold text-[#050816] transition-all duration-300 hover:-translate-y-0.5 hover:bg-cyan-300"
+            className="
+              inline-flex items-center gap-2
+              rounded-xl
+              border border-cyan-400/30
+              bg-cyan-400/10
+              px-5 py-3
+              text-sm font-semibold
+              text-cyan-300
+              transition
+              hover:bg-cyan-400/20
+            "
           >
-            Start a Project
-
-            <span className="transition-transform duration-300 group-hover:translate-x-1">
-              →
-            </span>
+            Start a project
+            <ArrowRight className="h-4 w-4" />
           </Link>
+
+
         </div>
 
-        {/* =========================================================
-            GRID
-        ========================================================== */}
 
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_0.8fr_1fr_1fr]">
-          {/* BRAND */}
-          <div>
-            <Link
-              to="/"
-              className="group inline-flex items-center gap-3"
-            >
-              <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                <img
-                  src="/logo-centa.jpeg"
-                  alt="Centa Limited"
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).style.display =
-                      "none";
-                  }}
-                />
-              </div>
 
-              <div>
-                <div className="text-lg font-black tracking-tight">
-                  Centa
-                  <span className="text-[#00BFFF]">
-                    Limited
-                  </span>
-                </div>
+        {/* Bottom */}
+        <div
+          className="
+            mt-10
+            flex flex-col gap-4
+            border-t border-white/[0.08]
+            pt-6
+            text-xs text-white/40
+            md:flex-row
+            md:items-center
+            md:justify-between
+          "
+        >
 
-                <div className="text-[9px] font-semibold uppercase tracking-[0.2em] text-slate-600">
-                  Technology & Security
-                </div>
-              </div>
-            </Link>
-
-            <p className="mt-6 max-w-sm text-sm leading-6 text-slate-500">
-              Centa Limited adalah perusahaan teknologi yang berfokus pada
-              software development, pengembangan website dan aplikasi,
-              serta cybersecurity solutions.
-            </p>
-
-            {/* Status */}
-            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/[0.025] px-3 py-2">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-40" />
-                <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
-              </span>
-
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
-                Technology Partner
-              </span>
-            </div>
-          </div>
-
-          {/* QUICK LINKS */}
-          <div>
-            <h3 className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-white">
-              Explore
-            </h3>
-
-            <ul className="space-y-3">
-              {[
-                ["Home", "/"],
-                ["About Us", "/about"],
-                ["Services", "/services"],
-                ["Articles & News", "/articles"],
-                ["Contact", "/contact"],
-              ].map(([label, path]) => (
-                <li key={path}>
-                  <Link
-                    to={path}
-                    className="group inline-flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-[#00BFFF]"
-                  >
-                    <span className="h-px w-0 bg-[#00BFFF] transition-all duration-300 group-hover:w-3" />
-
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* SERVICES */}
-          <div>
-            <h3 className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-white">
-              Capabilities
-            </h3>
-
-            <ul className="space-y-3 text-sm text-slate-500">
-              <li className="transition-colors hover:text-slate-300">
-                Software Development
-              </li>
-
-              <li className="transition-colors hover:text-slate-300">
-                Web Development
-              </li>
-
-              <li className="transition-colors hover:text-slate-300">
-                Application Development
-              </li>
-
-              <li className="transition-colors hover:text-slate-300">
-                Cyber Security
-              </li>
-
-              <li className="transition-colors hover:text-slate-300">
-                Security Assessment
-              </li>
-            </ul>
-          </div>
-
-          {/* CONTACT */}
-          <div>
-            <h3 className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-white">
-              Get in Touch
-            </h3>
-
-            <div className="space-y-5">
-              <div>
-                <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-600">
-                  Email
-                </div>
-
-                <a
-                  href="mailto:info@centalimited.com"
-                  className="text-sm font-medium text-slate-300 transition-colors hover:text-[#00BFFF]"
-                >
-                  info@centalimited.com
-                </a>
-              </div>
-
-              <div>
-                <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-600">
-                  Focus
-                </div>
-
-                <p className="text-sm leading-5 text-slate-500">
-                  Software Development
-                  <br />
-                  Web & Application
-                  <br />
-                  Cyber Security
-                </p>
-              </div>
-
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 text-xs font-semibold text-[#00BFFF] transition-colors hover:text-cyan-300"
-              >
-                Contact our team
-                <span>→</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* =========================================================
-            BOTTOM
-        ========================================================== */}
-
-        <div className="mt-16 flex flex-col gap-5 border-t border-white/5 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[11px] text-slate-600">
-            © {currentYear} Centa Limited. All rights reserved.
+          <p>
+            © 2026 Centa Limited. All rights reserved.
           </p>
 
-          <div className="flex items-center gap-6">
-            <Link
-              to="/privacy"
-              className="text-[11px] text-slate-600 transition-colors hover:text-slate-400"
-            >
-              Privacy Policy
-            </Link>
 
-            <Link
-              to="/terms"
-              className="text-[11px] text-slate-600 transition-colors hover:text-slate-400"
-            >
-              Terms of Service
-            </Link>
+          <div className="flex gap-6">
 
-            <span className="hidden h-3 w-px bg-white/10 sm:block" />
-
-            <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-700">
-              Built with purpose
+            <span>
+              Indonesia
             </span>
+
+
+            <span className="text-cyan-400/70">
+              Build. Secure. Scale.
+            </span>
+
           </div>
+
+
         </div>
+
+
       </div>
     </footer>
   );
-};
-
-export default FooterPublic;
+}

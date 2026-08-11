@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import MainLayout from "../layouts/MainLayout";
+
+import PublicLayout from "../layoutsPublic/PublicLayouts";
 import AdminLayout from "../layouts/AdminLayout";
 
 import ProtectedRoute from "../components/common/ProtectedRoute";
@@ -52,6 +53,7 @@ import EditService from "../pages/Services/EditService";
 import Settings from "../pages/Settings/Settings";
 import AdminTeam from "../pages/Team";
 import About from "../pages/About";
+import TeamProfile from "../landing-page/TeamProfile";
 
 
 export default function AppRouter() {
@@ -64,7 +66,7 @@ export default function AppRouter() {
             PUBLIC WEBSITE
         ====================================================== */}
 
-        <Route element={<MainLayout />}>
+    <Route element={<PublicLayout />}>
 
           <Route
             index
@@ -88,6 +90,11 @@ export default function AppRouter() {
             path="team"
             element={<Team />}
           />
+
+          <Route
+ path="team/:slug"
+ element={<TeamProfile />}
+/>
 
 
           <Route

@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+
+import {
+  sendContactMessage,
+} from "../services/contact.service";
 import {
   ArrowRight,
   Check,
@@ -23,7 +28,26 @@ import {
 } from "lucide-react";
 
 export default function LandingPage() {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+
+useEffect(() => {
+  const id = window.location.hash.replace("#", "");
+
+  if (!id) return;
+
+  const target = document.getElementById(id);
+
+  if (target) {
+    setTimeout(() => {
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  }
+}, []);
   const [formData, setFormData] = useState({
   name: "",
   email: "",
@@ -42,29 +66,71 @@ const handleInputChange = (
   });
 };
 
-const handleSubmit = (e: React.FormEvent) => {
+const handleSubmit = async (
+  e: React.FormEvent
+) => {
   e.preventDefault();
 
-  const whatsappNumber = "6287867738173";
 
-  const text = `
-Hello Centa Limited,
+  try {
 
-Name: ${formData.name}
-Email: ${formData.email}
+    await sendContactMessage({
+
+      name: formData.name,
+
+      email: formData.email,
+
+      subject:
+        `${formData.service || "Project Inquiry"} - ${formData.company || "Website Visitor"}`,
+
+      message:
+        `
 Phone: ${formData.phone}
-Company: ${formData.company}
-Service: ${formData.service}
+
+Company:
+${formData.company}
+
+Service:
+${formData.service}
 
 Project Details:
 ${formData.message}
-  `.trim();
+        `.trim(),
 
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+    });
 
-  window.open(whatsappUrl, "_blank");
+
+    toast.success(
+      "Message sent successfully. Our team will contact you soon."
+    );
+
+
+    setFormData({
+      name:"",
+      email:"",
+      phone:"",
+      company:"",
+      service:"",
+      message:"",
+    });
+
+
+  } catch(error:any){
+
+    console.error(
+      "CONTACT ERROR:",
+      error
+    );
+
+
+    toast.error(
+      error?.response?.data?.message ??
+      "Failed sending message."
+    );
+
+  }
+
 };
-
   const services = [
     {
       number: "01",
@@ -218,9 +284,9 @@ ${formData.message}
               <div>
                 <div className="relative max-w-4xl">
                  <h1 className="text-5xl font-black leading-[0.95] tracking-[-0.055em] text-white sm:text-6xl lg:text-[76px]">
-  Build technology
+ Where Engineering 
   <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
-    that moves business.
+    Meets Cybersecurity
   </span>
 </h1>
 
@@ -229,9 +295,7 @@ ${formData.message}
 
                 <div className="mt-8 max-w-2xl">
                   <p className="text-base leading-8 text-slate-400 sm:text-lg">
-                    Centa membantu bisnis membangun software, digital
-                    products, infrastructure, dan security systems yang
-                    modern, reliable, scalable, dan security-aware.
+                    Centa membantu bisnis membangun software, digital products, infrastructure, dan security systems yang modern, scalable, dan resilient dengan pendekatan security-first untuk menghadapi ancaman digital masa kini.
                   </p>
 
                   <div className="mt-3 text-xs font-semibold text-slate-400">
@@ -1189,7 +1253,10 @@ ${formData.message}
             FAQ — PRODUCT STYLE
         ========================================================== */}
 
-        <section className="border-t border-white/[0.05]">
+        <section 
+                  id="faq"
+        className="border-t border-white/[0.05]">
+        
           <div className="mx-auto max-w-7xl px-6 py-24 sm:px-8 lg:px-10 lg:py-32">
             <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
               {/* LEFT — CONTEXT */}
@@ -1362,9 +1429,9 @@ ${formData.message}
 
       <h2 className="mt-6 text-4xl font-black leading-[1.02] tracking-[-0.045em] text-white sm:text-5xl lg:text-[64px]">
         Let's build something
-        <span className="block bg-gradient-to-r from-white via-cyan-100 to-cyan-400 bg-clip-text text-transparent">
-          secure and scalable.
-        </span>
+       <span className="block text-blue-400">
+  secure and scalable.
+</span>
       </h2>
 
       <p className="mt-6 max-w-2xl text-sm leading-7 text-slate-400">
@@ -1398,8 +1465,7 @@ ${formData.message}
             </h3>
 
             <p className="mt-2 text-xs leading-6 text-slate-500">
-              Isi form berikut dan Anda akan diarahkan ke WhatsApp Centa
-              untuk melanjutkan percakapan.
+             Isi form berikut,tim Centa akan menerima pesan Anda
             </p>
           </div>
 
@@ -1581,7 +1647,7 @@ ${formData.message}
               type="submit"
               className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 px-6 py-4 text-sm font-bold text-white shadow-[0_10px_40px_rgba(59,130,246,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_15px_50px_rgba(99,102,241,0.3)]"
             >
-              Continue via WhatsApp
+             Send Project Inquiry
 
               <Send className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
@@ -1716,128 +1782,9 @@ ${formData.message}
 </section>
       </main>
 
-      {/* =========================================================
-          FOOTER
-      ========================================================== */}
+    
 
-      <footer className="border-t border-white/[0.06]">
-        <div className="mx-auto max-w-7xl px-6 py-12 sm:px-8 lg:px-10">
-          <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
-            <div>
-              <Link to="/" className="inline-flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-violet-400/20 bg-violet-500/10">
-                  <span className="text-sm font-black text-violet-400">
-                    C
-                  </span>
-                </div>
-
-                <div>
-                  <div className="text-sm font-black tracking-[0.16em] text-white">
-                    CENTA
-                  </div>
-
-                  <div className="text-[8px] tracking-[0.25em] text-slate-700">
-                    LIMITED
-                  </div>
-                </div>
-              </Link>
-
-              <p className="mt-5 max-w-sm text-xs leading-6 text-slate-400">
-                Software engineering, web & application development, dan cyber
-                security untuk membantu bisnis membangun teknologi yang
-                modern, reliable, dan secure.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-white">
-                Company
-              </h3>
-
-              <div className="mt-4 space-y-3">
-                <a
-                  href="#about"
-                  className="block text-xs text-slate-400 transition-colors hover:text-cyan-400"
-                >
-                  About
-                </a>
-
-                <a
-                  href="#services"
-                  className="block text-xs text-slate-400 transition-colors hover:text-cyan-400"
-                >
-                  Services
-                </a>
-
-                <a
-                  href="#approach"
-                  className="block text-xs text-slate-400 transition-colors hover:text-cyan-400"
-                >
-                  Approach
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-white">
-                Services
-              </h3>
-
-              <div className="mt-4 space-y-3">
-                <span className="block text-xs text-slate-400">
-                  Software Development
-                </span>
-
-                <span className="block text-xs text-slate-400">
-                  Web & Application
-                </span>
-
-                <span className="block text-xs text-slate-400">
-                  Cyber Security
-                </span>
-
-                <span className="block text-xs text-slate-400">
-                  Security Advisory
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-white">
-                Contact
-              </h3>
-
-              <div className="mt-4 space-y-3">
-                <a
-                  href="mailto:info@centalimited.com"
-                  className="block text-xs text-slate-400 transition-colors hover:text-cyan-400"
-                >
-                  info@centalimited.com
-                </a>
-
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400"
-                >
-                  Start a project
-                  <ArrowRight className="h-3 w-3" />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12 flex flex-col justify-between gap-4 border-t border-white/[0.06] pt-6 sm:flex-row">
-            <p className="text-[10px] text-slate-700">
-              © {new Date().getFullYear()} Centa Limited. All rights reserved.
-            </p>
-
-            <div className="flex items-center gap-2 text-[10px] text-slate-700">
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400/70" />
-              Build. Secure. Scale.
-            </div>
-          </div>
-        </div>
-      </footer>
+     
     </div>
   );
 }
