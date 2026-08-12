@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const process = [
   {
     step: "01",
@@ -32,8 +34,10 @@ const process = [
 ];
 
 export default function Approach() {
+  const [activeProcess, setActiveProcess] = useState<string | null>(null);
+
   return (
-    <section className="relative scroll-mt-24">
+    <section className="relative scroll-mt-24 overflow-hidden">
       {/* =========================================================
           AMBIENT BACKGROUND
       ========================================================== */}
@@ -41,6 +45,18 @@ export default function Approach() {
       <div className="pointer-events-none absolute right-[-180px] top-[18%] h-[420px] w-[420px] rounded-full bg-cyan-400/[0.035] blur-[140px]" />
 
       <div className="pointer-events-none absolute left-[-180px] bottom-[12%] h-[360px] w-[360px] rounded-full bg-blue-500/[0.025] blur-[130px]" />
+
+      {/* Fine background grid */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+          opacity-[0.018]
+          [background-image:linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)]
+          [background-size:64px_64px]
+        "
+      />
 
       <div className="mx-auto max-w-7xl px-6 py-24 sm:px-8 lg:px-10 lg:py-32">
         {/* =========================================================
@@ -77,64 +93,542 @@ export default function Approach() {
         ========================================================== */}
 
         <div className="relative mt-16">
-          {/* Timeline Line */}
-          <div className="pointer-events-none absolute left-[24px] top-8 bottom-8 w-px bg-gradient-to-b from-cyan-400/40 via-cyan-400/10 to-transparent md:left-1/2 md:-translate-x-1/2" />
+          {/* Timeline */}
+          <div
+            className="
+              pointer-events-none
+              absolute
+              left-[31px]
+              top-8
+              bottom-8
+              w-px
+              bg-gradient-to-b
+              from-cyan-400/40
+              via-cyan-400/10
+              to-transparent
+              md:left-1/2
+              md:-translate-x-1/2
+            "
+          />
 
           <div className="space-y-4">
-            {process.map((item, index) => (
-              <article
-                key={item.step}
-                className="group relative grid gap-7 overflow-hidden rounded-[1.75rem] border border-white/[0.07] bg-[#0b1120]/75 p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-0.5 hover:border-cyan-400/25 hover:bg-[#0d1626]/90 hover:shadow-[0_20px_70px_rgba(0,0,0,0.35)] md:grid-cols-[1fr_100px_1fr] md:items-center md:p-7"
-              >
-                {/* Card Glow */}
-                <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-cyan-400/[0.025] blur-3xl transition-all duration-500 group-hover:bg-cyan-400/[0.08]" />
+            {process.map((item, index) => {
+              const isActive = activeProcess === item.step;
 
-                {/* Left / Title */}
-                <div
-                  className={`relative ${
-                    index % 2 === 0
-                      ? "md:order-1"
-                      : "md:order-3 md:text-left"
-                  }`}
+              return (
+                <article
+                  key={item.step}
+                  onClick={() =>
+                    setActiveProcess(isActive ? null : item.step)
+                  }
+                  className={`
+                    group
+                    relative
+                    cursor-pointer
+                    overflow-hidden
+                    rounded-[1.75rem]
+                    border
+                    p-6
+                    backdrop-blur-xl
+                    transition-all
+                    duration-500
+                    md:grid
+                    md:grid-cols-[1fr_100px_1fr]
+                    md:items-center
+                    md:p-7
+
+                    ${
+                      isActive
+                        ? `
+                          border-cyan-400/35
+                          bg-[#0c1727]/95
+                          shadow-[0_25px_90px_rgba(34,211,238,0.08)]
+                        `
+                        : `
+                          border-white/[0.07]
+                          bg-[#0b1120]/75
+                          hover:-translate-y-0.5
+                          hover:border-cyan-400/25
+                          hover:bg-[#0d1626]/90
+                          hover:shadow-[0_20px_70px_rgba(0,0,0,0.35)]
+                        `
+                    }
+                  `}
                 >
-                  <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500">
-                    Phase {item.step}
+                  {/* =================================================
+                      CARD GRID
+                  ================================================= */}
+
+                  <div
+                    className={`
+                      pointer-events-none
+                      absolute
+                      inset-0
+                      opacity-0
+                      transition-opacity
+                      duration-700
+                      ${
+                        isActive
+                          ? "opacity-100"
+                          : "group-hover:opacity-100"
+                      }
+
+                      [background-image:linear-gradient(rgba(34,211,238,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.055)_1px,transparent_1px)]
+                      [background-size:28px_28px]
+
+                      [mask-image:linear-gradient(to_right,black,transparent_75%)]
+                    `}
+                  />
+
+                  {/* =================================================
+                      RADIAL CARD LIGHT
+                  ================================================== */}
+
+                  <div
+                    className={`
+                      pointer-events-none
+                      absolute
+                      -right-32
+                      -top-32
+                      h-72
+                      w-72
+                      rounded-full
+                      bg-cyan-400/[0.025]
+                      blur-3xl
+                      transition-all
+                      duration-700
+
+                      ${
+                        isActive
+                          ? "bg-cyan-400/[0.10]"
+                          : "group-hover:bg-cyan-400/[0.07]"
+                      }
+                    `}
+                  />
+
+                  {/* =================================================
+                      TOP SCANLINE
+                  ================================================== */}
+
+                  <div
+                    className={`
+                      pointer-events-none
+                      absolute
+                      left-0
+                      right-0
+                      top-[-100%]
+                      h-[50%]
+                      bg-gradient-to-b
+                      from-transparent
+                      via-cyan-300/[0.06]
+                      to-transparent
+                      transition-all
+                      duration-[1400ms]
+                      ${
+                        isActive
+                          ? "top-[120%]"
+                          : "group-hover:top-[120%]"
+                      }
+                    `}
+                  />
+
+                  {/* =================================================
+                      CORNER ACCENTS
+                  ================================================== */}
+
+                  <div
+                    className={`
+                      pointer-events-none
+                      absolute
+                      left-3
+                      top-3
+                      h-3
+                      w-3
+                      border-l
+                      border-t
+                      transition-all
+                      duration-500
+                      ${
+                        isActive
+                          ? "h-5 w-5 border-cyan-300/70"
+                          : "border-cyan-400/20 group-hover:border-cyan-400/60"
+                      }
+                    `}
+                  />
+
+                  <div
+                    className={`
+                      pointer-events-none
+                      absolute
+                      right-3
+                      top-3
+                      h-3
+                      w-3
+                      border-r
+                      border-t
+                      transition-all
+                      duration-500
+                      ${
+                        isActive
+                          ? "h-5 w-5 border-cyan-300/70"
+                          : "border-cyan-400/20 group-hover:border-cyan-400/60"
+                      }
+                    `}
+                  />
+
+                  <div
+                    className={`
+                      pointer-events-none
+                      absolute
+                      bottom-3
+                      left-3
+                      h-3
+                      w-3
+                      border-b
+                      border-l
+                      transition-all
+                      duration-500
+                      ${
+                        isActive
+                          ? "h-5 w-5 border-cyan-300/70"
+                          : "border-cyan-400/20 group-hover:border-cyan-400/60"
+                      }
+                    `}
+                  />
+
+                  <div
+                    className={`
+                      pointer-events-none
+                      absolute
+                      bottom-3
+                      right-3
+                      h-3
+                      w-3
+                      border-b
+                      border-r
+                      transition-all
+                      duration-500
+                      ${
+                        isActive
+                          ? "h-5 w-5 border-cyan-300/70"
+                          : "border-cyan-400/20 group-hover:border-cyan-400/60"
+                      }
+                    `}
+                  />
+
+                  {/* =================================================
+                      LEFT / TITLE
+                  ================================================== */}
+
+                  <div
+                    className={`
+                      relative
+                      ${
+                        index % 2 === 0
+                          ? "md:order-1"
+                          : "md:order-3 md:text-left"
+                      }
+                    `}
+                  >
+                    <div
+                      className={`
+                        font-mono
+                        text-[9px]
+                        font-bold
+                        uppercase
+                        tracking-[0.2em]
+                        transition-colors
+                        duration-300
+                        ${
+                          isActive
+                            ? "text-cyan-300"
+                            : "text-slate-500 group-hover:text-cyan-400"
+                        }
+                      `}
+                    >
+                      Phase {item.step}
+                    </div>
+
+                    <h3
+                      className={`
+                        mt-2.5
+                        text-xl
+                        font-bold
+                        tracking-tight
+                        transition-all
+                        duration-500
+                        sm:text-[22px]
+                        ${
+                          isActive
+                            ? "text-cyan-300 [text-shadow:0_0_25px_rgba(34,211,238,0.25)]"
+                            : "text-white group-hover:text-cyan-300"
+                        }
+                      `}
+                    >
+                      {item.title}
+                    </h3>
+
+                    {/* Active label */}
+                    <div
+                      className={`
+                        mt-3
+                        flex
+                        items-center
+                        gap-2
+                        transition-all
+                        duration-500
+                        ${
+                          isActive
+                            ? "translate-x-0 opacity-100"
+                            : "-translate-x-2 opacity-0"
+                        }
+                        ${
+                          index % 2 === 0
+                            ? "md:justify-end"
+                            : "md:justify-start"
+                        }
+                      `}
+                    >
+                      <span className="h-px w-5 bg-cyan-400/40" />
+
+                      <span className="font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-cyan-400/70">
+                        Active
+                      </span>
+
+                      <span className="h-1 w-1 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                    </div>
                   </div>
 
-                  <h3 className="mt-2.5 text-xl font-bold tracking-tight text-white transition-colors duration-300 group-hover:text-cyan-300 sm:text-[22px]">
-                    {item.title}
-                  </h3>
-                </div>
+                  {/* =================================================
+                      CENTER / STEP BOX
+                  ================================================== */}
 
-                {/* Center Step */}
-                <div className="relative z-10 flex md:order-2 md:justify-center">
-                  <div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-cyan-400/20 bg-[#07101b] shadow-[0_0_30px_rgba(34,211,238,0.06)] transition-all duration-300 group-hover:border-cyan-400/50 group-hover:bg-cyan-400/[0.06] group-hover:shadow-[0_0_40px_rgba(34,211,238,0.14)]">
-                    {/* Inner Ring */}
-                    <div className="absolute inset-1.5 rounded-full border border-cyan-400/[0.08] transition-colors group-hover:border-cyan-400/20" />
+                  <div className="relative z-10 my-6 flex md:order-2 md:my-0 md:justify-center">
+                    <div
+                      className={`
+                        relative
+                        flex
+                        h-[64px]
+                        w-[64px]
+                        items-center
+                        justify-center
+                        rounded-xl
+                        border
+                        bg-[#06101b]
+                        transition-all
+                        duration-500
 
-                    <span className="relative font-mono text-[10px] font-bold tracking-wider text-cyan-400">
-                      {item.step}
-                    </span>
+                        ${
+                          isActive
+                            ? `
+                              border-cyan-300/60
+                              bg-cyan-400/[0.07]
+                              shadow-[0_0_45px_rgba(34,211,238,0.20)]
+                            `
+                            : `
+                              border-cyan-400/15
+                              shadow-[0_0_30px_rgba(34,211,238,0.05)]
+                              group-hover:border-cyan-400/45
+                              group-hover:bg-cyan-400/[0.05]
+                              group-hover:shadow-[0_0_40px_rgba(34,211,238,0.14)]
+                            `
+                        }
+                      `}
+                    >
+                      {/* Grid */}
+                      <div
+                        className="
+                          pointer-events-none
+                          absolute
+                          inset-0
+                          rounded-xl
+                          opacity-50
+                          [background-image:linear-gradient(rgba(34,211,238,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.10)_1px,transparent_1px)]
+                          [background-size:9px_9px]
+                        "
+                      />
+
+                      {/* Inner border */}
+                      <div
+                        className={`
+                          absolute
+                          inset-1.5
+                          rounded-lg
+                          border
+                          transition-colors
+                          duration-500
+                          ${
+                            isActive
+                              ? "border-cyan-400/30"
+                              : "border-white/[0.06] group-hover:border-cyan-400/20"
+                          }
+                        `}
+                      />
+
+                      {/* Center glow */}
+                      <div
+                        className={`
+                          absolute
+                          h-8
+                          w-8
+                          rounded-full
+                          bg-cyan-400/[0.06]
+                          blur-xl
+                          transition-all
+                          duration-500
+                          ${
+                            isActive
+                              ? "bg-cyan-400/20"
+                              : "group-hover:bg-cyan-400/15"
+                          }
+                        `}
+                      />
+
+                      {/* Signal */}
+                      <div className="relative z-10 flex flex-col items-center">
+                        <div className="relative mb-1.5">
+                          <div
+                            className={`
+                              h-1.5
+                              w-1.5
+                              rounded-full
+                              transition-all
+                              duration-500
+                              ${
+                                isActive
+                                  ? "scale-150 bg-cyan-200 shadow-[0_0_14px_rgba(103,232,249,0.9)]"
+                                  : "bg-cyan-400/60 group-hover:scale-125 group-hover:bg-cyan-300"
+                              }
+                            `}
+                          />
+
+                          {isActive && (
+                            <div className="absolute inset-[-5px] animate-ping rounded-full border border-cyan-300/30" />
+                          )}
+                        </div>
+
+                        <span
+                          className={`
+                            font-mono
+                            text-[10px]
+                            font-bold
+                            tracking-[0.18em]
+                            transition-all
+                            duration-300
+                            ${
+                              isActive
+                                ? "text-cyan-200 [text-shadow:0_0_12px_rgba(34,211,238,0.6)]"
+                                : "text-cyan-400/70 group-hover:text-cyan-300"
+                            }
+                          `}
+                        >
+                          {item.step}
+                        </span>
+                      </div>
+
+                      {/* Active ring */}
+                      <div
+                        className={`
+                          absolute
+                          inset-[-5px]
+                          rounded-[14px]
+                          border
+                          transition-all
+                          duration-500
+                          ${
+                            isActive
+                              ? "border-cyan-300/20"
+                              : "border-transparent"
+                          }
+                        `}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* Right / Description */}
-                <div
-                  className={`relative ${
-                    index % 2 === 0
-                      ? "md:order-3"
-                      : "md:order-1 md:text-right"
-                  }`}
-                >
-                  <p className="text-sm leading-7 text-slate-400">
-                    {item.description}
-                  </p>
-                </div>
+                  {/* =================================================
+                      RIGHT / DESCRIPTION
+                  ================================================== */}
 
-                {/* Active Edge */}
-                <div className="pointer-events-none absolute inset-y-0 left-0 w-0.5 bg-gradient-to-b from-cyan-400 via-blue-400 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              </article>
-            ))}
+                  <div
+                    className={`
+                      relative
+                      ${
+                        index % 2 === 0
+                          ? "md:order-3"
+                          : "md:order-1 md:text-right"
+                      }
+                    `}
+                  >
+                    <p
+                      className={`
+                        text-sm
+                        leading-7
+                        transition-colors
+                        duration-500
+                        ${
+                          isActive
+                            ? "text-slate-300"
+                            : "text-slate-400 group-hover:text-slate-300"
+                        }
+                      `}
+                    >
+                      {item.description}
+                    </p>
+                  </div>
+
+                  {/* =================================================
+                      ACTIVE EDGE
+                  ================================================== */}
+
+                  <div
+                    className={`
+                      pointer-events-none
+                      absolute
+                      inset-y-0
+                      left-0
+                      w-[2px]
+                      bg-gradient-to-b
+                      from-cyan-300
+                      via-cyan-400
+                      to-transparent
+                      transition-all
+                      duration-500
+                      ${
+                        isActive
+                          ? "opacity-100 shadow-[0_0_12px_rgba(34,211,238,0.8)]"
+                          : "opacity-0 group-hover:opacity-100"
+                      }
+                    `}
+                  />
+
+                  {/* =================================================
+                      BOTTOM STATUS LINE
+                  ================================================== */}
+
+                  <div
+                    className={`
+                      pointer-events-none
+                      absolute
+                      bottom-0
+                      left-8
+                      right-8
+                      h-px
+                      bg-gradient-to-r
+                      from-transparent
+                      via-cyan-400
+                      to-transparent
+                      transition-all
+                      duration-700
+                      ${
+                        isActive
+                          ? "opacity-40"
+                          : "opacity-0 group-hover:opacity-20"
+                      }
+                    `}
+                  />
+                </article>
+              );
+            })}
           </div>
         </div>
 
@@ -162,19 +656,51 @@ export default function Approach() {
           ].map((item) => (
             <div
               key={item.label}
-              className="group rounded-2xl border border-white/[0.06] bg-[#0b1120]/55 p-5 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/15 hover:bg-cyan-400/[0.025]"
+              className="
+                group
+                relative
+                overflow-hidden
+                rounded-2xl
+                border
+                border-white/[0.06]
+                bg-[#0b1120]/55
+                p-5
+                backdrop-blur-xl
+                transition-all
+                duration-300
+                hover:border-cyan-400/20
+                hover:bg-cyan-400/[0.025]
+              "
             >
-              <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-cyan-400">
+              {/* Grid */}
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  opacity-0
+                  transition-opacity
+                  duration-500
+                  group-hover:opacity-100
+                  [background-image:linear-gradient(rgba(34,211,238,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.05)_1px,transparent_1px)]
+                  [background-size:24px_24px]
+                "
+              />
+
+              <span className="relative font-mono text-[9px] font-bold tracking-[0.15em] text-cyan-400">
                 {item.label}
               </span>
 
-              <h3 className="mt-4 text-sm font-bold text-white transition-colors group-hover:text-cyan-300">
+              <h3 className="relative mt-4 text-sm font-bold text-white transition-colors group-hover:text-cyan-300">
                 {item.title}
               </h3>
 
-              <p className="mt-2 text-[10px] leading-5 text-slate-500">
+              <p className="relative mt-2 text-[10px] leading-5 text-slate-500">
                 {item.text}
               </p>
+
+              {/* Bottom accent */}
+              <div className="absolute bottom-0 left-5 right-5 h-px origin-left scale-x-0 bg-gradient-to-r from-cyan-400/50 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
             </div>
           ))}
         </div>

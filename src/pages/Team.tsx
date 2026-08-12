@@ -2,10 +2,7 @@ export default function Team() {
   return (
     <div className="space-y-10">
 
-      {/* =========================================================
-          HEADER
-      ========================================================= */}
-
+    
       <div
         className="
           relative
@@ -21,7 +18,7 @@ export default function Team() {
         "
       >
 
-        {/* Grid Pattern */}
+       
         <div
           className="
             pointer-events-none
@@ -33,7 +30,7 @@ export default function Team() {
           "
         />
 
-        {/* Blue Ambient Glow */}
+      
         <div
           className="
             pointer-events-none
@@ -77,7 +74,7 @@ export default function Team() {
             Centa Limited
           </span>
 
-          {/* Main Title */}
+         
           <h1
             className="
               mt-2
@@ -91,7 +88,7 @@ export default function Team() {
             Internal Team Structure
           </h1>
 
-          {/* Description */}
+        
           <p
             className="
               mt-3
@@ -110,9 +107,7 @@ export default function Team() {
       </div>
 
 
-      {/* =========================================================
-          ORGANIZATION
-      ========================================================= */}
+     
 
       <div>
 
@@ -143,7 +138,7 @@ export default function Team() {
         </div>
 
 
-        {/* TEAM GRID */}
+      
 
         <div className="grid gap-5 md:grid-cols-2">
 
@@ -272,9 +267,7 @@ function TeamCard({
       "
     >
 
-      {/* =====================================================
-          CARD GRID PATTERN
-      ===================================================== */}
+     
 
       <div
         className="

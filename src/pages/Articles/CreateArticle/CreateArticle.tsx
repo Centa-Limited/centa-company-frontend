@@ -84,10 +84,6 @@ setForm((prev) => ({
   ...prev,
   thumbnail: response.data.url,
 }));
-    setForm((prev) => ({
-      ...prev,
-      thumbnail: response.data.url,
-    }));
 
     toast.success("Upload berhasil");
 

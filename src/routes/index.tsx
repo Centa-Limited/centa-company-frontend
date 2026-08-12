@@ -106,9 +106,6 @@ export default function AppRouter() {
 
 
 
-        {/* =====================================================
-            AUTHENTICATION
-        ====================================================== */}
 
         <Route
           path="/login"
@@ -117,9 +114,7 @@ export default function AppRouter() {
 
 
 
-        {/* =====================================================
-            ADMIN / CMS
-        ====================================================== */}
+       
 
         <Route
           element={
@@ -130,7 +125,7 @@ export default function AppRouter() {
         >
 
 
-          {/* Dashboard */}
+          
 
           <Route
             path="/dashboard"
@@ -139,8 +134,7 @@ export default function AppRouter() {
 
 
 
-          {/* About */}
-
+         
           <Route
             path="/dashboard/about"
             element={<About />}
@@ -148,7 +142,7 @@ export default function AppRouter() {
 
 
 
-          {/* Contacts */}
+         
 
           <Route
             path="/dashboard/contacts"
@@ -157,9 +151,7 @@ export default function AppRouter() {
 
 
 
-          {/* =====================
-              ARTICLES
-          ====================== */}
+         
 
           <Route
             path="/dashboard/articles"
@@ -178,9 +170,7 @@ export default function AppRouter() {
 
 
 
-          {/* =====================
-              CATEGORIES
-          ====================== */}
+         
 
           <Route
             path="/dashboard/categories"
@@ -199,9 +189,6 @@ export default function AppRouter() {
 
 
 
-          {/* =====================
-              USERS
-          ====================== */}
 
           <Route
             path="/dashboard/users"
@@ -220,9 +207,7 @@ export default function AppRouter() {
 
 
 
-          {/* =====================
-              TEAM
-          ====================== */}
+        
 
           <Route
             path="/dashboard/team"
@@ -231,10 +216,6 @@ export default function AppRouter() {
 
 
 
-          {/* =====================
-              SETTINGS
-          ====================== */}
-
           <Route
             path="/dashboard/settings"
             element={<Settings />}
@@ -242,9 +223,6 @@ export default function AppRouter() {
 
 
 
-          {/* =====================
-              SERVICES
-          ====================== */}
 
           <Route
             path="/dashboard/services"
@@ -266,9 +244,6 @@ export default function AppRouter() {
 
 
 
-        {/* =====================================================
-            404
-        ====================================================== */}
 
         <Route
           path="*"

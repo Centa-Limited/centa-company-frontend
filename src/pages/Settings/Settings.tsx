@@ -18,6 +18,8 @@ import {
   uploadAvatar,
 } from "../../services/profile.service";
 
+
+
 const getAvatarUrl = (avatar?: string | null) => {
   if (!avatar) return null;
 
@@ -703,20 +705,20 @@ export default function Settings() {
               dan angka agar lebih aman.
             </p>
 
-            <button
-              type="submit"
-              disabled={passwordLoading}
-              className="inline-flex h-11 items-center justify-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
-            >
-              {passwordLoading ? (
-                <>
-                  <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white dark:border-slate-900/30 dark:border-t-slate-900" />
-                  Updating...
-                </>
-              ) : (
-                "Change Password"
-              )}
-            </button>
+        <button
+  type="submit"
+  disabled={passwordLoading}
+  className="inline-flex h-11 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
+>
+  {passwordLoading ? (
+    <>
+      <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+      Updating...
+    </>
+  ) : (
+    "Change Password"
+  )}
+</button>
           </div>
         </form>
       </section>

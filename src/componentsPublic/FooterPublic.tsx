@@ -1,248 +1,805 @@
-import { ArrowRight, ShieldCheck } from "lucide-react";
-import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  Globe,
+  LockKeyhole,
+  ShieldCheck,
+} from "lucide-react";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
 
 export default function FooterPublic() {
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+
+  const companyLinks = [
+    {
+      name: "About",
+      type: "section",
+      section: "about",
+    },
+    {
+      name: "Approach",
+      type: "page",
+      path: "/approach",
+    },
+    {
+      name: "Team",
+      type: "page",
+      path: "/team",
+    },
+    {
+      name: "Articles",
+      type: "page",
+      path: "/articles",
+    },
+    {
+      name: "Contact",
+      type: "section",
+      section: "contact",
+    },
+  ];
+
+
+  const capabilities = [
+    "Software Engineering",
+    "Web Development",
+    "Application Development",
+    "Cyber Security",
+    "Cloud Infrastructure",
+    "Security Advisory",
+  ];
+
+
+
+  const handleSectionNavigation = (
+    section:string
+  )=>{
+
+    if(location.pathname === "/"){
+
+      document
+        .getElementById(section)
+        ?.scrollIntoView({
+          behavior:"smooth",
+          block:"start",
+        });
+
+      return;
+    }
+
+
+    navigate(`/#${section}`);
+
+  };
+
+
+
   return (
-    <footer className="border-t border-white/[0.08] bg-[#050816]">
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-10">
-
-        {/* Main */}
-        <div className="grid gap-12 lg:grid-cols-[1.6fr_1fr_1fr]">
-
-          {/* Brand */}
-          <div>
-            <Link to="/" className="inline-flex items-center gap-3">
-              
-              <div
-                className="
-                  flex h-11 w-11 items-center justify-center
-                  rounded-xl
-                  border border-cyan-400/20
-                  bg-cyan-400/10
-                  shadow-[0_0_30px_rgba(34,211,238,0.15)]
-                "
-              >
-                <span className="font-black text-cyan-400">
-                  C
-                </span>
-              </div>
 
+<footer
+className="
+relative
+overflow-hidden
+border-t
+border-white/[0.08]
+bg-[#020617]
+"
+>
 
-              <div>
-                <div className="text-sm font-black tracking-[0.35em] text-white">
-                  CENTA
-                </div>
 
-                <div className="text-[10px] tracking-[0.45em] text-white/40">
-                  LIMITED
-                </div>
-              </div>
+{/* GRID BACKGROUND */}
 
-            </Link>
+<div
+className="
+pointer-events-none
+absolute
+inset-0
+bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)]
+bg-[size:80px_80px]
+opacity-40
+"
+/>
 
 
-            <p className="mt-6 max-w-md text-sm leading-7 text-white/50">
-              Engineering secure digital products, software systems,
-              infrastructure, and cybersecurity solutions for modern
-              businesses.
-            </p>
 
+{/* GLOW */}
 
-            {/* Status */}
-            <div
-              className="
-                mt-6 inline-flex items-center gap-3
-                rounded-full
-                border border-cyan-400/15
-                bg-cyan-400/[0.05]
-                px-4 py-2
-              "
-            >
 
-              <span
-                className="
-                  h-2 w-2 rounded-full
-                  bg-cyan-400
-                  shadow-[0_0_12px_rgba(34,211,238,0.8)]
-                "
-              />
 
-              <span className="text-xs tracking-wide text-white/60">
-                All systems operational
-              </span>
 
-            </div>
 
 
-          </div>
 
 
 
-          {/* Company */}
-          <div>
 
-            <h4 className="text-xs font-semibold tracking-[0.3em] text-white">
-              COMPANY
-            </h4>
+<div
+className="
+relative
+mx-auto
+max-w-[1440px]
+px-6
+py-20
+lg:px-10
+xl:px-12
+"
+>
 
 
-            <ul className="mt-6 space-y-4 text-sm text-white/50">
 
-              {[
-                "About",
-                "Approach",
-                "Team",
-                "Articles",
-                "Contact",
-              ].map((item) => (
+{/* MAIN */}
 
-                <li
-                  key={item}
-                  className="transition hover:text-cyan-400"
-                >
-                  {item}
-                </li>
 
-              ))}
+<div
+className="
+grid
+gap-14
+lg:grid-cols-[1.7fr_1fr_1fr]
+"
+>
 
-            </ul>
 
-          </div>
 
+{/* BRAND */}
 
+<div>
 
-          {/* Services */}
-          <div>
 
-            <h4 className="text-xs font-semibold tracking-[0.3em] text-white">
-              CAPABILITIES
-            </h4>
+<Link
+to="/"
+className="
+group
+inline-flex
+items-center
+gap-4
+"
+>
 
 
-            <ul className="mt-6 space-y-4 text-sm text-white/50">
+<div
+className="
+relative
+flex
+h-16
+w-16
+items-center
+justify-center
+rounded-2xl
+border
+border-cyan-400/30
+bg-gradient-to-br
+from-cyan-400/20
+to-transparent
+shadow-[0_0_60px_rgba(34,211,238,0.25)]
+transition
+group-hover:scale-105
+"
+>
 
-              {[
-                "Software Engineering",
-                "Web Development",
-                "Application Development",
-                "Cyber Security",
-                "Cloud Infrastructure",
-                "Security Advisory",
-              ].map((item) => (
 
-                <li
-                  key={item}
-                  className="transition hover:text-cyan-400"
-                >
-                  {item}
-                </li>
+<div
+className="
+absolute
+inset-1
+rounded-xl
+border
+border-white/10
+"
+/>
 
-              ))}
 
-            </ul>
+<span
+className="
+relative
+text-2xl
+font-black
+text-cyan-300
+"
+>
+C
+</span>
 
-          </div>
 
+</div>
 
-        </div>
 
 
 
-        {/* CTA */}
-        <div
-          className="
-            mt-14
-            flex flex-col gap-5
-            rounded-2xl
-            border border-white/[0.08]
-            bg-white/[0.02]
-            p-6
-            md:flex-row
-            md:items-center
-            md:justify-between
-          "
-        >
+<div>
 
-          <div>
+<div
+className="
+text-xl
+font-black
+tracking-[0.45em]
+text-white
+"
+>
+CENTA
+</div>
 
-            <div className="flex items-center gap-2 text-sm font-semibold text-white">
 
-              <ShieldCheck className="h-4 w-4 text-cyan-400" />
+<div
+className="
+mt-1
+text-[10px]
+tracking-[0.5em]
+text-white/40
+"
+>
+LIMITED
+</div>
 
-              Need a secure digital solution?
 
-            </div>
+</div>
 
 
-            <p className="mt-2 text-sm text-white/40">
-              Tell us what you are building and we will design
-              the right engineering approach.
-            </p>
+</Link>
 
-          </div>
 
 
 
-          <Link
-            to="/contact"
-            className="
-              inline-flex items-center gap-2
-              rounded-xl
-              border border-cyan-400/30
-              bg-cyan-400/10
-              px-5 py-3
-              text-sm font-semibold
-              text-cyan-300
-              transition
-              hover:bg-cyan-400/20
-            "
-          >
-            Start a project
-            <ArrowRight className="h-4 w-4" />
-          </Link>
 
+<p
+className="
+mt-7
+max-w-md
+text-sm
+leading-7
+text-white/50
+"
+>
+Engineering secure digital products,
+scalable software systems,
+infrastructure, and cybersecurity
+solutions for modern businesses.
+</p>
 
-        </div>
 
 
 
-        {/* Bottom */}
-        <div
-          className="
-            mt-10
-            flex flex-col gap-4
-            border-t border-white/[0.08]
-            pt-6
-            text-xs text-white/40
-            md:flex-row
-            md:items-center
-            md:justify-between
-          "
-        >
 
-          <p>
-            © 2026 Centa Limited. All rights reserved.
-          </p>
+{/* STATUS */}
 
+<div
+className="
+mt-7
+inline-flex
+items-center
+gap-3
+rounded-2xl
+border
+border-cyan-400/20
+bg-cyan-400/[0.05]
+px-4
+py-3
+backdrop-blur-xl
+"
+>
 
-          <div className="flex gap-6">
 
-            <span>
-              Indonesia
-            </span>
+<span
+className="
+h-2
+w-2
+rounded-full
+bg-emerald-400
+animate-pulse
+shadow-[0_0_15px_rgba(52,211,153,.8)]
+"
+/>
 
 
-            <span className="text-cyan-400/70">
-              Build. Secure. Scale.
-            </span>
+<div>
 
-          </div>
+<p
+className="
+text-xs
+font-semibold
+text-white
+"
+>
+Systems Operational
+</p>
 
 
-        </div>
+<p
+className="
+text-[11px]
+text-white/40
+"
+>
+Security monitoring active
+</p>
 
 
-      </div>
-    </footer>
+</div>
+
+
+</div>
+
+
+
+
+
+{/* TRUST */}
+
+<div
+className="
+mt-5
+flex
+flex-wrap
+gap-2
+"
+>
+
+{
+[
+"ISO 27001 Ready",
+"Secure Architecture",
+"24/7 Monitoring"
+]
+.map(item=>(
+
+<span
+key={item}
+className="
+rounded-lg
+border
+border-white/10
+bg-white/[0.03]
+px-3
+py-2
+text-[11px]
+text-white/50
+"
+>
+{item}
+</span>
+
+))
+}
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+{/* COMPANY */}
+
+
+<div>
+
+
+<h4
+className="
+text-xs
+font-semibold
+tracking-[0.35em]
+text-white/70
+"
+>
+COMPANY
+</h4>
+
+
+<ul
+className="
+mt-7
+space-y-4
+"
+>
+
+{
+companyLinks.map((item:any)=>(
+
+<li
+key={item.name}
+>
+
+
+{
+item.type==="page" ? (
+
+<Link
+to={item.path}
+className="
+group
+flex
+items-center
+gap-3
+text-sm
+text-white/45
+transition-all
+hover:translate-x-1
+hover:text-cyan-300
+"
+>
+
+<span
+className="
+h-px
+w-0
+bg-cyan-400
+transition-all
+group-hover:w-4
+"
+/>
+
+{item.name}
+
+</Link>
+
+
+):(
+
+<button
+onClick={()=>
+handleSectionNavigation(item.section)
+}
+className="
+group
+flex
+items-center
+gap-3
+text-sm
+text-white/45
+transition-all
+hover:translate-x-1
+hover:text-cyan-300
+"
+>
+
+<span
+className="
+h-px
+w-0
+bg-cyan-400
+transition-all
+group-hover:w-4
+"
+/>
+
+
+{item.name}
+
+</button>
+
+)
+
+}
+
+
+</li>
+
+))
+
+}
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+
+{/* CAPABILITIES */}
+
+
+<div>
+
+
+<h4
+className="
+text-xs
+font-semibold
+tracking-[0.35em]
+text-white/70
+"
+>
+CAPABILITIES
+</h4>
+
+
+<ul
+className="
+mt-7
+space-y-4
+"
+>
+
+{
+capabilities.map(item=>(
+
+<li
+key={item}
+className="
+flex
+items-center
+gap-3
+text-sm
+text-white/45
+transition
+hover:text-cyan-300
+"
+>
+
+<LockKeyhole
+className="
+h-4
+w-4
+text-cyan-400/70
+"
+/>
+
+
+{item}
+
+
+</li>
+
+))
+
+}
+
+
+</ul>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+{/* CTA */}
+
+
+<div
+className="
+relative
+mt-16
+overflow-hidden
+rounded-3xl
+border
+border-white/[0.08]
+bg-gradient-to-br
+from-cyan-400/[0.08]
+via-white/[0.03]
+to-transparent
+p-8
+backdrop-blur-xl
+"
+>
+
+
+<div
+className="
+relative
+flex
+flex-col
+gap-6
+md:flex-row
+md:items-center
+md:justify-between
+"
+>
+
+
+<div>
+
+
+<div
+className="
+mb-3
+flex
+items-center
+gap-3
+text-[10px]
+tracking-[0.4em]
+text-cyan-400/80
+"
+>
+
+<ShieldCheck
+className="
+h-4
+w-4
+"
+/>
+
+SECURE PROJECT INITIATION
+
+</div>
+
+
+
+<h3
+className="
+text-xl
+font-bold
+text-white
+"
+>
+Build secure digital systems
+</h3>
+
+
+
+<p
+className="
+mt-3
+max-w-xl
+text-sm
+text-white/45
+"
+>
+Tell us your challenge.
+Our engineering and security team
+will design the right solution.
+</p>
+
+
+
+</div>
+
+
+
+
+
+<button
+  onClick={()=>handleSectionNavigation("contact")}
+  className="
+    group
+    inline-flex
+    items-center
+    gap-3
+    rounded-2xl
+    border
+    border-cyan-300/20
+    bg-cyan-300/10
+    px-6
+    py-3
+    text-sm
+    font-semibold
+    text-cyan-200
+    transition
+    hover:bg-cyan-300/20
+  "
+>
+  Start a project
+
+  <ArrowRight
+    className="
+      h-4
+      w-4
+      transition
+      group-hover:translate-x-1
+    "
+  />
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+{/* BOTTOM */}
+
+
+<div
+className="
+mt-12
+flex
+flex-col
+gap-5
+border-t
+border-white/[0.08]
+pt-7
+text-xs
+text-white/40
+md:flex-row
+md:items-center
+md:justify-between
+"
+>
+
+
+<p>
+© 2026 Centa Limited. All rights reserved.
+</p>
+
+
+
+<div
+className="
+flex
+items-center
+gap-5
+"
+>
+
+
+<span
+className="
+flex
+items-center
+gap-2
+"
+>
+
+<Globe
+className="
+h-3.5
+w-3.5
+"
+/>
+
+Indonesia
+
+</span>
+
+
+
+<span
+className="
+text-cyan-400/70
+"
+>
+Build. Secure. Scale.
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</footer>
+
   );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getArticleById } from "../services/article.service";
+import { API_BASE_URL } from "../config/env";
 
 
 interface Article {
@@ -366,19 +367,19 @@ export default function ArticleDetail() {
           ">
 
 
-            <img
-
-              src={article.thumbnail}
-
-              alt={article.title}
-
-              className="
-              w-full
-              max-h-[600px]
-              object-cover
-              "
-
-            />
+         <img
+  src={
+    article.thumbnail.startsWith("http")
+      ? article.thumbnail
+      : `${API_BASE_URL}${article.thumbnail}`
+  }
+  alt={article.title}
+  className="
+    w-full
+    max-h-[600px]
+    object-cover
+  "
+/>
 
 
           </div>
@@ -398,22 +399,22 @@ export default function ArticleDetail() {
       {/* CONTENT */}
 
 
-      <section className="
-        mx-auto
-        max-w-3xl
-        px-6
-        pb-32
-      ">
+     <section className="
+  mx-auto
+  max-w-5xl
+  px-6
+  pb-32
+  lg:px-10
+">
 
 
         <article className="
-          prose
-          prose-invert
-          max-w-none
-          prose-p:text-slate-300
-          prose-headings:text-white
-        ">
-
+  prose
+  prose-invert
+  max-w-none
+  prose-p:text-slate-300
+  prose-headings:text-white
+">
 
           <p className="
             whitespace-pre-line

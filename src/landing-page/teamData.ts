@@ -3,7 +3,7 @@ export const teamMembers = [
     slug: "yudi-ardata",
     name: "Yudi Ardata",
     role: "Founder & Technology Lead",
-    image: "/team/yudi.jpg",
+    image: "/Media/yudi.jpg",
 
     about:
       "Yudi merupakan Founder Centa Limited yang bertanggung jawab dalam menentukan visi teknologi, strategi perusahaan, dan pengembangan solusi digital. Memiliki peran dalam mengarahkan inovasi teknologi serta memastikan setiap produk yang dikembangkan memiliki kualitas, skalabilitas, dan nilai yang dapat memberikan dampak bagi pengguna.",
@@ -20,7 +20,7 @@ export const teamMembers = [
     slug: "ach-nur-wahyudi",
     name: "Ach. Nur Wahyudi",
     role: "App Developer",
-    image: "/team/nur.jpg",
+    image: "/Media/nur.jpg",
 
     about:
       "Berfokus pada pengembangan aplikasi dengan pendekatan modern, scalable, dan user-focused. Memiliki peran dalam membangun solusi aplikasi yang efisien dengan memperhatikan performa, pengalaman pengguna, dan kebutuhan teknologi masa kini.",
@@ -66,6 +66,10 @@ export const teamMembers = [
         text: "Became a computer science educator at SMK Annuqthah, guiding students in programming, technology, and the fundamentals of digital innovation.",
       },
       {
+        year: "2025",
+        text: "Joined Seputarmata News as a Redaction Editor, combining editorial responsibilities with practical experience in security analysis and digital threat awareness.",
+      },
+      {
         year: "2026",
         text: "Joined Centa Limited and contributed to building modern digital experiences.",
       },
@@ -76,7 +80,7 @@ export const teamMembers = [
     slug: "muh-rifqi",
     name: "Muh. Rifqi",
     role: "Marketing Specialist",
-    image: "/team/rifqi.jpg",
+    image: "/Media/rifqi.jpg",
 
     about:
       "Berperan dalam membangun strategi pemasaran dan memperkuat hubungan Centa dengan klien serta komunitas. Fokus dalam mengembangkan komunikasi brand dan menciptakan strategi yang mendukung pertumbuhan bisnis.",
@@ -92,7 +96,7 @@ export const teamMembers = [
     slug: "desvita-putri-varizka",
     name: "Desvita Putri Varizka",
     role: "UI/UX Designer",
-    image: "/team/desvita.jpg",
+    image: "/Media/desvita.jpg",
 
     about:
       "Menciptakan desain digital yang menggabungkan estetika, usability, dan pengalaman pengguna yang optimal. Berfokus dalam membangun interface yang intuitif serta sistem desain yang konsisten untuk meningkatkan kualitas produk digital.",

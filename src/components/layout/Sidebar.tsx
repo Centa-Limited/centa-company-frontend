@@ -92,22 +92,23 @@ const Sidebar = () => {
   };
 
   return (
-    <aside
-      className="
-        relative
-        w-[260px]
-        min-h-screen
-        shrink-0
-        overflow-hidden
+<aside
+  className="
+    sticky
+    top-0
+    h-screen
+    w-[260px]
+    shrink-0
+    overflow-hidden
 
-        bg-white
-        dark:bg-slate-950
+    border-r
+    border-slate-200/70
+    bg-white
 
-        border-r
-        border-slate-200/70
-        dark:border-slate-800
-      "
-    >
+    dark:border-white/[0.06]
+    dark:bg-[#070b14]
+  "
+>
       {/* Background Decoration */}
       <div
         className="
@@ -137,21 +138,20 @@ const Sidebar = () => {
         "
       />
 
-      <div className="relative z-10 flex min-h-screen flex-col">
+     <div className="relative z-10 flex h-full flex-col">
         {/* Logo / Branding */}
         <div
-          className="
-            flex
-            h-20
-            shrink-0
-            items-center
-            px-6
-
-            border-b
-            border-slate-200/70
-            dark:border-slate-800
-          "
-        >
+  className="
+    flex
+    h-[72px]
+    shrink-0
+    items-center
+    border-b
+    border-slate-200/70
+    px-5
+    dark:border-white/[0.06]
+  "
+>
           <div>
             <div
               className="
@@ -183,84 +183,18 @@ const Sidebar = () => {
           </div>
         </div>
 
-        {/* Current User / Role */}
-        <div
-          className="
-            mx-4
-            mt-5
-            shrink-0
-            rounded-2xl
-            border
-            border-blue-500/20
-            bg-gradient-to-br
-            from-blue-500/10
-            to-indigo-500/10
-            p-4
-            backdrop-blur-md
-          "
-        >
-          <div className="flex items-center gap-3">
-            <div
-              className="
-                flex
-                h-10
-                w-10
-                shrink-0
-                items-center
-                justify-center
-                rounded-xl
-
-                bg-gradient-to-br
-                from-blue-600
-                to-indigo-600
-
-                text-white
-              "
-            >
-              <ShieldCheck size={21} />
-            </div>
-
-            <div className="min-w-0">
-              <p
-                className="
-                  truncate
-                  text-sm
-                  font-semibold
-                  text-slate-800
-                  dark:text-white
-                "
-              >
-                {isSuperAdmin
-                  ? "Super Administrator"
-                  : "Administrator"}
-              </p>
-
-              <p
-                className="
-                  mt-0.5
-                  truncate
-                  text-xs
-                  text-slate-500
-                  dark:text-slate-400
-                "
-              >
-                {user?.role ?? "Unknown"}
-              </p>
-            </div>
-          </div>
-        </div>
+       
 
       {/* Navigation */}
 <nav
   className="
-    mt-6
     flex-1
     overflow-y-auto
-    px-4
-    pb-4
+    px-3
+    py-5
   "
 >
-  <div className="space-y-6">
+  <div className="space-y-10">
     {menuGroups.map((group) => (
       <div key={group.label}>
         {/* Group Title */}
@@ -280,75 +214,91 @@ const Sidebar = () => {
         </p>
 
         {/* Group Menu */}
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           {group.items.map((menu) => {
             const Icon = menu.icon;
 
             return (
-              <NavLink
-                key={menu.path}
-                to={menu.path}
-                end={menu.path === "/dashboard"}
-               className={({ isActive }) =>
-  `
-  group
-  relative
-  flex
-  items-center
-  gap-3
-  rounded-xl
-  px-4
-  py-2.5
+            <NavLink
+  key={menu.path}
+  to={menu.path}
+  end={menu.path === "/dashboard"}
+  className={({ isActive }) =>
+    `
+    group
+    relative
+    flex
+    items-center
+    gap-3
+    rounded-lg
+    px-3
+    py-2.5
 
-  text-sm
-  font-medium
+    text-sm
+    font-medium
 
-  transition-all
-  duration-200
+    transition-all
+    duration-200
 
-  ${
-    isActive
-      ? `
-        bg-blue-500/[0.08]
-        text-blue-600
+    ${
+      isActive
+        ? `
+          bg-blue-500/[0.08]
+          text-blue-600
+          shadow-[inset_0_0_0_1px_rgba(59,130,246,0.10)]
 
-        dark:bg-blue-500/[0.10]
-        dark:text-blue-400
+          dark:bg-blue-400/[0.08]
+          dark:text-blue-400
+        `
+        : `
+          text-slate-600
+          dark:text-slate-400
 
-        shadow-[inset_0_0_0_1px_rgba(59,130,246,0.10)]
-      `
-      : `
-        text-slate-600
-        dark:text-slate-300
+          hover:bg-slate-100/80
+          hover:text-slate-900
 
-        hover:bg-slate-100/80
-        dark:hover:bg-white/[0.04]
-
-        hover:text-slate-900
-        dark:hover:text-white
-
-        hover:translate-x-[2px]
-        
-      `
+          dark:hover:bg-white/[0.04]
+          dark:hover:text-white
+        `
+    }
+    `
   }
-  `
-}
-              >
-                <Icon
-                  size={18}
-                  strokeWidth={2}
-                  className="
-                    shrink-0
-                    transition-transform
-                    duration-200
-                    group-hover:scale-105
-                  "
-                />
+>
+  {({ isActive }) => (
+    <>
+      {isActive && (
+        <span
+          className="
+            absolute
+            left-0
+            top-1/2
+            h-5
+            w-0.5
+            -translate-y-1/2
+            rounded-full
+            bg-blue-500
+            dark:bg-blue-400
+          "
+        />
+      )}
 
-                <span className="truncate">
-                  {menu.name}
-                </span>
-              </NavLink>
+      <Icon
+        size={17}
+        strokeWidth={2}
+        className="
+          shrink-0
+          transition-transform
+          duration-200
+          group-hover:scale-105
+        "
+      />
+
+      <span className="truncate">
+        {menu.name}
+      </span>
+    </>
+  )}
+</NavLink>
             );
           })}
         </div>

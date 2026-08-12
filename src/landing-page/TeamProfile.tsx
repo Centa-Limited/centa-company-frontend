@@ -30,7 +30,7 @@ export default function TeamProfile() {
       ">
 
 
-        {/* PROFILE HEADER */}
+       
 
         <div className="
           grid
@@ -39,7 +39,6 @@ export default function TeamProfile() {
           items-center
         ">
 
-{/* IMAGE */}
 
 <div
   className="
@@ -47,6 +46,7 @@ export default function TeamProfile() {
     justify-center
     relative
     group
+   -translate-x-30
   "
 >
 
@@ -69,26 +69,29 @@ export default function TeamProfile() {
 
 
   <img
-    src={member.image}
-    alt={member.name}
-    className="
-      relative
-      w-full
-      max-w-md
-      rounded-3xl
-      border
-      border-white/10
-      ring-1
-      ring-cyan-400/20
-      transition-all
-      duration-500
-      group-hover:scale-[1.01]
-    "
-  />
+  src={member.image}
+  alt={member.name}
+  className="
+    relative
+    w-full
+    max-w-md
+    h-[620px]
+    object-cover
+   object-[center_48%]
+    rounded-3xl
+    border
+    border-white/10
+    ring-1
+    ring-cyan-400/20
+    transition-all
+    duration-500
+    group-hover:scale-[1.01]
+  "
+/>
 
 </div>
 
-          {/* INFORMATION */}
+         
 
           <div>
 
@@ -187,7 +190,7 @@ export default function TeamProfile() {
 
 
 
-        {/* JOURNEY TIMELINE */}
+       
 
         {member.journey && (
           <div className="

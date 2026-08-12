@@ -13,6 +13,7 @@ import { getAllCategories } from "../../services/category.service";
 
 import type { Article } from "../../types/article";
 import type { Category } from "../../types/category";
+import { API_BASE_URL } from "../../config/env";
 
 const Articles = () => {
   const navigate = useNavigate();
@@ -946,7 +947,7 @@ const Articles = () => {
                         <div className="pointer-events-none absolute -inset-1 rounded-xl bg-blue-500/10 opacity-0 blur-md transition-all duration-300 group-hover:opacity-100" />
 
                         <img
-                          src={article.thumbnail}
+                         src={`${API_BASE_URL}${article.thumbnail}`}
                           alt={article.title}
                           className="
                             relative

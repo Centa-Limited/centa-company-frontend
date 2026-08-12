@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -30,6 +30,31 @@ import {
 export default function LandingPage() {
 
 const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+const previewRef = useRef<HTMLDivElement | null>(null);
+
+const [isHovering, setIsHovering] = useState(false);
+
+const [mouse, setMouse] = useState({
+  x: 50,
+  y: 50,
+});
+
+const handlePreviewMove = (
+  e: React.MouseEvent<HTMLDivElement>
+) => {
+  if (!previewRef.current) return;
+
+  const rect = previewRef.current.getBoundingClientRect();
+
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+  setMouse({
+    x,
+    y,
+  });
+};
 
 
 useEffect(() => {
@@ -70,6 +95,8 @@ const handleSubmit = async (
   e: React.FormEvent
 ) => {
   e.preventDefault();
+
+  
 
 
   try {
@@ -232,428 +259,757 @@ ${formData.message}
     },
   ];
 
-  return (
-    <div className="min-h-screen overflow-hidden bg-[#030712] text-white">
-      {/* =========================================================
-          BACKGROUND
-      ========================================================== */}
+  
+    return (
+  <div className="min-h-screen overflow-hidden text-white">
+     
 
-     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-  <div
-    className="absolute inset-0 opacity-[0.018]"
-    style={{
-      backgroundImage:
-        "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)",
-      backgroundSize: "56px 56px",
-    }}
-  />
+    <main>
+  {/* =========================================================
+      HERO
+  ========================================================== */}
 
-  <div className="absolute left-1/2 top-[-320px] h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-violet-600/[0.07] blur-[160px]" />
+  <section className="relative scroll-mt-24">
+    <div className="absolute right-[-180px] top-[35%] h-[420px] w-[420px] rounded-full bg-violet-600/[0.045] blur-[140px]" />
 
-  <div className="absolute right-[-220px] top-[18%] h-[650px] w-[650px] rounded-full bg-blue-600/[0.06] blur-[160px]" />
+    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
 
-  <div className="absolute bottom-[-300px] left-[-220px] h-[650px] w-[650px] rounded-full bg-cyan-500/[0.035] blur-[160px]" />
-</div>
+    <div className="mx-auto max-w-7xl px-6 pb-24 pt-12 sm:px-8 lg:px-10 lg:pb-32 lg:pt-16">
 
-      <main>
+      {/* Top Label */}
+      <div className="mb-10 flex items-center gap-3">
+        <span className="flex h-7 items-center rounded-full border border-white/10 bg-white/[0.035] px-3 text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">
+          CENTA / DIGITAL ENGINEERING
+        </span>
+
+        <span className="hidden h-px w-12 bg-white/10 sm:block" />
+
+        <span className="hidden text-[9px] uppercase tracking-[0.18em] text-slate-400 sm:block">
+          Build with confidence
+        </span>
+      </div>
+
+      <div className="grid items-end gap-14 lg:grid-cols-[1.25fr_0.75fr]">
+
+        {/* =====================================================
+            MAIN MESSAGE
+        ====================================================== */}
+
+        <div>
+          <div className="relative max-w-4xl">
+
+            <h1 className="text-5xl font-black leading-[0.95] tracking-[-0.055em] text-white sm:text-6xl lg:text-[76px]">
+              Where Engineering
+
+              <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                Meets Cybersecurity
+              </span>
+            </h1>
+
+            <span className="absolute -bottom-2 left-0 h-px w-24 bg-cyan-400/60" />
+
+          </div>
+
+          <div className="mt-8 max-w-2xl">
+            <p className="text-base leading-8 text-slate-400 sm:text-lg">
+              Centa membantu bisnis membangun software, digital products,
+              infrastructure, dan security systems yang modern, scalable,
+              dan resilient dengan pendekatan security-first untuk
+              menghadapi ancaman digital masa kini.
+            </p>
+
+            <div className="mt-3 text-xs font-semibold text-slate-400">
+              + Security
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+
+            <a
+              href="#contact"
+              className="group inline-flex items-center justify-center gap-3 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[#030712] transition-all duration-300 hover:-translate-y-0.5 hover:bg-cyan-300"
+            >
+              Start a Project
+
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+
+            <a
+              href="#services"
+              className="group inline-flex items-center justify-center gap-3 rounded-xl border border-white/[0.08] bg-[#0b1120]/60 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:border-violet-400/25 hover:bg-violet-400/[0.05]"
+            >
+              Explore Capabilities
+
+              <span className="text-slate-400 transition-colors group-hover:text-cyan-400">
+                →
+              </span>
+            </a>
+
+          </div>
+        </div>
+
         {/* =========================================================
-            HERO
+            RIGHT PRODUCT PREVIEW — INTERACTIVE ENGINEERING SYSTEM
         ========================================================== */}
 
-        <section className="relative scroll-mt-24">
-        <div className="absolute right-[-180px] top-[35%] h-[420px] w-[420px] rounded-full bg-violet-600/[0.045] blur-[140px]" />
+        <div className="relative mx-auto w-full max-w-[520px] lg:mx-0">
 
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
+          {/* Ambient Glow */}
+          <div className="pointer-events-none absolute -inset-16 -z-10">
 
-          <div className="mx-auto max-w-7xl px-6 pb-24 pt-12 sm:px-8 lg:px-10 lg:pb-32 lg:pt-16">
-            {/* Top Label */}
-            <div className="mb-10 flex items-center gap-3">
-              <span className="flex h-7 items-center rounded-full border border-white/10 bg-white/[0.035] px-3 text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                CENTA / DIGITAL ENGINEERING
-              </span>
+            <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.08] blur-[110px] animate-pulse" />
 
-              <span className="hidden h-px w-12 bg-white/10 sm:block" />
-
-              <span className="hidden text-[9px] uppercase tracking-[0.18em] text-slate-400 sm:block">
-                Build with confidence
-              </span>
-            </div>
-
-            <div className="grid items-end gap-14 lg:grid-cols-[1.25fr_0.75fr]">
-              {/* Main Message */}
-              <div>
-                <div className="relative max-w-4xl">
-                 <h1 className="text-5xl font-black leading-[0.95] tracking-[-0.055em] text-white sm:text-6xl lg:text-[76px]">
- Where Engineering 
-  <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
-    Meets Cybersecurity
-  </span>
-</h1>
-
-                  <span className="absolute -bottom-2 left-0 h-px w-24 bg-cyan-400/60" />
-                </div>
-
-                <div className="mt-8 max-w-2xl">
-                  <p className="text-base leading-8 text-slate-400 sm:text-lg">
-                    Centa membantu bisnis membangun software, digital products, infrastructure, dan security systems yang modern, scalable, dan resilient dengan pendekatan security-first untuk menghadapi ancaman digital masa kini.
-                  </p>
-
-                  <div className="mt-3 text-xs font-semibold text-slate-400">
-                    + Security
-                  </div>
-                </div>
-
-                {/* Actions */}
-                <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                  <a
-                    href="#contact"
-                    className="group inline-flex items-center justify-center gap-3 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[#030712] transition-all duration-300 hover:-translate-y-0.5 hover:bg-cyan-300"
-                  >
-                    Start a Project
-
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </a>
-
-                  <a
-                    href="#services"
-                   className="group inline-flex items-center justify-center gap-3 rounded-xl border border-white/[0.08] bg-[#0b1120]/60 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:border-violet-400/25 hover:bg-violet-400/[0.05]"
-                  >
-                    Explore Capabilities
-
-                    <span className="text-slate-400 transition-colors group-hover:text-cyan-400">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-
-            {/* =========================================================
-    RIGHT PRODUCT PREVIEW — ANIMATED ENGINEERING SYSTEM
-========================================================= */}
-
-<div className="relative mx-auto w-full max-w-[520px] lg:mx-0">
-
-  {/* Ambient Glow */}
-  <div className="pointer-events-none absolute -inset-10 -z-10">
-    <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.08] blur-[110px] animate-pulse" />
-
-    <div className="absolute -right-10 top-10 h-40 w-40 rounded-full bg-violet-600/[0.08] blur-[90px]" />
-  </div>
-
-  {/* Floating System Container */}
-  <div className="relative animate-[float_7s_ease-in-out_infinite]">
-
-    {/* Moving Border Glow */}
-    <div className="pointer-events-none absolute -inset-px overflow-hidden rounded-[1.75rem]">
-      <div className="absolute -left-1/2 top-1/2 h-[180%] w-[200%] -translate-y-1/2 animate-[spin_12s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_280deg,rgba(34,211,238,0.5)_320deg,rgba(139,92,246,0.35)_345deg,transparent_360deg)] opacity-70" />
-    </div>
-
-    {/* Main Interface */}
-    <div className="relative overflow-hidden rounded-[1.75rem] border border-white/[0.08] bg-[#080e19]/95 shadow-[0_35px_120px_rgba(0,0,0,0.65)] backdrop-blur-2xl">
-
-      {/* Background Grid */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.035]">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-          }}
-        />
-      </div>
-
-      {/* Top Glow Line */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/70 to-transparent" />
-
-      {/* =====================================================
-          BROWSER BAR
-      ====================================================== */}
-
-      <div className="relative flex items-center justify-between border-b border-white/[0.06] px-4 py-3.5">
-
-        {/* Traffic Lights */}
-        <div className="flex items-center gap-1.5">
-          <span className="h-2 w-2 rounded-full bg-white/10" />
-          <span className="h-2 w-2 rounded-full bg-white/10" />
-          <span className="h-2 w-2 rounded-full bg-white/10" />
-        </div>
-
-        {/* Address */}
-        <div className="relative overflow-hidden rounded-md border border-white/[0.06] bg-white/[0.025] px-4 py-1.5">
-
-          {/* Moving Shine */}
-          <div className="absolute inset-y-0 -left-10 w-10 animate-[shimmer_4s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-
-          <span className="font-mono text-[8px] tracking-wide text-slate-400">
-            app.centa.engineering
-          </span>
-        </div>
-
-        {/* Connection */}
-        <div className="flex items-center gap-1.5">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-          <span className="hidden text-[7px] uppercase tracking-wider text-slate-600 sm:block">
-            Live
-          </span>
-        </div>
-      </div>
-
-      {/* =====================================================
-          DASHBOARD
-      ====================================================== */}
-
-      <div className="relative p-4 sm:p-5">
-
-        {/* Header */}
-        <div className="flex items-center justify-between">
-
-          <div>
-            <div className="text-[8px] uppercase tracking-[0.22em] text-slate-500">
-              Digital Engineering
-            </div>
-
-            <div className="mt-1 text-sm font-bold tracking-tight text-white">
-              System Architecture
-            </div>
-          </div>
-
-          {/* Animated Icon */}
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/[0.06]">
-
-            <div className="absolute inset-0 animate-ping rounded-xl bg-cyan-400/[0.05]" />
-
-            <Sparkles className="relative h-4 w-4 text-cyan-400" />
-          </div>
-        </div>
-
-        {/* =================================================
-            MAIN METRIC
-        ================================================== */}
-
-        <div className="relative mt-6 overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.025] p-4">
-
-          {/* Scan Line */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px animate-[scan_3.5s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent" />
-
-          <div className="flex items-end justify-between">
-
-            <div>
-
-              <div className="text-[8px] uppercase tracking-[0.18em] text-slate-500">
-                System Readiness
-              </div>
-
-              <div className="mt-2 flex items-baseline gap-2">
-
-                <span className="text-3xl font-black tracking-tight text-white">
-                  94%
-                </span>
-
-                <span className="text-[8px] font-semibold text-cyan-400">
-                  +12.4%
-                </span>
-
-              </div>
-            </div>
-
-            {/* Health Badge */}
-            <div className="flex items-center gap-1.5 rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-2.5 py-1">
-
-              <span className="relative flex h-1.5 w-1.5">
-
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-
-              </span>
-
-              <span className="text-[8px] font-bold tracking-wide text-emerald-400">
-                HEALTHY
-              </span>
-            </div>
-          </div>
-
-          {/* =================================================
-              GRAPH
-          ================================================== */}
-
-          <div className="relative mt-6 h-24">
-
-            {/* Horizontal Guides */}
-            <div className="pointer-events-none absolute inset-0 flex flex-col justify-between">
-              <span className="h-px w-full bg-white/[0.035]" />
-              <span className="h-px w-full bg-white/[0.035]" />
-              <span className="h-px w-full bg-white/[0.035]" />
-              <span className="h-px w-full bg-white/[0.035]" />
-            </div>
-
-            {/* Bars */}
-            <div className="absolute inset-0 flex items-end gap-1.5">
-
-              {[
-                28,
-                42,
-                35,
-                54,
-                48,
-                67,
-                59,
-                76,
-                69,
-                84,
-                78,
-                94,
-              ].map((height, index) => (
-                <div
-                  key={index}
-                  className="group relative flex-1"
-                >
-                  <div
-                    className="absolute bottom-0 w-full rounded-t-sm bg-gradient-to-t from-cyan-400/10 to-cyan-400/40 transition-all duration-500 group-hover:from-cyan-400/30 group-hover:to-cyan-400/70"
-                    style={{
-                      height: `${height}%`,
-                    }}
-                  />
-
-                  {/* Bar Glow */}
-                  <div
-                    className="absolute bottom-0 w-full rounded-t-sm bg-cyan-400/20 blur-[5px] opacity-50"
-                    style={{
-                      height: `${height}%`,
-                    }}
-                  />
-                </div>
-              ))}
-
-            </div>
-          </div>
-
-          {/* Graph Footer */}
-          <div className="mt-3 flex items-center justify-between">
-
-            <span className="text-[7px] uppercase tracking-[0.15em] text-slate-600">
-              Performance
-            </span>
-
-            <span className="font-mono text-[7px] text-slate-600">
-              LIVE / 24H
-            </span>
+            <div className="absolute -right-10 top-10 h-40 w-40 rounded-full bg-violet-600/[0.08] blur-[90px]" />
 
           </div>
-        </div>
 
-        {/* =================================================
-            ARCHITECTURE CARDS
-        ================================================== */}
+          {/* =====================================================
+              INTERACTIVE SYSTEM CONTAINER
+          ====================================================== */}
 
-        <div className="mt-3 grid grid-cols-3 gap-2">
+          <div
+            ref={previewRef}
+            onMouseMove={handlePreviewMove}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => {
+              setIsHovering(false);
+              setMouse({ x: 50, y: 50 });
+            }}
+            className="
+              group
+              relative
+              animate-[float_7s_ease-in-out_infinite]
+              transition-transform
+              duration-500
+              ease-out
+            "
+            style={{
+              transform: isHovering
+                ? `perspective(1200px)
+                   rotateX(${(mouse.y - 50) * -0.035}deg)
+                   rotateY(${(mouse.x - 50) * 0.035}deg)
+                   translateY(-6px)`
+                : "perspective(1200px) rotateX(0deg) rotateY(0deg) translateY(0)",
+            }}
+          >
 
-          {[
-            {
-              icon: Code2,
-              label: "Build",
-              value: "Active",
-            },
-            {
-              icon: ShieldCheck,
-              label: "Secure",
-              value: "Protected",
-            },
-            {
-              icon: Zap,
-              label: "Scale",
-              value: "Ready",
-            },
-        ].map((item) => {
+            {/* Cursor Spotlight */}
+            <div
+              className="
+                pointer-events-none
+                absolute
+                -inset-20
+                z-20
+                rounded-[3rem]
+                opacity-0
+                transition-opacity
+                duration-500
+                group-hover:opacity-100
+              "
+              style={{
+                background: `
+                  radial-gradient(
+                    260px circle at ${mouse.x}% ${mouse.y}%,
+                    rgba(34,211,238,0.13),
+                    transparent 65%
+                  )
+                `,
+              }}
+            />
 
-            const Icon = item.icon;
+            {/* Moving Border Glow */}
+            <div className="pointer-events-none absolute -inset-px overflow-hidden rounded-[1.75rem]">
 
-            return (
               <div
-                key={item.label}
-                className="group relative overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.018] p-3 transition-all duration-500 hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-cyan-400/[0.035]"
-              >
+                className="
+                  absolute
+                  -left-1/2
+                  top-1/2
+                  h-[180%]
+                  w-[200%]
+                  -translate-y-1/2
+                  animate-[spin_10s_linear_infinite]
+                  bg-[conic-gradient(from_0deg,transparent_0deg,transparent_255deg,rgba(34,211,238,0.75)_310deg,rgba(139,92,246,0.65)_340deg,transparent_360deg)]
+                  opacity-40
+                  transition-opacity
+                  duration-500
+                  group-hover:opacity-90
+                "
+              />
 
-                {/* Hover Glow */}
-                <div className="absolute -right-5 -top-5 h-12 w-12 rounded-full bg-cyan-400/[0.08] blur-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            </div>
 
-                {/* Icon */}
-                <div className="relative flex h-6 w-6 items-center justify-center rounded-md bg-cyan-400/[0.06]">
+            {/* =====================================================
+                MAIN INTERFACE
+            ====================================================== */}
 
-                  <Icon className="h-3.5 w-3.5 text-cyan-400 transition-transform duration-500 group-hover:scale-110" />
+            <div
+              className="
+                relative
+                overflow-hidden
+                rounded-[1.75rem]
+                border
+                border-white/[0.08]
+                bg-[#080e19]/95
+                shadow-[0_35px_120px_rgba(0,0,0,0.65)]
+                backdrop-blur-2xl
+                transition-all
+                duration-500
+                group-hover:border-cyan-400/20
+                group-hover:shadow-[0_40px_140px_rgba(0,0,0,0.72),0_0_60px_rgba(34,211,238,0.06)]
+              "
+            >
+
+              {/* Cursor Glow */}
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  z-10
+                  h-[260px]
+                  w-[260px]
+                  -translate-x-1/2
+                  -translate-y-1/2
+                  rounded-full
+                  bg-cyan-400/[0.06]
+                  blur-[90px]
+                  transition-all
+                  duration-150
+                "
+                style={{
+                  left: `${mouse.x}%`,
+                  top: `${mouse.y}%`,
+                }}
+              />
+
+              {/* Background Grid */}
+              <div className="pointer-events-none absolute inset-0 opacity-[0.035]">
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+                    backgroundSize: "32px 32px",
+                  }}
+                />
+              </div>
+
+              {/* Top Glow Line */}
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/70 to-transparent" />
+
+              {/* =====================================================
+                  BROWSER BAR
+              ====================================================== */}
+
+              <div className="relative z-20 flex items-center justify-between border-b border-white/[0.06] px-4 py-3.5">
+
+                {/* Traffic Lights */}
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-white/10 transition-all duration-300 group-hover:bg-red-400/50" />
+                  <span className="h-2 w-2 rounded-full bg-white/10 transition-all duration-300 group-hover:bg-yellow-400/50" />
+                  <span className="h-2 w-2 rounded-full bg-white/10 transition-all duration-300 group-hover:bg-emerald-400/50" />
+                </div>
+
+                {/* Address */}
+                <div className="relative overflow-hidden rounded-md border border-white/[0.06] bg-white/[0.025] px-4 py-1.5 transition-all duration-300 group-hover:border-cyan-400/15 group-hover:bg-cyan-400/[0.025]">
+
+                  {/* Moving Shine */}
+                  <div className="absolute inset-y-0 -left-10 w-10 animate-[shimmer_4s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+
+                  <span className="font-mono text-[8px] tracking-wide text-slate-400">
+                    app.centa.engineering
+                  </span>
 
                 </div>
 
-                <div className="mt-3 text-[9px] font-bold text-white">
-                  {item.label}
-                </div>
+                {/* Connection */}
+                <div className="flex items-center gap-1.5">
 
-                <div className="mt-1 flex items-center gap-1">
+                  <span className="relative flex h-1.5 w-1.5">
 
-                  <span className="h-1 w-1 rounded-full bg-emerald-400" />
+                    <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-50" />
 
-                  <span className="text-[7px] uppercase tracking-wider text-slate-500">
-                    {item.value}
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+
+                  </span>
+
+                  <span className="hidden text-[7px] uppercase tracking-wider text-slate-600 sm:block">
+                    Live
                   </span>
 
                 </div>
 
               </div>
-            );
-          })}
 
-        </div>
+              {/* =====================================================
+                  DASHBOARD
+              ====================================================== */}
 
-        {/* =================================================
-            MINI SYSTEM FLOW
-        ================================================== */}
+              <div className="relative z-20 p-4 sm:p-5">
 
-        <div className="mt-3 rounded-xl border border-white/[0.06] bg-white/[0.015] p-3">
+                {/* Header */}
+                <div className="flex items-center justify-between">
 
-          <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-[8px] uppercase tracking-[0.22em] text-slate-500">
+                      Digital Engineering
+                    </div>
 
-            <span className="text-[7px] uppercase tracking-[0.18em] text-slate-600">
-              Infrastructure Flow
-            </span>
+                    <div className="mt-1 text-sm font-bold tracking-tight text-white">
+                      System Architecture
+                    </div>
+                  </div>
 
-            <span className="font-mono text-[7px] text-cyan-400/70">
-              ACTIVE
-            </span>
+                  {/* Animated Icon */}
+                  <div className="group/icon relative flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/[0.06] transition-all duration-500 hover:scale-110 hover:border-cyan-300/40 hover:bg-cyan-400/[0.12] hover:shadow-[0_0_25px_rgba(34,211,238,0.2)]">
 
-          </div>
+                    <div className="absolute inset-0 animate-ping rounded-xl bg-cyan-400/[0.05]" />
 
-          <div className="mt-3 flex items-center">
+                    <Sparkles className="relative h-4 w-4 text-cyan-400 transition-transform duration-500 group-hover/icon:rotate-12 group-hover/icon:scale-110" />
 
-            {/* Node 1 */}
-            <div className="flex h-6 w-6 items-center justify-center rounded-md border border-cyan-400/15 bg-cyan-400/[0.05]">
-              <Code2 className="h-3 w-3 text-cyan-400" />
-            </div>
+                  </div>
 
-            {/* Connection */}
-            <div className="relative mx-2 h-px flex-1 overflow-hidden bg-white/[0.07]">
-              <div className="absolute left-0 top-0 h-px w-8 animate-[flow_2s_linear_infinite] bg-cyan-400/70" />
-            </div>
+                </div>
 
-            {/* Node 2 */}
-            <div className="flex h-6 w-6 items-center justify-center rounded-md border border-violet-400/15 bg-violet-400/[0.05]">
-              <Server className="h-3 w-3 text-violet-400" />
-            </div>
+                {/* =================================================
+                    MAIN METRIC
+                ================================================== */}
 
-            {/* Connection */}
-            <div className="relative mx-2 h-px flex-1 overflow-hidden bg-white/[0.07]">
-              <div className="absolute left-0 top-0 h-px w-8 animate-[flow_2s_linear_infinite] bg-violet-400/70" />
-            </div>
+                <div
+                  className="
+                    group/metric
+                    relative
+                    mt-6
+                    overflow-hidden
+                    rounded-2xl
+                    border
+                    border-white/[0.07]
+                    bg-white/[0.025]
+                    p-4
+                    transition-all
+                    duration-500
+                    hover:-translate-y-0.5
+                    hover:border-cyan-400/20
+                    hover:bg-cyan-400/[0.025]
+                    hover:shadow-[0_15px_50px_rgba(34,211,238,0.06)]
+                  "
+                >
 
-            {/* Node 3 */}
-            <div className="flex h-6 w-6 items-center justify-center rounded-md border border-emerald-400/15 bg-emerald-400/[0.05]">
-              <ShieldCheck className="h-3 w-3 text-emerald-400" />
+                  {/* Scan Line */}
+                  <div
+                    className="
+                      pointer-events-none
+                      absolute
+                      inset-x-0
+                      top-0
+                      h-px
+                      animate-[scan_3.5s_ease-in-out_infinite]
+                      bg-gradient-to-r
+                      from-transparent
+                      via-cyan-400/50
+                      to-transparent
+                      transition-opacity
+                      duration-300
+                      group-hover/metric:via-cyan-300
+                    "
+                  />
+
+                  <div className="flex items-end justify-between">
+
+                    <div>
+
+                      <div className="text-[8px] uppercase tracking-[0.18em] text-slate-500">
+                        System Readiness
+                      </div>
+
+                      <div className="mt-2 flex items-baseline gap-2">
+
+                        <span className="text-3xl font-black tracking-tight text-white transition-all duration-500 group-hover/metric:text-cyan-50 group-hover/metric:drop-shadow-[0_0_15px_rgba(34,211,238,0.25)]">
+                          94%
+                        </span>
+
+                        <span className="text-[8px] font-semibold text-cyan-400">
+                          +12.4%
+                        </span>
+
+                      </div>
+                    </div>
+
+                    {/* Health Badge */}
+                    <div className="flex items-center gap-1.5 rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-2.5 py-1 transition-all duration-300 hover:border-emerald-400/30 hover:bg-emerald-400/[0.1]">
+
+                      <span className="relative flex h-1.5 w-1.5">
+
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+
+                      </span>
+
+                      <span className="text-[8px] font-bold tracking-wide text-emerald-400">
+                        HEALTHY
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  {/* =================================================
+                      GRAPH
+                  ================================================== */}
+
+                  <div className="relative mt-6 h-24">
+
+                    {/* Horizontal Guides */}
+                    <div className="pointer-events-none absolute inset-0 flex flex-col justify-between">
+                      <span className="h-px w-full bg-white/[0.035]" />
+                      <span className="h-px w-full bg-white/[0.035]" />
+                      <span className="h-px w-full bg-white/[0.035]" />
+                      <span className="h-px w-full bg-white/[0.035]" />
+                    </div>
+
+                    {/* Bars */}
+                    <div className="absolute inset-0 flex items-end gap-1.5">
+
+                      {[
+                        28,
+                        42,
+                        35,
+                        54,
+                        48,
+                        67,
+                        59,
+                        76,
+                        69,
+                        84,
+                        78,
+                        94,
+                      ].map((height, index) => (
+                        <div
+                          key={index}
+                          className="group/bar relative flex-1 cursor-crosshair"
+                        >
+
+                          <div
+                            className="
+                              absolute
+                              bottom-0
+                              w-full
+                              origin-bottom
+                              rounded-t-sm
+                              bg-gradient-to-t
+                              from-cyan-400/10
+                              to-cyan-400/40
+                              transition-all
+                              duration-500
+                              group-hover/bar:scale-y-110
+                              group-hover/bar:from-cyan-400/30
+                              group-hover/bar:to-cyan-400/80
+                              group-hover/bar:shadow-[0_0_14px_rgba(34,211,238,0.35)]
+                            "
+                            style={{
+                              height: `${height}%`,
+                            }}
+                          />
+
+                          {/* Bar Glow */}
+                          <div
+                            className="
+                              absolute
+                              bottom-0
+                              w-full
+                              rounded-t-sm
+                              bg-cyan-400/20
+                              blur-[5px]
+                              opacity-50
+                              transition-all
+                              duration-500
+                              group-hover/bar:bg-cyan-300/40
+                              group-hover/bar:opacity-100
+                            "
+                            style={{
+                              height: `${height}%`,
+                            }}
+                          />
+
+                        </div>
+                      ))}
+
+                    </div>
+                  </div>
+
+                  {/* Graph Footer */}
+                  <div className="mt-3 flex items-center justify-between">
+
+                    <span className="text-[7px] uppercase tracking-[0.15em] text-slate-600">
+                      Performance
+                    </span>
+
+                    <span className="font-mono text-[7px] text-slate-600">
+                      LIVE / 24H
+                    </span>
+
+                  </div>
+
+                </div>
+
+                {/* =================================================
+                    ARCHITECTURE CARDS
+                ================================================== */}
+
+                <div className="mt-3 grid grid-cols-3 gap-2">
+
+                  {[
+                    {
+                      icon: Code2,
+                      label: "Build",
+                      value: "Active",
+                    },
+                    {
+                      icon: ShieldCheck,
+                      label: "Secure",
+                      value: "Protected",
+                    },
+                    {
+                      icon: Zap,
+                      label: "Scale",
+                      value: "Ready",
+                    },
+                  ].map((item) => {
+
+                    const Icon = item.icon;
+
+                    return (
+                      <div
+                        key={item.label}
+                        className="
+                          group/card
+                          relative
+                          cursor-default
+                          overflow-hidden
+                          rounded-xl
+                          border
+                          border-white/[0.06]
+                          bg-white/[0.018]
+                          p-3
+                          transition-all
+                          duration-500
+                          hover:-translate-y-1
+                          hover:border-cyan-400/20
+                          hover:bg-cyan-400/[0.035]
+                          hover:shadow-[0_12px_35px_rgba(34,211,238,0.07)]
+                        "
+                      >
+
+                        {/* Shine */}
+                        <div
+                          className="
+                            pointer-events-none
+                            absolute
+                            -left-20
+                            top-0
+                            h-full
+                            w-16
+                            rotate-12
+                            bg-gradient-to-r
+                            from-transparent
+                            via-white/[0.08]
+                            to-transparent
+                            transition-transform
+                            duration-700
+                            group-hover/card:translate-x-[180px]
+                          "
+                        />
+
+                        {/* Hover Glow */}
+                        <div className="absolute -right-5 -top-5 h-12 w-12 rounded-full bg-cyan-400/[0.08] blur-xl opacity-0 transition-opacity duration-500 group-hover/card:opacity-100" />
+
+                        {/* Icon */}
+                        <div
+                          className="
+                            relative
+                            flex
+                            h-7
+                            w-7
+                            items-center
+                            justify-center
+                            rounded-lg
+                            border
+                            border-cyan-400/10
+                            bg-cyan-400/[0.06]
+                            transition-all
+                            duration-500
+                            group-hover/card:border-cyan-400/30
+                            group-hover/card:bg-cyan-400/[0.12]
+                            group-hover/card:shadow-[0_0_20px_rgba(34,211,238,0.18)]
+                          "
+                        >
+
+                          <Icon
+                            className="
+                              h-3.5
+                              w-3.5
+                              text-cyan-400
+                              transition-all
+                              duration-500
+                              group-hover/card:scale-125
+                              group-hover/card:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]
+                            "
+                          />
+
+                        </div>
+
+                        <div className="mt-3 text-[9px] font-bold text-white">
+                          {item.label}
+                        </div>
+
+                        <div className="mt-1 flex items-center gap-1">
+
+                          <span className="relative flex h-1 w-1">
+                            <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-60" />
+                            <span className="relative h-1 w-1 rounded-full bg-emerald-400" />
+                          </span>
+
+                          <span className="text-[7px] uppercase tracking-wider text-slate-500">
+                            {item.value}
+                          </span>
+
+                        </div>
+
+                      </div>
+                    );
+                  })}
+
+                </div>
+
+                {/* =================================================
+                    MINI SYSTEM FLOW
+                ================================================== */}
+
+                <div className="group/flow mt-3 rounded-xl border border-white/[0.06] bg-white/[0.015] p-3 transition-all duration-500 hover:border-cyan-400/15 hover:bg-cyan-400/[0.02]">
+
+                  <div className="flex items-center justify-between">
+
+                    <span className="text-[7px] uppercase tracking-[0.18em] text-slate-600">
+                      Infrastructure Flow
+                    </span>
+
+                    <span className="font-mono text-[7px] text-cyan-400/70 transition-colors group-hover/flow:text-cyan-300">
+                      ACTIVE
+                    </span>
+
+                  </div>
+
+                  <div className="mt-3 flex items-center">
+
+                    {/* Node 1 */}
+                    <div
+                      className="
+                        group/node
+                        relative
+                        flex
+                        h-7
+                        w-7
+                        items-center
+                        justify-center
+                        rounded-lg
+                        border
+                        border-cyan-400/15
+                        bg-cyan-400/[0.05]
+                        transition-all
+                        duration-500
+                        hover:scale-110
+                        hover:border-cyan-300/40
+                        hover:bg-cyan-400/[0.12]
+                        hover:shadow-[0_0_20px_rgba(34,211,238,0.25)]
+                      "
+                    >
+                      <Code2 className="relative h-3 w-3 text-cyan-400 transition-transform duration-300 group-hover/node:scale-110" />
+                    </div>
+
+                    {/* Connection */}
+                    <div className="relative mx-2 h-px flex-1 overflow-hidden bg-white/[0.07]">
+
+                      <div className="absolute left-0 top-0 h-px w-10 animate-[flow_1.6s_linear_infinite] bg-gradient-to-r from-transparent via-cyan-300 to-transparent shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+
+                      <div className="absolute left-0 top-1/2 h-1 w-1 -translate-y-1/2 animate-[flow_1.6s_linear_infinite] rounded-full bg-cyan-300 blur-[1px]" />
+
+                    </div>
+
+                    {/* Node 2 */}
+                    <div
+                      className="
+                        group/node
+                        relative
+                        flex
+                        h-7
+                        w-7
+                        items-center
+                        justify-center
+                        rounded-lg
+                        border
+                        border-violet-400/15
+                        bg-violet-400/[0.05]
+                        transition-all
+                        duration-500
+                        hover:scale-110
+                        hover:border-violet-300/40
+                        hover:bg-violet-400/[0.12]
+                        hover:shadow-[0_0_20px_rgba(139,92,246,0.25)]
+                      "
+                    >
+                      <Server className="relative h-3 w-3 text-violet-400 transition-transform duration-300 group-hover/node:scale-110" />
+                    </div>
+
+                    {/* Connection */}
+                    <div className="relative mx-2 h-px flex-1 overflow-hidden bg-white/[0.07]">
+
+                      <div className="absolute left-0 top-0 h-px w-10 animate-[flow_1.6s_linear_infinite] bg-gradient-to-r from-transparent via-violet-300 to-transparent shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
+
+                      <div className="absolute left-0 top-1/2 h-1 w-1 -translate-y-1/2 animate-[flow_1.6s_linear_infinite] rounded-full bg-violet-300 blur-[1px]" />
+
+                    </div>
+
+                    {/* Node 3 */}
+                    <div
+                      className="
+                        group/node
+                        relative
+                        flex
+                        h-7
+                        w-7
+                        items-center
+                        justify-center
+                        rounded-lg
+                        border
+                        border-emerald-400/15
+                        bg-emerald-400/[0.05]
+                        transition-all
+                        duration-500
+                        hover:scale-110
+                        hover:border-emerald-300/40
+                        hover:bg-emerald-400/[0.12]
+                        hover:shadow-[0_0_20px_rgba(52,211,153,0.25)]
+                      "
+                    >
+                      <ShieldCheck className="relative h-3 w-3 text-emerald-400 transition-transform duration-300 group-hover/node:scale-110" />
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
             </div>
 
           </div>
         </div>
 
       </div>
+    
+  
 
       {/* =====================================================
           BOTTOM STATUS
@@ -734,9 +1090,8 @@ ${formData.message}
       </span>
 
     </div>
-</div>
-  </div>
-</div>
+
+ 
             {/* Hero Bottom Meta */}
             <div className="mt-20 grid border-t border-white/[0.06] pt-6 sm:grid-cols-3">
               <div className="flex items-center gap-3 border-b border-white/[0.06] py-4 sm:border-b-0 sm:border-r sm:py-0">
@@ -769,8 +1124,10 @@ ${formData.message}
                 </span>
               </div>
             </div>
-          </div>
-        </section>
+          
+          
+          
+       </section>
 
         {/* =========================================================
             VALUE BAR — MODERN SIGNAL STRIP

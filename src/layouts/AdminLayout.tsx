@@ -1,7 +1,20 @@
 import { Outlet, useLocation } from "react-router-dom";
+import { ChevronRight, Circle } from "lucide-react";
 
 import Sidebar from "../components/layout/Sidebar";
 import ThemeToggle from "../components/ThemeToggle";
+
+const pageTitles: Record<string, string> = {
+  "/dashboard": "Dashboard",
+  "/dashboard/contacts": "Contacts",
+  "/dashboard/articles": "Articles",
+  "/dashboard/categories": "Categories",
+  "/dashboard/services": "Services",
+  "/dashboard/users": "User Management",
+  "/dashboard/team": "Team",
+  "/dashboard/about": "About",
+  "/dashboard/settings": "Settings",
+};
 
 export default function AdminLayout() {
   const location = useLocation();
@@ -9,43 +22,15 @@ export default function AdminLayout() {
   const getPageTitle = () => {
     const path = location.pathname;
 
-    if (path === "/dashboard") {
-      return "Dashboard";
+    if (pageTitles[path]) {
+      return pageTitles[path];
     }
 
-    if (path.startsWith("/dashboard/contacts")) {
-      return "Contacts";
-    }
+    const matchedPath = Object.keys(pageTitles).find(
+      (key) => key !== "/dashboard" && path.startsWith(`${key}/`)
+    );
 
-    if (path.startsWith("/dashboard/articles")) {
-      return "Articles";
-    }
-
-    if (path.startsWith("/dashboard/categories")) {
-      return "Categories";
-    }
-
-    if (path.startsWith("/dashboard/services")) {
-      return "Services";
-    }
-
-    if (path.startsWith("/dashboard/users")) {
-      return "User Management";
-    }
-
-    if (path.startsWith("/dashboard/team")) {
-      return "Team";
-    }
-
-    if (path.startsWith("/dashboard/about")) {
-      return "About";
-    }
-
-    if (path.startsWith("/dashboard/settings")) {
-      return "Settings";
-    }
-
-    return "Management";
+    return matchedPath ? pageTitles[matchedPath] : "Management";
   };
 
   const pageTitle = getPageTitle();
@@ -55,20 +40,24 @@ export default function AdminLayout() {
       className="
         relative
         flex
-        min-h-screen
+        h-screen
         w-full
         overflow-hidden
-        bg-slate-50
+        bg-[#f8fafc]
         text-slate-900
-        dark:bg-[#070b14]
+        selection:bg-blue-500/20
+        selection:text-blue-700
+        dark:bg-[#060a12]
         dark:text-white
+        dark:selection:bg-blue-400/20
+        dark:selection:text-blue-300
       "
     >
-      {/* Background Effects */}
+      {/* Ambient Background */}
       <div
         className="
           pointer-events-none
-          absolute
+          fixed
           inset-0
           overflow-hidden
         "
@@ -76,60 +65,61 @@ export default function AdminLayout() {
         <div
           className="
             absolute
-            -left-32
-            -top-32
-            h-96
-            w-96
+            -left-40
+            -top-40
+            h-[32rem]
+            w-[32rem]
             rounded-full
-            bg-blue-500/10
-            blur-3xl
-            dark:bg-blue-500/10
+            bg-blue-500/[0.035]
+            blur-[100px]
+            dark:bg-blue-500/[0.045]
           "
         />
 
         <div
           className="
             absolute
-            right-[-10rem]
-            top-1/3
+            -right-40
+            top-1/4
             h-[30rem]
             w-[30rem]
             rounded-full
-            bg-indigo-500/10
-            blur-3xl
-            dark:bg-indigo-500/10
+            bg-indigo-500/[0.025]
+            blur-[110px]
+            dark:bg-indigo-500/[0.04]
           "
         />
 
         <div
           className="
             absolute
-            bottom-[-12rem]
+            bottom-[-15rem]
             left-1/3
             h-[28rem]
             w-[28rem]
             rounded-full
-            bg-purple-500/5
-            blur-3xl
-            dark:bg-purple-500/10
+            bg-violet-500/[0.02]
+            blur-[110px]
+            dark:bg-violet-500/[0.035]
           "
         />
       </div>
 
       {/* Sidebar */}
-      <div
+      <aside
         className="
           relative
-          z-30
+          z-40
           hidden
+          h-screen
           shrink-0
           lg:block
         "
       >
         <Sidebar />
-      </div>
+      </aside>
 
-      {/* Main Application */}
+      {/* Application */}
       <div
         className="
           relative
@@ -146,178 +136,185 @@ export default function AdminLayout() {
           className="
             sticky
             top-0
-            z-20
+            z-30
             flex
-            h-[68px]
+            h-16
             shrink-0
             items-center
             justify-between
-            gap-4
             border-b
-            border-slate-200/60
-            bg-white/75
+            border-slate-200/70
+            bg-white/80
             px-4
-            backdrop-blur-2xl
-            shadow-[0_1px_0_rgba(15,23,42,0.02)]
-            dark:border-white/[0.06]
-            dark:bg-[#070b14]/85
-            dark:shadow-[0_1px_0_rgba(255,255,255,0.02)]
+            backdrop-blur-xl
+            supports-[backdrop-filter]:bg-white/65
             sm:px-6
             lg:px-8
+            dark:border-white/[0.055]
+            dark:bg-[#060a12]/80
+            dark:supports-[backdrop-filter]:bg-[#060a12]/70
           "
         >
-          {/* Page Information */}
-          <div
-            className="
-              flex
-              min-w-0
-              items-center
-              gap-3
-              sm:gap-4
-            "
-          >
-            <div
-              className="
-                hidden
-                h-10
-                w-10
-                shrink-0
-                items-center
-                justify-center
-                rounded-xl
-                border
-                border-blue-500/20
-                bg-gradient-to-br
-                from-blue-500/15
-                via-indigo-500/10
-                to-purple-500/10
-                shadow-[0_4px_18px_rgba(59,130,246,0.08)]
-                sm:flex
-              "
-            >
+          {/* Left */}
+          <div className="flex min-w-0 items-center">
+            <div className="flex min-w-0 items-center gap-2.5">
               <div
                 className="
-                  h-2
-                  w-2
-                  rounded-full
-                  bg-blue-400
-                  shadow-[0_0_14px_rgba(96,165,250,0.9)]
-                  animate-pulse
-                "
-              />
-            </div>
-
-            <div className="min-w-0">
-              <p
-                className="
-                  text-[9px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.22em]
-                  text-slate-400
-                  dark:text-slate-500
-                  sm:text-[10px]
+                  flex
+                  h-8
+                  w-8
+                  shrink-0
+                  items-center
+                  justify-center
+                  rounded-lg
+                  border
+                  border-blue-500/15
+                  bg-blue-500/[0.06]
+                  dark:border-blue-400/10
+                  dark:bg-blue-400/[0.06]
                 "
               >
-                Centa Control Panel
-              </p>
+                <Circle
+                  size={7}
+                  strokeWidth={0}
+                  fill="currentColor"
+                  className="
+                    text-blue-500
+                    dark:text-blue-400
+                  "
+                />
+              </div>
 
-              <h1
-                className="
-                  truncate
-                  text-sm
-                  font-semibold
-                  text-slate-900
-                  sm:text-base
-                  dark:text-white
-                "
-              >
-                {pageTitle}
-              </h1>
+              <div className="min-w-0">
+                <div
+                  className="
+                    hidden
+                    items-center
+                    gap-1.5
+                    text-[10px]
+                    font-medium
+                    uppercase
+                    tracking-[0.18em]
+                    text-slate-400
+                    sm:flex
+                    dark:text-slate-500
+                  "
+                >
+                  <span>Centa</span>
+
+                  <ChevronRight size={11} />
+
+                  <span>Control Panel</span>
+                </div>
+
+                <h1
+                  className="
+                    truncate
+                    text-sm
+                    font-semibold
+                    tracking-[-0.01em]
+                    text-slate-900
+                    sm:text-[15px]
+                    dark:text-white
+                  "
+                >
+                  {pageTitle}
+                </h1>
+              </div>
             </div>
           </div>
 
-          {/* Header Actions */}
-          <div
-            className="
-              flex
-              shrink-0
-              items-center
-              gap-2
-              sm:gap-3
-            "
-          >
+          {/* Right */}
+          <div className="flex shrink-0 items-center gap-2">
             {/* System Status */}
             <div
               className="
                 hidden
+                h-9
                 items-center
-                gap-2.5
-                rounded-xl
+                gap-2
+                rounded-lg
                 border
                 border-emerald-500/15
-                bg-emerald-500/[0.06]
-                px-3.5
-                py-2
-                shadow-[0_4px_16px_rgba(16,185,129,0.05)]
-                transition-all
-                duration-200
-                hover:border-emerald-500/25
-                hover:bg-emerald-500/[0.09]
-                dark:border-emerald-400/10
-                dark:bg-emerald-400/[0.05]
-                dark:hover:border-emerald-400/20
-                dark:hover:bg-emerald-400/[0.08]
+                bg-emerald-500/[0.045]
+                px-3
                 md:flex
+                dark:border-emerald-400/10
+                dark:bg-emerald-400/[0.04]
               "
             >
               <span
                 className="
-                  h-2
-                  w-2
-                  rounded-full
-                  bg-emerald-400
-                  shadow-[0_0_10px_rgba(52,211,153,0.8)]
-                  animate-pulse
+                  relative
+                  flex
+                  h-1.5
+                  w-1.5
                 "
-              />
+              >
+                <span
+                  className="
+                    absolute
+                    inline-flex
+                    h-full
+                    w-full
+                    animate-ping
+                    rounded-full
+                    bg-emerald-400
+                    opacity-60
+                  "
+                />
+
+                <span
+                  className="
+                    relative
+                    inline-flex
+                    h-1.5
+                    w-1.5
+                    rounded-full
+                    bg-emerald-400
+                  "
+                />
+              </span>
 
               <span
                 className="
-                  text-[11px]
+                  text-[10px]
                   font-semibold
-                  tracking-wide
+                  uppercase
+                  tracking-[0.12em]
                   text-emerald-600
                   dark:text-emerald-400
                 "
               >
-                System Online
+                Online
               </span>
             </div>
 
-            {/* Theme Toggle */}
+            {/* Theme */}
             <div
               className="
                 flex
-                h-10
-                w-10
+                h-9
+                w-9
                 items-center
                 justify-center
-                rounded-xl
+                rounded-lg
                 border
-                border-slate-200/80
+                border-slate-200
                 bg-white
-                shadow-sm
+                text-slate-500
+                shadow-[0_1px_2px_rgba(15,23,42,0.04)]
                 transition-all
                 duration-200
-                hover:-translate-y-0.5
                 hover:border-slate-300
                 hover:bg-slate-50
-                hover:shadow-md
+                hover:text-slate-700
                 dark:border-white/[0.07]
-                dark:bg-white/[0.04]
+                dark:bg-white/[0.025]
+                dark:text-slate-400
                 dark:hover:border-white/[0.12]
-                dark:hover:bg-white/[0.07]
+                dark:hover:bg-white/[0.05]
+                dark:hover:text-slate-200
               "
             >
               <ThemeToggle />
@@ -325,7 +322,7 @@ export default function AdminLayout() {
           </div>
         </header>
 
-        {/* Main Content */}
+        {/* Main */}
         <main
           className="
             relative
@@ -338,17 +335,24 @@ export default function AdminLayout() {
             sm:py-7
             lg:px-8
             lg:py-8
-            before:pointer-events-none
-            before:absolute
-            before:inset-x-0
-            before:top-0
-            before:h-40
-            before:bg-gradient-to-b
-            before:from-blue-500/[0.025]
-            before:to-transparent
-            dark:before:from-blue-400/[0.025]
           "
         >
+          {/* Top Accent */}
+          <div
+            className="
+              pointer-events-none
+              absolute
+              inset-x-0
+              top-0
+              h-px
+              bg-gradient-to-r
+              from-transparent
+              via-blue-500/20
+              to-transparent
+              dark:via-blue-400/15
+            "
+          />
+
           <div
             className="
               relative
@@ -360,58 +364,7 @@ export default function AdminLayout() {
             <Outlet />
           </div>
         </main>
-
-        {/* Footer */}
-        <footer
-          className="
-            shrink-0
-            border-t
-            border-slate-200/60
-            bg-white/30
-            px-4
-            py-4
-            dark:border-white/[0.06]
-            dark:bg-[#070b14]/40
-            sm:px-6
-            lg:px-8
-          "
-        >
-          <div
-            className="
-              flex
-              flex-col
-              items-center
-              justify-between
-              gap-2
-              sm:flex-row
-            "
-          >
-            <p
-              className="
-                text-center
-                text-xs
-                text-slate-500
-                dark:text-slate-600
-                sm:text-left
-              "
-            >
-              Centa Limited • Management System
-            </p>
-
-            <p
-              className="
-                text-center
-                text-xs
-                text-slate-500
-                dark:text-slate-600
-                sm:text-right
-              "
-            >
-              Secure Administration Panel
-            </p>
           </div>
-        </footer>
-      </div>
-    </div>
-  );
+          </div>
+         );
 }
