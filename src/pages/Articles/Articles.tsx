@@ -939,56 +939,53 @@ const Articles = () => {
 
                   {/* Thumbnail */}
 
-                  <td className="px-6 py-5">
+             <td className="px-6 py-5">
+  {article.thumbnail ? (
+    <div className="relative w-20">
+      <div className="pointer-events-none absolute -inset-1 rounded-xl bg-blue-500/10 opacity-0 blur-md transition-all duration-300 group-hover:opacity-100" />
 
-                    {article.thumbnail ? (
-                      <div className="relative">
-
-                        <div className="pointer-events-none absolute -inset-1 rounded-xl bg-blue-500/10 opacity-0 blur-md transition-all duration-300 group-hover:opacity-100" />
-
-                        <img
-                         src={`${API_BASE_URL}${article.thumbnail}`}
-                          alt={article.title}
-                          className="
-                            relative
-                            h-14
-                            w-20
-                            rounded-xl
-                            border
-                            border-white/[0.08]
-                            object-cover
-                            shadow-lg
-                            transition-transform
-                            duration-300
-                            group-hover:scale-[1.03]
-                          "
-                        />
-
-                      </div>
-                    ) : (
-                      <div
-                        className="
-                          flex
-                          h-14
-                          w-20
-                          items-center
-                          justify-center
-                          rounded-xl
-                          border
-                          border-white/[0.06]
-                          bg-white/[0.025]
-                          text-[10px]
-                          font-medium
-                          uppercase
-                          tracking-wider
-                          text-slate-600
-                        "
-                      >
-                        No Image
-                      </div>
-                    )}
-
-                  </td>
+      <div className="relative aspect-video w-20 overflow-hidden rounded-xl border border-white/[0.08] bg-[#080d1d] shadow-lg">
+        <img
+          src={
+            article.thumbnail.startsWith("http")
+              ? article.thumbnail
+              : `${API_BASE_URL}${article.thumbnail}`
+          }
+          alt={article.title}
+          className="
+            h-full
+            w-full
+            object-cover
+            transition-transform
+            duration-300
+            group-hover:scale-[1.03]
+          "
+        />
+      </div>
+    </div>
+  ) : (
+    <div
+      className="
+        flex
+        aspect-video
+        w-20
+        items-center
+        justify-center
+        rounded-xl
+        border
+        border-white/[0.06]
+        bg-white/[0.025]
+        text-[10px]
+        font-medium
+        uppercase
+        tracking-wider
+        text-slate-600
+      "
+    >
+      No Image
+    </div>
+  )}
+</td>
 
                   {/* Article */}
 
