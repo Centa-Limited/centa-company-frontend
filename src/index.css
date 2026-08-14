@@ -2,6 +2,11 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+
+/* ================================
+   FLOAT
+================================ */
+
 @keyframes float {
   0%,
   100% {
@@ -12,6 +17,7 @@
     transform: translateY(-8px);
   }
 }
+
 
 @keyframes floatSmall {
   0%,
@@ -24,25 +30,70 @@
   }
 }
 
+
+/* ================================
+   CYBER SCAN
+================================ */
+
 @keyframes scan {
   0% {
-    transform: translateY(-20px);
+    transform: translateY(-40px);
     opacity: 0;
   }
 
-  20% {
+  15% {
+    opacity: 0.8;
+  }
+
+  50% {
     opacity: 1;
   }
 
-  80% {
-    opacity: 1;
+  85% {
+    opacity: 0.8;
   }
 
   100% {
-    transform: translateY(120px);
+    transform: translateY(420px);
     opacity: 0;
   }
 }
+
+
+/* ================================
+   BORDER ENERGY
+================================ */
+
+@keyframes borderSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ================================
+   GLOW PULSE
+================================ */
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+
+/* ================================
+   HORIZONTAL FLOW
+================================ */
 
 @keyframes flow {
   0% {
@@ -53,6 +104,11 @@
     transform: translateX(180px);
   }
 }
+
+
+/* ================================
+   SHIMMER
+================================ */
 
 @keyframes shimmer {
   0% {

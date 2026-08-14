@@ -324,29 +324,129 @@ ${formData.message}
           </div>
 
           {/* Actions */}
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+     <div className="mt-9 flex flex-col gap-3 sm:flex-row">
 
-            <a
-              href="#contact"
-              className="group inline-flex items-center justify-center gap-3 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[#030712] transition-all duration-300 hover:-translate-y-0.5 hover:bg-cyan-300"
-            >
-              Start a Project
+  {/* =====================================================
+      PRIMARY — SECURE ACTION
+  ====================================================== */}
+  <a
+    href="#contact"
+    className="
+      group relative isolate
+      inline-flex items-center justify-center
+      gap-3
+      overflow-hidden
+      rounded-xl
+      border border-cyan-300/30
+      bg-cyan-400
+      px-6 py-3.5
+      text-sm font-bold
+      text-[#030712]
+      shadow-[0_0_30px_rgba(34,211,238,0.12)]
+      transition-all duration-500
+      hover:-translate-y-1
+      hover:bg-cyan-300
+      hover:shadow-[0_15px_45px_rgba(34,211,238,0.22)]
+    "
+  >
+    {/* Moving light */}
+    <span
+      className="
+        pointer-events-none
+        absolute inset-y-0 left-[-60%]
+        w-[45%]
+        skew-x-[-20deg]
+        bg-white/30
+        blur-md
+        transition-all duration-700
+        group-hover:left-[120%]
+      "
+    />
 
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
+    <span className="relative z-10">
+      Start a Project
+    </span>
 
-            <a
-              href="#services"
-              className="group inline-flex items-center justify-center gap-3 rounded-xl border border-white/[0.08] bg-[#0b1120]/60 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:border-violet-400/25 hover:bg-violet-400/[0.05]"
-            >
-              Explore Capabilities
+    <ArrowRight
+      className="
+        relative z-10
+        h-4 w-4
+        transition-transform duration-300
+        group-hover:translate-x-1
+      "
+    />
+  </a>
 
-              <span className="text-slate-400 transition-colors group-hover:text-cyan-400">
-                →
-              </span>
-            </a>
 
-          </div>
+  {/* =====================================================
+      SECONDARY — SYSTEM NAVIGATION
+  ====================================================== */}
+  <a
+    href="#services"
+    className="
+      group relative
+      inline-flex items-center justify-center
+      gap-3
+      overflow-hidden
+      rounded-xl
+      border border-white/[0.08]
+      bg-[#07111f]/80
+      px-6 py-3.5
+      text-sm font-semibold
+      text-white
+      backdrop-blur-xl
+      transition-all duration-500
+      hover:-translate-y-1
+      hover:border-cyan-400/25
+      hover:bg-cyan-400/[0.035]
+      hover:shadow-[0_15px_45px_rgba(34,211,238,0.06)]
+    "
+  >
+
+    {/* Hover grid */}
+    <span
+      className="
+        pointer-events-none
+        absolute inset-0
+        opacity-0
+        transition-opacity duration-500
+        group-hover:opacity-100
+        [background-image:linear-gradient(rgba(34,211,238,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.12)_1px,transparent_1px)]
+        [background-size:16px_16px]
+      "
+    />
+
+    {/* Status indicator */}
+    <span
+      className="
+        relative z-10
+        h-1.5 w-1.5
+        rounded-full
+        bg-cyan-400/60
+        transition-all duration-300
+        group-hover:bg-cyan-400
+        group-hover:shadow-[0_0_10px_rgba(34,211,238,0.9)]
+      "
+    />
+
+    <span className="relative z-10">
+      Explore Capabilities
+    </span>
+
+    <ArrowRight
+      className="
+        relative z-10
+        h-4 w-4
+        text-slate-500
+        transition-all duration-300
+        group-hover:translate-x-1
+        group-hover:text-cyan-400
+      "
+    />
+
+  </a>
+
+</div>
         </div>
 
         {/* =========================================================
@@ -1092,77 +1192,13 @@ ${formData.message}
     </div>
 
  
-            {/* Hero Bottom Meta */}
-            <div className="mt-20 grid border-t border-white/[0.06] pt-6 sm:grid-cols-3">
-              <div className="flex items-center gap-3 border-b border-white/[0.06] py-4 sm:border-b-0 sm:border-r sm:py-0">
-                <span className="text-[9px] font-black text-cyan-400">
-                  01
-                </span>
-
-                <span className="text-[9px] uppercase tracking-[0.16em] text-slate-400">
-                  Software Engineering
-                </span>
-              </div>
-
-              <div className="flex items-center gap-3 border-b border-white/[0.06] py-4 sm:border-b-0 sm:px-6">
-                <span className="text-[9px] font-black text-cyan-400">
-                  02
-                </span>
-
-                <span className="text-[9px] uppercase tracking-[0.16em] text-slate-400">
-                  Product Development
-                </span>
-              </div>
-
-              <div className="flex items-center gap-3 py-4 sm:border-l sm:border-white/[0.06] sm:pl-6">
-                <span className="text-[9px] font-black text-cyan-400">
-                  03
-                </span>
-
-                <span className="text-[9px] uppercase tracking-[0.16em] text-slate-400">
-                  Cyber Security
-                </span>
-              </div>
-            </div>
+          
           
           
           
        </section>
 
-        {/* =========================================================
-            VALUE BAR — MODERN SIGNAL STRIP
-        ========================================================== */}
-
-        <section className="border-y border-white/[0.06] bg-white/[0.012]">
-          <div className="mx-auto max-w-7xl px-6 py-10 sm:px-8 lg:px-10">
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {services.slice(0, 3).map((item) => (
-                <div
-                  key={item.number}
-                 className="group rounded-2xl border border-white/[0.06] bg-[#0b1120]/60 p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-400/20 hover:bg-violet-400/[0.025] hover:shadow-[0_20px_60px_rgba(0,0,0,0.25)]"
-                >
-                  <div className="flex items-start justify-between">
-                    <span className="font-mono text-[9px] font-bold tracking-[0.2em] text-slate-700">
-                      / {item.number}
-                    </span>
-
-                    <ArrowRight className="h-3.5 w-3.5 -translate-x-1 text-slate-700 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:text-cyan-400 group-hover:opacity-100" />
-                  </div>
-
-                  <div className="mt-5">
-                    <h3 className="text-sm font-bold tracking-tight text-white">
-                      {item.title}
-                    </h3>
-
-                    <p className="mt-2 max-w-[210px] text-[11px] leading-5 text-slate-400">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+     
 
         {/* =========================================================
             SERVICES
@@ -1193,49 +1229,402 @@ ${formData.message}
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {services.map((service) => {
-                const Icon = service.icon;
+           {services.map((service) => {
+  const Icon = service.icon;
 
-                return (
-                  <article
-                    key={service.number}
-                   className="group relative overflow-hidden rounded-3xl border border-white/[0.07] bg-[#0b1120]/70 p-7 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-violet-400/20 hover:bg-[#0f172a]/80 hover:shadow-[0_20px_70px_rgba(0,0,0,0.35)]"
-                  >
-                   <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-violet-500/[0.055] blur-3xl transition-all duration-500 group-hover:bg-violet-400/[0.09]" />
+  return (
+    <article
+      key={service.number}
+      className="
+        group relative isolate h-full
+        rounded-[30px]
+        p-[1px]
+        overflow-hidden
+        transition-all duration-700
+        hover:-translate-y-2
+        hover:shadow-[0_30px_100px_rgba(34,211,238,0.12)]
+      "
+    >
+      {/* ═══════════════════════════════════
+          ANIMATED ENERGY BORDER
+      ═══════════════════════════════════ */}
+      <div
+        className="
+          absolute inset-[-100%]
+          animate-[spin_8s_linear_infinite]
+          bg-[conic-gradient(from_0deg,transparent_0deg,transparent_250deg,rgba(34,211,238,0.0)_280deg,rgba(34,211,238,0.9)_315deg,rgba(139,92,246,0.8)_340deg,transparent_360deg)]
+          opacity-30
+          transition-opacity duration-500
+          group-hover:opacity-100
+        "
+      />
 
-                    <div className="relative">
-                      <div className="mb-10 flex items-start justify-between">
-                       <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-violet-400/15 bg-violet-400/[0.06]">
-                          <Icon className="h-5 w-5 text-cyan-400" />
-                        </div>
+      {/* Secondary border glow */}
+      <div
+        className="
+          absolute inset-0 rounded-[30px]
+          border border-cyan-400/10
+          transition-all duration-500
+          group-hover:border-cyan-400/30
+        "
+      />
 
-                        <span className="text-4xl font-black tracking-tight text-white/[0.05] transition-colors group-hover:text-cyan-400/10">
-                          {service.number}
-                        </span>
-                      </div>
+      {/* ═══════════════════════════════════
+          CARD BODY
+      ═══════════════════════════════════ */}
+      <div
+        className="
+          relative h-full overflow-hidden
+          rounded-[29px]
+          bg-[#070d18]
+          px-7 py-7
+        "
+      >
 
-                      <h3 className="text-lg font-bold text-white transition-colors group-hover:text-cyan-400">
-                        {service.title}
-                      </h3>
+        {/* ═══════════════════════════════════
+            DIGITAL GRID
+        ═══════════════════════════════════ */}
+        <div
+          className="
+            pointer-events-none absolute inset-0
+            opacity-[0.035]
+            transition-opacity duration-500
+            group-hover:opacity-[0.08]
+            [background-image:linear-gradient(rgba(34,211,238,0.6)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.6)_1px,transparent_1px)]
+            [background-size:28px_28px]
+          "
+        />
 
-                      <p className="mt-3 min-h-[72px] text-sm leading-6 text-slate-500">
-                        {service.description}
-                      </p>
+        {/* ═══════════════════════════════════
+            TOP RIGHT RADIAL GLOW
+        ═══════════════════════════════════ */}
+        <div
+          className="
+            pointer-events-none absolute
+            -right-24 -top-24
+            h-64 w-64 rounded-full
+            bg-cyan-400/[0.035]
+            blur-3xl
+            transition-all duration-700
+            group-hover:scale-150
+            group-hover:bg-cyan-400/[0.09]
+          "
+        />
 
-                      <div className="mt-6 flex flex-wrap gap-2">
-                        {service.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded-full border border-white/[0.06] bg-white/[0.025] px-2.5 py-1 text-[9px] font-semibold text-slate-400"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
+        {/* Bottom violet glow */}
+        <div
+          className="
+            pointer-events-none absolute
+            -bottom-24 -left-24
+            h-56 w-56 rounded-full
+            bg-violet-500/[0.025]
+            blur-3xl
+            transition-all duration-700
+            group-hover:bg-violet-500/[0.08]
+          "
+        />
+
+        {/* ═══════════════════════════════════
+            SCAN LINE
+        ═══════════════════════════════════ */}
+        <div
+          className="
+            pointer-events-none absolute
+            left-0 top-0
+            h-px w-full
+            bg-gradient-to-r
+            from-transparent
+            via-cyan-400
+            to-transparent
+            opacity-0
+            group-hover:animate-[scan_2.5s_ease-in-out_infinite]
+            group-hover:opacity-70
+          "
+        />
+
+        {/* ═══════════════════════════════════
+            CONTENT
+        ═══════════════════════════════════ */}
+        <div className="relative z-10">
+
+          {/* HEADER */}
+          <div className="mb-12 flex items-start justify-between">
+
+            {/* ICON SYSTEM */}
+            <div className="relative">
+
+              {/* Outer ring */}
+              <div
+                className="
+                  absolute -inset-2
+                  rounded-[20px]
+                  border border-cyan-400/0
+                  transition-all duration-500
+                  group-hover:rotate-45
+                  group-hover:border-cyan-400/20
+                "
+              />
+
+              {/* Glow */}
+              <div
+                className="
+                  absolute inset-0
+                  rounded-2xl
+                  bg-cyan-400/20
+                  blur-xl
+                  opacity-0
+                  transition-opacity duration-500
+                  group-hover:opacity-100
+                "
+              />
+
+              {/* Icon box */}
+              <div
+                className="
+                  relative flex h-12 w-12
+                  items-center justify-center
+                  rounded-2xl
+                  border border-white/[0.08]
+                  bg-white/[0.025]
+                  shadow-[inset_0_0_20px_rgba(34,211,238,0.02)]
+                  transition-all duration-500
+                  group-hover:border-cyan-400/40
+                  group-hover:bg-cyan-400/[0.07]
+                "
+              >
+                <Icon
+                  className="
+                    h-5 w-5
+                    text-cyan-400
+                    transition-all duration-500
+                    group-hover:scale-110
+                    group-hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.9)]
+                  "
+                />
+              </div>
+
+              {/* Status dot */}
+              <span
+                className="
+                  absolute -right-1 -top-1
+                  h-2 w-2 rounded-full
+                  bg-cyan-400/30
+                  transition-all duration-500
+                  group-hover:bg-cyan-400
+                  group-hover:shadow-[0_0_12px_rgba(34,211,238,1)]
+                "
+              />
+            </div>
+
+            {/* TECHNICAL NUMBER */}
+            <div className="relative text-right">
+
+              <div
+                className="
+                  font-mono text-[9px]
+                  uppercase tracking-[0.3em]
+                  text-slate-700
+                  transition-colors duration-500
+                  group-hover:text-cyan-400/50
+                "
+              >
+                SYS / 0{service.number}
+              </div>
+
+              <div
+                className="
+                  mt-1 text-4xl
+                  font-black tracking-[-0.1em]
+                  text-white/[0.035]
+                  transition-all duration-500
+                  group-hover:text-cyan-400/[0.13]
+                "
+              >
+                {service.number}
+              </div>
+            </div>
+          </div>
+
+          {/* TITLE */}
+          <h3
+            className="
+              text-xl font-bold
+              tracking-[-0.025em]
+              text-white
+              transition-all duration-300
+              group-hover:text-cyan-300
+              group-hover:drop-shadow-[0_0_14px_rgba(34,211,238,0.15)]
+            "
+          >
+            {service.title}
+          </h3>
+
+          {/* DESCRIPTION */}
+          <p
+            className="
+              mt-3 min-h-[72px]
+              max-w-[95%]
+              text-sm leading-6
+              text-slate-500
+              transition-colors duration-300
+              group-hover:text-slate-400
+            "
+          >
+            {service.description}
+          </p>
+
+          {/* TAGS */}
+          <div className="mt-7 flex flex-wrap gap-2">
+            {service.tags.map((tag) => (
+              <span
+                key={tag}
+                className="
+                  rounded-md
+                  border border-white/[0.06]
+                  bg-white/[0.025]
+                  px-2.5 py-1.5
+                  font-mono text-[8px]
+                  font-semibold
+                  uppercase tracking-[0.08em]
+                  text-slate-500
+                  transition-all duration-300
+                  group-hover:border-cyan-400/15
+                  group-hover:bg-cyan-400/[0.035]
+                  group-hover:text-cyan-400/70
+                "
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* ═══════════════════════════════════
+              SECURITY STATUS
+          ═══════════════════════════════════ */}
+          <div className="mt-8 border-t border-white/[0.06] pt-5">
+
+            <div className="flex items-center justify-between">
+
+              <div className="flex items-center gap-2">
+
+                <span
+                  className="
+                    relative flex h-2 w-2
+                  "
+                >
+                  <span
+                    className="
+                      absolute inline-flex
+                      h-full w-full
+                      animate-ping
+                      rounded-full
+                      bg-cyan-400/40
+                    "
+                  />
+
+                  <span
+                    className="
+                      relative inline-flex
+                      h-2 w-2 rounded-full
+                      bg-cyan-400
+                      shadow-[0_0_8px_rgba(34,211,238,0.8)]
+                    "
+                  />
+                </span>
+
+                <span
+                  className="
+                    font-mono text-[8px]
+                    font-bold uppercase
+                    tracking-[0.25em]
+                    text-slate-600
+                    transition-colors
+                    group-hover:text-cyan-400/70
+                  "
+                >
+                  Secure System
+                </span>
+              </div>
+
+              <span
+                className="
+                  font-mono text-[8px]
+                  tracking-[0.2em]
+                  text-slate-700
+                  transition-colors
+                  group-hover:text-slate-500
+                "
+              >
+                ONLINE
+              </span>
+
+            </div>
+
+            {/* Progress / signal line */}
+            <div className="mt-3 h-[2px] w-full overflow-hidden rounded-full bg-white/[0.04]">
+              <div
+                className="
+                  h-full w-1/3
+                  bg-gradient-to-r
+                  from-cyan-500/0
+                  via-cyan-400/70
+                  to-cyan-400/0
+                  transition-all duration-700
+                  group-hover:w-full
+                "
+              />
+            </div>
+
+          </div>
+        </div>
+
+        {/* ═══════════════════════════════════
+            HUD CORNERS
+        ═══════════════════════════════════ */}
+
+        {/* Top left */}
+        <div
+          className="
+            pointer-events-none absolute left-0 top-0
+            h-7 w-7
+            border-l border-t
+            border-cyan-400/20
+            opacity-50
+            transition-all duration-500
+            group-hover:h-10
+            group-hover:w-10
+            group-hover:border-cyan-400/70
+            group-hover:opacity-100
+          "
+        />
+
+        {/* Bottom right */}
+        <div
+          className="
+            pointer-events-none absolute bottom-0 right-0
+            h-7 w-7
+            border-b border-r
+            border-violet-400/20
+            opacity-50
+            transition-all duration-500
+            group-hover:h-10
+            group-hover:w-10
+            group-hover:border-violet-400/70
+            group-hover:opacity-100
+          "
+        />
+
+        {/* Tiny HUD marks */}
+        <div className="absolute bottom-3 left-7 flex gap-1 opacity-30">
+          <span className="h-[2px] w-2 bg-cyan-400" />
+          <span className="h-[2px] w-1 bg-cyan-400" />
+          <span className="h-[2px] w-3 bg-cyan-400" />
+        </div>
+
+      </div>
+    </article>
+  );
+})}
             </div>
           </div>
         </section>
@@ -1274,81 +1663,458 @@ ${formData.message}
               </div>
             </div>
 
-            {/* Capability System */}
-            <div className="relative mt-16">
-              {/* Connection line */}
-              <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-cyan-400/10 to-transparent lg:block" />
+        {/* Capability System */}
+<div className="relative mt-16">
 
-              <div className="grid gap-3 lg:grid-cols-2">
-                {capabilities.map((item, index) => {
-                  const Icon = item.icon;
+  {/* Central connection line */}
+  <div
+    className="
+      pointer-events-none absolute
+      left-1/2 top-0 hidden
+      h-full w-px
+      -translate-x-1/2
+      bg-gradient-to-b
+      from-transparent
+      via-cyan-400/15
+      to-transparent
+      lg:block
+    "
+  />
 
-                  return (
-                    <article
-                      key={item.title}
-                      className={`group relative overflow-hidden rounded-[1.75rem] border border-white/[0.07] bg-[#0b1120]/70 p-7 backdrop-blur-xl transition-all duration-500 hover:border-violet-400/20 hover:shadow-[0_20px_70px_rgba(0,0,0,0.3)] ${
-                        index === 0 || index === 3
-                          ? "lg:translate-y-8" 
-                          : ""
-                      }`}
+  {/* Central glowing node */}
+  <div
+    className="
+      pointer-events-none absolute
+      left-1/2 top-1/2 hidden
+      -translate-x-1/2 -translate-y-1/2
+      lg:flex
+      h-3 w-3
+      items-center justify-center
+    "
+  >
+    <span className="absolute h-8 w-8 rounded-full bg-cyan-400/5 blur-xl" />
+
+    <span
+      className="
+        relative h-1.5 w-1.5 rounded-full
+        bg-cyan-400
+        shadow-[0_0_15px_rgba(34,211,238,0.9)]
+      "
+    />
+  </div>
+
+  <div className="grid gap-4 lg:grid-cols-2">
+
+    {capabilities.map((item, index) => {
+      const Icon = item.icon;
+
+      return (
+        <article
+          key={item.title}
+          className={`group relative isolate overflow-hidden rounded-[30px] p-[1px] transition-all duration-700 hover:-translate-y-1 hover:shadow-[0_25px_90px_rgba(34,211,238,0.08)] ${
+            index === 0 || index === 3
+              ? "lg:translate-y-8"
+              : ""
+          }`}
+        >
+
+          {/* =====================================
+              ANIMATED BORDER
+          ===================================== */}
+          <div
+            className="
+              absolute inset-[-100%]
+              bg-[conic-gradient(from_0deg,transparent_0deg,transparent_250deg,rgba(34,211,238,0)_280deg,rgba(34,211,238,0.65)_315deg,rgba(139,92,246,0.55)_340deg,transparent_360deg)]
+              opacity-20
+              transition-opacity duration-700
+              group-hover:opacity-100
+              animate-[spin_10s_linear_infinite]
+            "
+          />
+
+          {/* Static border */}
+          <div
+            className="
+              absolute inset-0
+              rounded-[30px]
+              border border-cyan-400/[0.08]
+              transition-all duration-500
+              group-hover:border-cyan-400/25
+            "
+          />
+
+          {/* =====================================
+              CARD BODY
+          ===================================== */}
+          <div
+            className="
+              relative h-full overflow-hidden
+              rounded-[29px]
+              bg-[#080f1d]
+              p-7
+            "
+          >
+
+            {/* Digital grid */}
+            <div
+              className="
+                pointer-events-none absolute inset-0
+                opacity-[0.025]
+                transition-opacity duration-500
+                group-hover:opacity-[0.065]
+                [background-image:linear-gradient(rgba(34,211,238,0.6)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.6)_1px,transparent_1px)]
+                [background-size:30px_30px]
+              "
+            />
+
+            {/* Top glow */}
+            <div
+              className="
+                pointer-events-none absolute
+                -right-24 -top-24
+                h-64 w-64
+                rounded-full
+                bg-cyan-400/[0.025]
+                blur-[90px]
+                transition-all duration-700
+                group-hover:scale-150
+                group-hover:bg-cyan-400/[0.08]
+              "
+            />
+
+            {/* Bottom violet glow */}
+            <div
+              className="
+                pointer-events-none absolute
+                -bottom-28 -left-28
+                h-60 w-60
+                rounded-full
+                bg-violet-500/[0.02]
+                blur-[90px]
+                transition-all duration-700
+                group-hover:bg-violet-500/[0.07]
+              "
+            />
+
+            {/* Scanline */}
+            <div
+              className="
+                pointer-events-none absolute
+                left-0 top-0
+                h-px w-full
+                bg-gradient-to-r
+                from-transparent
+                via-cyan-400
+                to-transparent
+                opacity-0
+                group-hover:animate-[scan_2.5s_ease-in-out_infinite]
+                group-hover:opacity-60
+              "
+            />
+
+            {/* Content */}
+            <div className="relative z-10">
+
+              {/* =====================================
+                  TOP ROW
+              ===================================== */}
+              <div className="flex items-start justify-between">
+
+                <div className="flex items-center gap-4">
+
+                  {/* Icon system */}
+                  <div className="relative">
+
+                    {/* Outer HUD ring */}
+                    <div
+                      className="
+                        absolute -inset-2
+                        rounded-[19px]
+                        border border-cyan-400/0
+                        transition-all duration-500
+                        group-hover:rotate-45
+                        group-hover:border-cyan-400/20
+                      "
+                    />
+
+                    {/* Icon glow */}
+                    <div
+                      className="
+                        absolute inset-0
+                        rounded-2xl
+                        bg-cyan-400/20
+                        blur-xl
+                        opacity-0
+                        transition-opacity duration-500
+                        group-hover:opacity-100
+                      "
+                    />
+
+                    {/* Icon */}
+                    <div
+                      className="
+                        relative flex h-12 w-12
+                        items-center justify-center
+                        rounded-2xl
+                        border border-white/[0.07]
+                        bg-white/[0.025]
+                        transition-all duration-500
+                        group-hover:border-cyan-400/35
+                        group-hover:bg-cyan-400/[0.06]
+                      "
                     >
-                      {/* Ambient glow */}
-                      <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-violet-500/[0.04] blur-[90px] transition-all duration-500 group-hover:bg-violet-400/[0.09]" />
+                      <Icon
+                        className="
+                          h-[18px] w-[18px]
+                          text-cyan-400
+                          transition-all duration-500
+                          group-hover:scale-110
+                          group-hover:drop-shadow-[0_0_9px_rgba(34,211,238,0.9)]
+                        "
+                      />
+                    </div>
 
-                      <div className="relative">
-                        {/* Top row */}
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-violet-400/10 bg-violet-400/[0.05] transition-all group-hover:border-violet-400/25 group-hover:bg-violet-400/10">
-                              <Icon className="h-[18px] w-[18px] text-cyan-400" />
-                            </div>
+                    {/* Live dot */}
+                    <span
+                      className="
+                        absolute -right-1 -top-1
+                        h-2 w-2 rounded-full
+                        bg-cyan-400
+                        shadow-[0_0_8px_rgba(34,211,238,0.8)]
+                        transition-all duration-500
+                        group-hover:shadow-[0_0_14px_rgba(34,211,238,1)]
+                      "
+                    />
+                  </div>
 
-                            <div>
-                              <span className="block font-mono text-[8px] uppercase tracking-[0.2em] text-slate-700">
-                                Layer 0{index + 1}
-                              </span>
+                  {/* Layer information */}
+                  <div>
 
-                              <span className="mt-1 block text-[9px] uppercase tracking-[0.16em] text-slate-400">
-                                Capability
-                              </span>
-                            </div>
-                          </div>
+                    <span
+                      className="
+                        block font-mono
+                        text-[8px]
+                        uppercase
+                        tracking-[0.25em]
+                        text-slate-700
+                        transition-colors duration-500
+                        group-hover:text-cyan-400/60
+                      "
+                    >
+                      Layer 0{index + 1}
+                    </span>
 
-                          <ArrowRight className="h-4 w-4 -translate-x-1 text-slate-700 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:text-cyan-400 group-hover:opacity-100" />
-                        </div>
+                    <span
+                      className="
+                        mt-1 block
+                        text-[9px]
+                        font-semibold
+                        uppercase
+                        tracking-[0.18em]
+                        text-slate-500
+                      "
+                    >
+                      Capability
+                    </span>
 
-                        {/* Main */}
-                        <div className="mt-10">
-                          <h3 className="text-xl font-bold tracking-tight text-white">
-                            {item.title}
-                          </h3>
+                  </div>
+                </div>
 
-                          <p className="mt-3 max-w-lg text-sm leading-6 text-slate-500">
-                            {item.description}
-                          </p>
-                        </div>
+                {/* Arrow */}
+                <ArrowRight
+                  className="
+                    h-4 w-4
+                    -translate-x-2
+                    text-slate-700
+                    opacity-0
+                    transition-all duration-500
+                    group-hover:translate-x-0
+                    group-hover:text-cyan-400
+                    group-hover:opacity-100
+                    group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.7)]
+                  "
+                />
 
-                        {/* Visual system bar */}
-                        <div className="mt-10">
-                          <div className="flex items-center justify-between text-[8px] uppercase tracking-[0.18em] text-slate-700">
-                            <span>Integrated layer</span>
-                            <span>Active</span>
-                          </div>
-
-                          <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/[0.05]">
-                            <div
-                              className="h-full rounded-full bg-gradient-to-r from-cyan-400/20 via-cyan-400/70 to-cyan-400"
-                              style={{
-                                width: `${68 + index * 7}%`,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                  );
-                })}
               </div>
+
+              {/* =====================================
+                  MAIN CONTENT
+              ===================================== */}
+              <div className="mt-10">
+
+                <div className="flex items-end justify-between gap-4">
+
+                  <h3
+                    className="
+                      text-xl font-bold
+                      tracking-[-0.025em]
+                      text-white
+                      transition-all duration-300
+                      group-hover:text-cyan-300
+                    "
+                  >
+                    {item.title}
+                  </h3>
+
+                  <span
+                    className="
+                      font-mono text-[8px]
+                      uppercase tracking-[0.2em]
+                      text-slate-700
+                      transition-colors
+                      group-hover:text-cyan-400/50
+                    "
+                  >
+                    0{index + 1}
+                  </span>
+
+                </div>
+
+                <p
+                  className="
+                    mt-3 max-w-lg
+                    text-sm leading-6
+                    text-slate-500
+                    transition-colors duration-300
+                    group-hover:text-slate-400
+                  "
+                >
+                  {item.description}
+                </p>
+
+              </div>
+
+              {/* =====================================
+                  SYSTEM STATUS
+              ===================================== */}
+              <div className="mt-9">
+
+                <div
+                  className="
+                    mb-2 flex items-center
+                    justify-between
+                    font-mono text-[8px]
+                    uppercase
+                    tracking-[0.18em]
+                    text-slate-700
+                  "
+                >
+                  <span>Integrated Layer</span>
+
+                  <span
+                    className="
+                      flex items-center gap-2
+                      transition-colors
+                      group-hover:text-cyan-400/70
+                    "
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
+                    Active
+                  </span>
+                </div>
+
+                {/* Signal */}
+                <div
+                  className="
+                    relative h-[3px]
+                    overflow-hidden rounded-full
+                    bg-white/[0.04]
+                  "
+                >
+
+                  <div
+                    className="
+                      h-full rounded-full
+                      bg-gradient-to-r
+                      from-cyan-500/10
+                      via-cyan-400/60
+                      to-cyan-400
+                      transition-all duration-700
+                      group-hover:shadow-[0_0_12px_rgba(34,211,238,0.5)]
+                    "
+                    style={{
+                      width: `${68 + index * 7}%`,
+                    }}
+                  />
+
+                  {/* Moving signal */}
+                  <div
+                    className="
+                      absolute inset-y-0 left-0
+                      w-20
+                      bg-gradient-to-r
+                      from-transparent
+                      via-white/30
+                      to-transparent
+                      -translate-x-full
+                      opacity-0
+                      group-hover:animate-[shimmer_1.8s_linear_infinite]
+                      group-hover:opacity-100
+                    "
+                  />
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* =====================================
+                HUD CORNERS
+            ===================================== */}
+
+            {/* Top left */}
+            <div
+              className="
+                pointer-events-none absolute
+                left-0 top-0
+                h-7 w-7
+                border-l border-t
+                border-cyan-400/20
+                opacity-50
+                transition-all duration-500
+                group-hover:h-10
+                group-hover:w-10
+                group-hover:border-cyan-400/70
+                group-hover:opacity-100
+              "
+            />
+
+            {/* Bottom right */}
+            <div
+              className="
+                pointer-events-none absolute
+                bottom-0 right-0
+                h-7 w-7
+                border-b border-r
+                border-violet-400/20
+                opacity-50
+                transition-all duration-500
+                group-hover:h-10
+                group-hover:w-10
+                group-hover:border-violet-400/70
+                group-hover:opacity-100
+              "
+            />
+
+            {/* Tiny technical marks */}
+            <div
+              className="
+                pointer-events-none absolute
+                bottom-4 left-7
+                flex gap-1 opacity-30
+              "
+            >
+              <span className="h-[2px] w-2 bg-cyan-400" />
+              <span className="h-[2px] w-1 bg-cyan-400" />
+              <span className="h-[2px] w-3 bg-cyan-400" />
+            </div>
+
+          </div>
+        </article>
+      );
+    })}
+  </div>
 
               {/* Center System Node */}
               <div className="relative z-10 mx-auto mt-8 hidden w-fit lg:block">
@@ -1375,14 +2141,83 @@ ${formData.message}
                 </p>
               </div>
 
-              <a
-                href="#contact"
-                className="group inline-flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 px-6 py-3.5 text-sm font-bold text-white shadow-[0_10px_40px_rgba(59,130,246,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_15px_50px_rgba(99,102,241,0.3)]"
-              >
-                Build your stack
+            <a
+  href="#contact"
+  className="
+    group
+    relative
+    isolate
+    inline-flex
+    items-center
+    justify-center
+    gap-3
+    overflow-hidden
+    rounded-xl
+    border
+    border-cyan-300/25
+    bg-cyan-400
+    px-6
+    py-3.5
+    text-sm
+    font-bold
+    text-[#030712]
+    shadow-[0_10px_35px_rgba(34,211,238,0.10)]
+    transition-all
+    duration-500
+    hover:-translate-y-1
+    hover:bg-cyan-300
+    hover:shadow-[0_15px_45px_rgba(34,211,238,0.22)]
+  "
+>
+  {/* Moving light */}
+  <span
+    className="
+      pointer-events-none
+      absolute
+      inset-y-0
+      left-[-60%]
+      w-[45%]
+      skew-x-[-20deg]
+      bg-white/35
+      blur-md
+      transition-all
+      duration-700
+      group-hover:left-[120%]
+    "
+  />
 
-                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-              </a>
+  {/* Status */}
+  <span
+    className="
+      relative
+      z-10
+      h-1.5
+      w-1.5
+      rounded-full
+      bg-[#030712]/60
+      transition-all
+      duration-300
+      group-hover:bg-[#030712]
+      group-hover:shadow-[0_0_8px_rgba(3,7,18,0.7)]
+    "
+  />
+
+  <span className="relative z-10">
+    Build Your Stack
+  </span>
+
+  <ArrowRight
+    className="
+      relative
+      z-10
+      h-3.5
+      w-3.5
+      transition-transform
+      duration-300
+      group-hover:translate-x-1
+    "
+  />
+</a>
             </div>
           </div>
         </section>
@@ -1449,122 +2284,703 @@ ${formData.message}
                 </div>
               </div>
 
-              {/* Right — System Visualization */}
-              <div className="relative">
-                {/* Ambient */}
-                <div className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/[0.045] blur-[110px]" />
+  {/* Right — System Visualization */}
+<div className="relative">
 
-               <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.07] bg-[#0b1120]/80 shadow-2xl backdrop-blur-xl">
-                  {/* Header */}
-                  <div className="flex items-center justify-between border-b border-white/[0.06] px-6 py-5">
-                    <div>
-                      <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-slate-700">
-                        CENTA / SYSTEM
-                      </div>
+  {/* Ambient glow */}
+  <div
+    className="
+      pointer-events-none absolute
+      left-1/2 top-1/2
+      h-[520px] w-[520px]
+      -translate-x-1/2
+      -translate-y-1/2
+      rounded-full
+      bg-cyan-400/[0.035]
+      blur-[120px]
+    "
+  />
 
-                      <div className="mt-1 text-xs font-bold text-white">
-                        Technology Architecture
-                      </div>
-                    </div>
+  {/* Secondary ambient */}
+  <div
+    className="
+      pointer-events-none absolute
+      -right-20 -top-20
+      h-64 w-64
+      rounded-full
+      bg-violet-500/[0.04]
+      blur-[100px]
+    "
+  />
 
-                    <div className="flex items-center gap-2 rounded-full border border-emerald-400/10 bg-emerald-400/[0.04] px-2.5 py-1.5">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+  {/* Outer animated border */}
+  <div
+    className="
+      absolute inset-[-1px]
+      rounded-[2rem]
+      bg-[conic-gradient(from_180deg,transparent,rgba(34,211,238,0.45),transparent,rgba(139,92,246,0.35),transparent)]
+      opacity-30
+      blur-[1px]
+      transition-opacity duration-700
+      hover:opacity-80
+    "
+  />
 
-                      <span className="text-[8px] font-bold uppercase tracking-[0.15em] text-emerald-400">
-                        Operational
-                      </span>
-                    </div>
-                  </div>
+  <div
+    className="
+      relative overflow-hidden
+      rounded-[2rem]
+      border border-white/[0.08]
+      bg-[#070d18]/95
+      shadow-[0_30px_100px_rgba(0,0,0,0.35)]
+      backdrop-blur-2xl
+    "
+  >
 
-                  {/* System */}
-                  <div className="relative p-6 sm:p-8">
-                    {/* Connection lines */}
-                    <div className="pointer-events-none absolute left-1/2 top-[105px] hidden h-[230px] w-px -translate-x-1/2 bg-gradient-to-b from-cyan-400/30 via-cyan-400/10 to-transparent sm:block" />
+    {/* =====================================
+        DIGITAL GRID
+    ===================================== */}
+    <div
+      className="
+        pointer-events-none absolute inset-0
+        opacity-[0.035]
+        [background-image:linear-gradient(rgba(34,211,238,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.5)_1px,transparent_1px)]
+        [background-size:32px_32px]
+      "
+    />
 
-                    {/* Core */}
-                    <div className="relative mx-auto flex h-28 w-28 items-center justify-center rounded-full border border-violet-400/20 bg-violet-500/[0.05] shadow-[0_0_90px_rgba(124,58,237,0.12)]">
-                      <div className="absolute inset-2 rounded-full border border-cyan-400/10" />
+    {/* Scanline */}
+    <div
+      className="
+        pointer-events-none absolute
+        left-0 top-0
+        h-px w-full
+        bg-gradient-to-r
+        from-transparent
+        via-cyan-400
+        to-transparent
+        opacity-40
+        animate-[scan_5s_ease-in-out_infinite]
+      "
+    />
 
-                      <div className="text-center">
-                        <div className="text-lg font-black tracking-[0.12em] text-white">
-                          C
-                        </div>
+    {/* =====================================
+        HEADER
+    ===================================== */}
+    <div
+      className="
+        relative z-10
+        flex items-center justify-between
+        border-b border-white/[0.06]
+        px-6 py-5
+      "
+    >
 
-                        <div className="mt-1 font-mono text-[7px] uppercase tracking-[0.2em] text-cyan-400">
-                          Core
-                        </div>
-                      </div>
-                    </div>
+      <div>
 
-                    {/* Modules */}
-                    <div className="relative mt-10 grid grid-cols-2 gap-2">
-                      {[
-                        {
-                          icon: Code2,
-                          title: "Engineering",
-                          value: "Build",
-                        },
-                        {
-                          icon: ShieldCheck,
-                          title: "Security",
-                          value: "Protect",
-                        },
-                        {
-                          icon: Server,
-                          title: "Infrastructure",
-                          value: "Operate",
-                        },
-                        {
-                          icon: Globe2,
-                          title: "Digital Products",
-                          value: "Deliver",
-                        },
-                      ].map((item) => {
-                        const Icon = item.icon;
+        <div
+          className="
+            font-mono text-[8px]
+            uppercase tracking-[0.3em]
+            text-slate-700
+          "
+        >
+          CENTA / SYSTEM / ARCH
+        </div>
 
-                        return (
-                          <div
-                            key={item.title}
-                           className="group rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-400/20 hover:bg-violet-400/[0.025]"
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-400/[0.05]">
-                                <Icon className="h-3.5 w-3.5 text-cyan-400" />
-                              </div>
+        <div
+          className="
+            mt-1.5 text-xs
+            font-bold tracking-tight
+            text-white
+          "
+        >
+          Technology Architecture
+        </div>
 
-                              <ArrowRight className="h-3 w-3 text-slate-800 transition-all group-hover:translate-x-0.5 group-hover:text-cyan-400" />
-                            </div>
+      </div>
 
-                            <div className="mt-5 text-[10px] font-bold text-white">
-                              {item.title}
-                            </div>
+      {/* Operational status */}
+      <div
+        className="
+          flex items-center gap-2
+          rounded-full
+          border border-emerald-400/15
+          bg-emerald-400/[0.035]
+          px-3 py-1.5
+        "
+      >
 
-                            <div className="mt-1 text-[8px] uppercase tracking-[0.16em] text-slate-700">
-                              {item.value}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
+        <span className="relative flex h-1.5 w-1.5">
 
-                    {/* Bottom status */}
-                    <div className="mt-3 flex items-center justify-between rounded-xl border border-white/[0.05] bg-white/[0.015] px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+          <span
+            className="
+              absolute inset-0
+              animate-ping
+              rounded-full
+              bg-emerald-400/50
+            "
+          />
 
-                        <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-slate-400">
-                          All systems connected
-                        </span>
-                      </div>
+          <span
+            className="
+              relative h-1.5 w-1.5
+              rounded-full
+              bg-emerald-400
+              shadow-[0_0_8px_rgba(52,211,153,0.9)]
+            "
+          />
 
-                      <span className="font-mono text-[8px] text-slate-700">
-                        v1.0
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        </span>
+
+        <span
+          className="
+            font-mono text-[7px]
+            font-bold uppercase
+            tracking-[0.18em]
+            text-emerald-400/80
+          "
+        >
+          Operational
+        </span>
+
+      </div>
+    </div>
+
+
+    {/* =====================================
+        SYSTEM VISUALIZATION
+    ===================================== */}
+    <div className="relative z-10 p-6 sm:p-8">
+
+      {/* Technical coordinates */}
+      <div
+        className="
+          absolute right-6 top-6
+          font-mono text-[7px]
+          tracking-[0.2em]
+          text-slate-800
+        "
+      >
+        SYS.CORE / 01
+      </div>
+
+
+      {/* =====================================
+          CORE SYSTEM
+      ===================================== */}
+      <div className="relative mx-auto flex h-40 w-40 items-center justify-center">
+
+        {/* Outer orbit */}
+        <div
+          className="
+            absolute inset-0
+            rounded-full
+            border border-cyan-400/[0.08]
+            animate-[spin_18s_linear_infinite]
+          "
+        />
+
+        {/* Orbit accent */}
+        <div
+          className="
+            absolute inset-[-7px]
+            rounded-full
+            border border-transparent
+            border-t-cyan-400/40
+            border-r-violet-400/20
+            animate-[spin_10s_linear_infinite]
+          "
+        />
+
+        {/* Orbit dot */}
+        <div
+          className="
+            absolute -top-1
+            left-1/2
+            h-2 w-2
+            -translate-x-1/2
+            rounded-full
+            bg-cyan-400
+            shadow-[0_0_14px_rgba(34,211,238,1)]
+          "
+        />
+
+        {/* Inner ring */}
+        <div
+          className="
+            absolute inset-5
+            rounded-full
+            border border-cyan-400/10
+            bg-cyan-400/[0.025]
+            shadow-[inset_0_0_40px_rgba(34,211,238,0.035)]
+          "
+        />
+
+        {/* Core glow */}
+        <div
+          className="
+            absolute inset-12
+            rounded-full
+            bg-cyan-400/[0.08]
+            blur-2xl
+          "
+        />
+
+        {/* Core */}
+        <div
+          className="
+            relative flex
+            h-20 w-20
+            items-center justify-center
+            rounded-full
+            border border-violet-400/25
+            bg-[#0b1424]
+            shadow-[0_0_60px_rgba(124,58,237,0.14)]
+          "
+        >
+
+          <div className="text-center">
+
+            <div
+              className="
+                text-xl font-black
+                tracking-[0.15em]
+                text-white
+                drop-shadow-[0_0_12px_rgba(255,255,255,0.1)]
+              "
+            >
+              C
             </div>
+
+            <div
+              className="
+                mt-1 font-mono
+                text-[6px]
+                uppercase
+                tracking-[0.3em]
+                text-cyan-400
+              "
+            >
+              Core
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      {/* Core label */}
+      <div className="mt-5 text-center">
+
+        <div
+          className="
+            font-mono text-[7px]
+            uppercase tracking-[0.25em]
+            text-slate-700
+          "
+        >
+          Central Architecture
+        </div>
+
+        <div
+          className="
+            mt-1 text-[9px]
+            font-semibold
+            uppercase tracking-[0.15em]
+            text-slate-500
+          "
+        >
+          Unified Technology Layer
+        </div>
+
+      </div>
+
+
+      {/* =====================================
+          CONNECTION SYSTEM
+      ===================================== */}
+      <div
+        className="
+          relative mx-auto
+          mt-8 hidden h-8
+          w-[70%]
+          sm:block
+        "
+      >
+
+        {/* Main line */}
+        <div
+          className="
+            absolute left-0 right-0 top-1/2
+            h-px
+            bg-gradient-to-r
+            from-transparent
+            via-cyan-400/20
+            to-transparent
+          "
+        />
+
+        {/* Moving signal */}
+        <div
+          className="
+            absolute left-0 top-1/2
+            h-px w-16
+            -translate-y-1/2
+            bg-gradient-to-r
+            from-transparent
+            via-cyan-400
+            to-transparent
+            animate-[flow_2.5s_linear_infinite]
+          "
+        />
+
+        {/* Center node */}
+        <div
+          className="
+            absolute left-1/2 top-1/2
+            h-2 w-2
+            -translate-x-1/2
+            -translate-y-1/2
+            rounded-full
+            bg-cyan-400
+            shadow-[0_0_12px_rgba(34,211,238,0.9)]
+          "
+        />
+
+      </div>
+
+
+      {/* =====================================
+          MODULES
+      ===================================== */}
+      <div className="relative grid grid-cols-2 gap-2.5">
+
+        {[
+          {
+            icon: Code2,
+            title: "Engineering",
+            value: "Build",
+          },
+          {
+            icon: ShieldCheck,
+            title: "Security",
+            value: "Protect",
+          },
+          {
+            icon: Server,
+            title: "Infrastructure",
+            value: "Operate",
+          },
+          {
+            icon: Globe2,
+            title: "Digital Products",
+            value: "Deliver",
+          },
+        ].map((item, index) => {
+
+          const Icon = item.icon;
+
+          return (
+            <div
+              key={item.title}
+              className="
+                group/module
+                relative overflow-hidden
+                rounded-2xl
+                border border-white/[0.06]
+                bg-white/[0.02]
+                p-4
+                transition-all duration-500
+                hover:-translate-y-1
+                hover:border-cyan-400/20
+                hover:bg-cyan-400/[0.025]
+                hover:shadow-[0_15px_40px_rgba(34,211,238,0.06)]
+              "
+            >
+
+              {/* Module grid */}
+              <div
+                className="
+                  pointer-events-none absolute inset-0
+                  opacity-0
+                  transition-opacity duration-500
+                  group-hover/module:opacity-100
+                  [background-image:linear-gradient(rgba(34,211,238,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.4)_1px,transparent_1px)]
+                  [background-size:18px_18px]
+                "
+              />
+
+              {/* Module glow */}
+              <div
+                className="
+                  pointer-events-none absolute
+                  -right-8 -top-8
+                  h-20 w-20
+                  rounded-full
+                  bg-cyan-400/[0.04]
+                  blur-2xl
+                  transition-all duration-500
+                  group-hover/module:bg-cyan-400/[0.1]
+                "
+              />
+
+              <div className="relative z-10">
+
+                {/* Top */}
+                <div className="flex items-center justify-between">
+
+                  <div
+                    className="
+                      flex h-9 w-9
+                      items-center justify-center
+                      rounded-xl
+                      border border-cyan-400/10
+                      bg-cyan-400/[0.035]
+                      transition-all duration-500
+                      group-hover/module:border-cyan-400/30
+                      group-hover/module:bg-cyan-400/[0.07]
+                    "
+                  >
+                    <Icon
+                      className="
+                        h-3.5 w-3.5
+                        text-cyan-400
+                        transition-all duration-500
+                        group-hover/module:scale-110
+                        group-hover/module:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]
+                      "
+                    />
+                  </div>
+
+                  <span
+                    className="
+                      font-mono text-[7px]
+                      text-slate-800
+                      transition-colors
+                      group-hover/module:text-cyan-400/50
+                    "
+                  >
+                    0{index + 1}
+                  </span>
+
+                </div>
+
+                {/* Title */}
+                <div
+                  className="
+                    mt-5 text-[10px]
+                    font-bold
+                    text-white
+                    transition-colors
+                    group-hover/module:text-cyan-300
+                  "
+                >
+                  {item.title}
+                </div>
+
+                {/* Action */}
+                <div
+                  className="
+                    mt-1 flex items-center
+                    justify-between
+                  "
+                >
+
+                  <span
+                    className="
+                      text-[8px]
+                      uppercase
+                      tracking-[0.16em]
+                      text-slate-700
+                    "
+                  >
+                    {item.value}
+                  </span>
+
+                  <ArrowRight
+                    className="
+                      h-3 w-3
+                      text-slate-800
+                      transition-all duration-300
+                      group-hover/module:translate-x-0.5
+                      group-hover/module:text-cyan-400
+                    "
+                  />
+
+                </div>
+
+                {/* Module signal */}
+                <div
+                  className="
+                    mt-4 h-[2px]
+                    overflow-hidden
+                    rounded-full
+                    bg-white/[0.04]
+                  "
+                >
+                  <div
+                    className="
+                      h-full
+                      w-1/2
+                      bg-gradient-to-r
+                      from-cyan-400/10
+                      via-cyan-400/50
+                      to-transparent
+                      transition-all duration-500
+                      group-hover/module:w-full
+                    "
+                  />
+                </div>
+
+              </div>
+
+              {/* Corner */}
+              <span
+                className="
+                  pointer-events-none
+                  absolute bottom-0 right-0
+                  h-4 w-4
+                  border-b border-r
+                  border-cyan-400/0
+                  transition-all duration-500
+                  group-hover/module:border-cyan-400/40
+                "
+              />
+
+            </div>
+          );
+        })}
+      </div>
+
+
+      {/* =====================================
+          SYSTEM STATUS
+      ===================================== */}
+      <div
+        className="
+          mt-3 flex items-center
+          justify-between
+          rounded-xl
+          border border-white/[0.05]
+          bg-white/[0.015]
+          px-4 py-3
+        "
+      >
+
+        <div className="flex items-center gap-2">
+
+          <span className="relative flex h-1.5 w-1.5">
+
+            <span
+              className="
+                absolute inset-0
+                animate-ping
+                rounded-full
+                bg-cyan-400/40
+              "
+            />
+
+            <span
+              className="
+                relative h-1.5 w-1.5
+                rounded-full
+                bg-cyan-400
+                shadow-[0_0_7px_rgba(34,211,238,0.9)]
+              "
+            />
+
+          </span>
+
+          <span
+            className="
+              font-mono text-[7px]
+              uppercase
+              tracking-[0.18em]
+              text-slate-500
+            "
+          >
+            All systems connected
+          </span>
+
+        </div>
+
+        <div className="flex items-center gap-3">
+
+          <span
+            className="
+              font-mono text-[7px]
+              uppercase
+              tracking-[0.15em]
+              text-slate-800
+            "
+          >
+            STABLE
+          </span>
+
+          <span
+            className="
+              font-mono text-[7px]
+              text-slate-700
+            "
+          >
+            v1.0
+          </span>
+
+        </div>
+
+      </div>
+
+
+      {/* =====================================
+          FOOTER TELEMETRY
+      ===================================== */}
+      <div
+        className="
+          mt-4 flex items-center
+          justify-between
+          font-mono text-[6px]
+          uppercase tracking-[0.2em]
+          text-slate-800
+        "
+      >
+        <span>SECURE ARCHITECTURE</span>
+
+        <span className="flex items-center gap-1.5">
+          <span className="h-px w-5 bg-cyan-400/20" />
+          CENTA.LTD
+        </span>
+      </div>
+
+    </div>
+
+
+    {/* HUD corners */}
+
+    <div
+      className="
+        pointer-events-none absolute
+        left-0 top-0
+        h-8 w-8
+        border-l border-t
+        border-cyan-400/30
+      "
+    />
+
+    <div
+      className="
+        pointer-events-none absolute
+        right-0 bottom-0
+        h-8 w-8
+        border-b border-r
+        border-violet-400/30
+      "
+    />
+
+  </div>
+</div>
+ </div>
 
             {/* Bottom metrics */}
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
@@ -1978,44 +3394,316 @@ ${formData.message}
               </select>
             </div>
 
-            {/* Message */}
-            <div>
-              <label
-                htmlFor="message"
-                className="mb-2 block text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400"
-              >
-                Project Details *
-              </label>
+{/* Message */}
+<div className="group/message">
+  <div className="mb-2 flex items-end justify-between">
+    <label
+      htmlFor="message"
+      className="
+        block
+        font-mono
+        text-[9px]
+        font-bold
+        uppercase
+        tracking-[0.2em]
+        text-slate-400
+      "
+    >
+      Project Details
+      <span className="ml-1 text-cyan-400">*</span>
+    </label>
 
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={6}
-                value={formData.message}
-                onChange={handleInputChange}
-                placeholder="Tell us about your project, requirements, timeline, or the problem you want to solve..."
-                className="w-full resize-none rounded-xl border border-white/[0.07] bg-white/[0.025] px-4 py-3.5 text-sm leading-6 text-white outline-none transition-all placeholder:text-slate-700 focus:border-cyan-400/30 focus:bg-cyan-400/[0.02] focus:ring-1 focus:ring-cyan-400/10"
-              />
-            </div>
+    <span
+      className="
+        font-mono
+        text-[7px]
+        uppercase
+        tracking-[0.15em]
+        text-slate-700
+      "
+    >
+      SECURE INPUT
+    </span>
+  </div>
 
-            {/* Submit */}
-            <button
-              type="submit"
-              className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 px-6 py-4 text-sm font-bold text-white shadow-[0_10px_40px_rgba(59,130,246,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_15px_50px_rgba(99,102,241,0.3)]"
-            >
-             Send Project Inquiry
+  <div className="relative">
+    {/* Ambient glow */}
+    <div
+      className="
+        pointer-events-none
+        absolute
+        -inset-px
+        rounded-2xl
+        bg-cyan-400/0
+        blur-xl
+        transition-all duration-500
+        focus-within:bg-cyan-400/[0.05]
+      "
+    />
 
-              <Send className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
+    {/* Textarea container */}
+    <div
+      className="
+        relative
+        overflow-hidden
+        rounded-2xl
+        border border-white/[0.07]
+        bg-[#07111f]/80
+        backdrop-blur-xl
+        transition-all duration-500
+        focus-within:border-cyan-400/30
+        focus-within:bg-cyan-400/[0.018]
+        focus-within:shadow-[0_0_35px_rgba(34,211,238,0.05)]
+      "
+    >
+      {/* Technical grid */}
+      <div
+        className="
+          pointer-events-none
+          absolute inset-0
+          opacity-[0.018]
+          [background-image:linear-gradient(rgba(34,211,238,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.5)_1px,transparent_1px)]
+          [background-size:22px_22px]
+        "
+      />
 
-            <p className="text-center text-[9px] leading-5 text-slate-700">
-              Your information will be used only to respond to your project inquiry.
-            </p>
+      {/* Scan line */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-0
+          top-0
+          h-px
+          w-full
+          bg-gradient-to-r
+          from-transparent
+          via-cyan-400
+          to-transparent
+          opacity-0
+          transition-opacity duration-500
+          group-focus-within/message:opacity-40
+        "
+      />
 
-          </form>
+      <textarea
+        id="message"
+        name="message"
+        required
+        rows={6}
+        value={formData.message}
+        onChange={handleInputChange}
+        placeholder="Tell us about your project, requirements, timeline, or the problem you want to solve..."
+        className="
+          relative z-10
+          w-full
+          resize-none
+          bg-transparent
+          px-4
+          py-4
+          text-sm
+          leading-6
+          text-white
+          outline-none
+          placeholder:text-slate-700
+        "
+      />
+
+      {/* Bottom telemetry */}
+      <div
+        className="
+          relative z-10
+          flex items-center
+          justify-between
+          border-t border-white/[0.05]
+          px-4
+          py-2.5
+        "
+      >
+        <div className="flex items-center gap-2">
+          <span
+            className="
+              h-1.5
+              w-1.5
+              rounded-full
+              bg-cyan-400/30
+              transition-all duration-300
+              group-focus-within/message:bg-cyan-400
+              group-focus-within/message:shadow-[0_0_8px_rgba(34,211,238,0.8)]
+            "
+          />
+
+          <span
+            className="
+              font-mono
+              text-[7px]
+              uppercase
+              tracking-[0.18em]
+              text-slate-700
+            "
+          >
+            Input Channel
+          </span>
         </div>
+
+        <span
+          className="
+            font-mono
+            text-[7px]
+            uppercase
+            tracking-[0.15em]
+            text-slate-700
+          "
+        >
+          Encrypted
+        </span>
       </div>
+
+      {/* HUD corners */}
+      <span
+        className="
+          pointer-events-none
+          absolute
+          left-0
+          top-0
+          h-5
+          w-5
+          border-l
+          border-t
+          border-cyan-400/20
+        "
+      />
+
+      <span
+        className="
+          pointer-events-none
+          absolute
+          bottom-0
+          right-0
+          h-5
+          w-5
+          border-b
+          border-r
+          border-cyan-400/20
+        "
+      />
+    </div>
+  </div>
+</div>
+
+{/* Submit */}
+<button
+  type="submit"
+  className="
+    group
+    relative
+    isolate
+    flex
+    w-full
+    items-center
+    justify-center
+    gap-3
+    overflow-hidden
+    rounded-2xl
+    border
+    border-cyan-300/25
+    bg-cyan-400
+    px-6
+    py-4
+    text-sm
+    font-bold
+    text-[#030712]
+    shadow-[0_10px_40px_rgba(34,211,238,0.12)]
+    transition-all
+    duration-500
+    hover:-translate-y-1
+    hover:bg-cyan-300
+    hover:shadow-[0_18px_55px_rgba(34,211,238,0.22)]
+    active:translate-y-0
+  "
+>
+  {/* Moving energy */}
+  <span
+    className="
+      pointer-events-none
+      absolute
+      inset-y-0
+      left-[-60%]
+      w-[45%]
+      skew-x-[-20deg]
+      bg-white/35
+      blur-md
+      transition-all
+      duration-700
+      group-hover:left-[120%]
+    "
+  />
+
+  {/* Status */}
+  <span
+    className="
+      relative
+      z-10
+      h-1.5
+      w-1.5
+      rounded-full
+      bg-[#030712]/60
+      transition-all
+      duration-300
+      group-hover:bg-[#030712]
+      group-hover:shadow-[0_0_8px_rgba(3,7,18,0.7)]
+    "
+  />
+
+  <span className="relative z-10">
+    Send Project Inquiry
+  </span>
+
+  <Send
+    className="
+      relative
+      z-10
+      h-4
+      w-4
+      transition-transform
+      duration-300
+      group-hover:translate-x-1
+      group-hover:-translate-y-0.5
+    "
+  />
+</button>
+
+{/* Privacy */}
+<div className="flex items-center justify-center gap-2">
+  <span
+    className="
+      h-1.5
+      w-1.5
+      rounded-full
+      bg-emerald-400/60
+      shadow-[0_0_7px_rgba(52,211,153,0.5)]
+    "
+  />
+
+  <p
+    className="
+      text-center
+      font-mono
+      text-[7px]
+      uppercase
+      tracking-[0.15em]
+      leading-5
+      text-slate-700
+    "
+  >
+    Project information is used only for secure inquiry response
+  </p>
+</div>
+
+</form>
+</div>
+</div>
+
 
       {/* =====================================================
           CONTACT CHANNELS
