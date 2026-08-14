@@ -17,22 +17,6 @@ export const teamMembers = [
   },
 
   {
-    slug: "ach-nur-wahyudi",
-    name: "Ach. Nur Wahyudi",
-    role: "App Developer",
-    image: "/Media/nur.jpg",
-
-    about:
-      "Berfokus pada pengembangan aplikasi dengan pendekatan modern, scalable, dan user-focused. Memiliki peran dalam membangun solusi aplikasi yang efisien dengan memperhatikan performa, pengalaman pengguna, dan kebutuhan teknologi masa kini.",
-
-    expertise: [
-      "Mobile Development",
-      "Application Architecture",
-      "App Optimization",
-    ],
-  },
-
-  {
     slug: "goestaf-nurhidayat",
     name: "Goestaf Nurhidayat",
     role: "Web Developer x Cyber Security",
@@ -76,6 +60,25 @@ export const teamMembers = [
     ],
   },
 
+  
+  
+  {
+    slug: "ach-nur-wahyudi",
+    name: "Ach. Nur Wahyudi",
+    role: "App Developer",
+    image: "/Media/nur.jpg",
+
+    about:
+      "Berfokus pada pengembangan aplikasi dengan pendekatan modern, scalable, dan user-focused. Memiliki peran dalam membangun solusi aplikasi yang efisien dengan memperhatikan performa, pengalaman pengguna, dan kebutuhan teknologi masa kini.",
+
+    expertise: [
+      "Mobile Development",
+      "Application Architecture",
+      "App Optimization",
+    ],
+  },
+
+  
   {
     slug: "muh-rifqi",
     name: "Muh. Rifqi",
