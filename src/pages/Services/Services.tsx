@@ -985,9 +985,6 @@ const Services = () => {
                 </tr>
               )}
 
-              {/* =====================================================
-                  SERVICE DATA
-              ===================================================== */}
 
               {!loading &&
                 services.map((service) => (
@@ -1003,7 +1000,7 @@ const Services = () => {
                       hover:bg-blue-500/[0.025]
                     "
                   >
-                    {/* SERVICE */}
+                
 
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-4">
@@ -1071,7 +1068,7 @@ const Services = () => {
                       </div>
                     </td>
 
-                    {/* STATUS */}
+                 
 
                     <td className="px-6 py-5">
                       {service.isActive ? (
@@ -1142,7 +1139,7 @@ const Services = () => {
                       )}
                     </td>
 
-                    {/* ORDER */}
+                  
 
                     <td className="px-6 py-5">
                       <span
@@ -1166,12 +1163,10 @@ const Services = () => {
                       </span>
                     </td>
 
-                    {/* ACTIONS */}
 
                     <td className="px-6 py-5">
                       <div className="flex items-center justify-end gap-2">
-                        {/* EDIT */}
-
+                        
                         <button
                           type="button"
                           onClick={() =>
@@ -1222,7 +1217,7 @@ const Services = () => {
                           Edit
                         </button>
 
-                        {/* DELETE */}
+                       
 
                         <button
                           type="button"
@@ -1282,9 +1277,7 @@ const Services = () => {
           </table>
         </div>
 
-        {/* =========================================================
-            PAGINATION
-        ========================================================= */}
+       
 
         <div
           className="
@@ -1382,7 +1375,7 @@ const Services = () => {
               {page}
             </div>
 
-            {/* NEXT */}
+          
 
             <button
               type="button"
