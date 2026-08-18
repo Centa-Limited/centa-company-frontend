@@ -1,5 +1,4 @@
 import { useEffect, useState, } from "react";
-import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import {
@@ -177,28 +176,7 @@ ${formData.message}
     },
   ];
 
-  const capabilities = [
-    {
-      title: "Engineering",
-      description:
-        "Software architecture, backend, frontend, API, database, dan custom application development.",
-    },
-    {
-      title: "Product & UI/UX",
-      description:
-        "Menerjemahkan kebutuhan bisnis menjadi pengalaman digital yang intuitif, modern, dan mudah digunakan.",
-    },
-    {
-      title: "Security",
-      description:
-        "Security testing dan secure development untuk membantu memastikan aplikasi dibangun dengan mempertimbangkan keamanan.",
-    },
-    {
-      title: "Infrastructure",
-      description:
-        "Server, deployment, networking, cloud environment, monitoring, dan infrastructure security.",
-    },
-  ];
+  
 
   const faqs = [
     {
