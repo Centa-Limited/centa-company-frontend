@@ -42,9 +42,9 @@ export default function Approach() {
           AMBIENT BACKGROUND
       ========================================================== */}
 
-      <div className="pointer-events-none absolute right-[-180px] top-[18%] h-[420px] w-[420px] rounded-full bg-cyan-400/[0.035] blur-[140px]" />
+      <div className="pointer-events-none absolute right-[-180px] top-[18%] h-[420px] w-[420px] rounded-full bg-[#15E0ED]/[0.035] blur-[140px]" />
 
-      <div className="pointer-events-none absolute left-[-180px] bottom-[12%] h-[360px] w-[360px] rounded-full bg-blue-500/[0.025] blur-[130px]" />
+      <div className="pointer-events-none absolute left-[-180px] bottom-[12%] h-[360px] w-[360px] rounded-full bg-[#15E0ED]/[0.02] blur-[130px]" />
 
       {/* Fine background grid */}
       <div
@@ -53,7 +53,7 @@ export default function Approach() {
           absolute
           inset-0
           opacity-[0.018]
-          [background-image:linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)]
+          [background-image:linear-gradient(rgba(21,224,237,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(21,224,237,0.5)_1px,transparent_1px)]
           [background-size:64px_64px]
         "
       />
@@ -66,21 +66,18 @@ export default function Approach() {
         {/* Header */}
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
-            <div className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] text-cyan-400">
-              <span className="h-px w-8 bg-cyan-400" />
-              How We Work
-            </div>
+           
 
-            <h2 className="mt-6 text-4xl font-black tracking-[-0.045em] text-white sm:text-5xl lg:text-[60px] lg:leading-[1.02]">
+            <h2 className="mt-6 text-4xl font-black tracking-[-0.045em] text-[#eef2f2] sm:text-5xl lg:text-[60px] lg:leading-[1.02]">
               From concept
-              <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-white via-[#15E0ED] to-white bg-clip-text text-transparent">
                 to production.
               </span>
             </h2>
           </div>
 
           <div className="lg:pl-16 lg:pb-1">
-            <p className="max-w-xl text-sm leading-7 text-slate-400">
+            <p className="max-w-xl text-sm leading-7 text-[#8a9494]">
               A structured delivery model that keeps business goals,
               engineering quality, and security aligned throughout the
               entire lifecycle.
@@ -103,8 +100,8 @@ export default function Approach() {
               bottom-8
               w-px
               bg-gradient-to-b
-              from-cyan-400/40
-              via-cyan-400/10
+              from-[#15E0ED]/40
+              via-[#15E0ED]/10
               to-transparent
               md:left-1/2
               md:-translate-x-1/2
@@ -140,16 +137,16 @@ export default function Approach() {
                     ${
                       isActive
                         ? `
-                          border-cyan-400/35
-                          bg-[#0c1727]/95
-                          shadow-[0_25px_90px_rgba(34,211,238,0.08)]
+                          border-[#15E0ED]/35
+                          bg-[#0b0d0d]/95
+                          shadow-[0_25px_90px_rgba(21,224,237,0.08)]
                         `
                         : `
-                          border-white/[0.07]
-                          bg-[#0b1120]/75
+                          border-[#1a1d1d]
+                          bg-[#0b0d0d]/75
                           hover:-translate-y-0.5
-                          hover:border-cyan-400/25
-                          hover:bg-[#0d1626]/90
+                          hover:border-[#15E0ED]/25
+                          hover:bg-[#0f1414]/90
                           hover:shadow-[0_20px_70px_rgba(0,0,0,0.35)]
                         `
                     }
@@ -157,7 +154,7 @@ export default function Approach() {
                 >
                   {/* =================================================
                       CARD GRID
-                  ================================================= */}
+                  ================================================== */}
 
                   <div
                     className={`
@@ -173,7 +170,7 @@ export default function Approach() {
                           : "group-hover:opacity-100"
                       }
 
-                      [background-image:linear-gradient(rgba(34,211,238,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.055)_1px,transparent_1px)]
+                      [background-image:linear-gradient(rgba(21,224,237,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(21,224,237,0.055)_1px,transparent_1px)]
                       [background-size:28px_28px]
 
                       [mask-image:linear-gradient(to_right,black,transparent_75%)]
@@ -193,15 +190,15 @@ export default function Approach() {
                       h-72
                       w-72
                       rounded-full
-                      bg-cyan-400/[0.025]
+                      bg-[#15E0ED]/[0.025]
                       blur-3xl
                       transition-all
                       duration-700
 
                       ${
                         isActive
-                          ? "bg-cyan-400/[0.10]"
-                          : "group-hover:bg-cyan-400/[0.07]"
+                          ? "bg-[#15E0ED]/[0.10]"
+                          : "group-hover:bg-[#15E0ED]/[0.07]"
                       }
                     `}
                   />
@@ -220,7 +217,7 @@ export default function Approach() {
                       h-[50%]
                       bg-gradient-to-b
                       from-transparent
-                      via-cyan-300/[0.06]
+                      via-[#15E0ED]/[0.06]
                       to-transparent
                       transition-all
                       duration-[1400ms]
@@ -250,8 +247,8 @@ export default function Approach() {
                       duration-500
                       ${
                         isActive
-                          ? "h-5 w-5 border-cyan-300/70"
-                          : "border-cyan-400/20 group-hover:border-cyan-400/60"
+                          ? "h-5 w-5 border-[#15E0ED]/70"
+                          : "border-[#15E0ED]/20 group-hover:border-[#15E0ED]/60"
                       }
                     `}
                   />
@@ -270,8 +267,8 @@ export default function Approach() {
                       duration-500
                       ${
                         isActive
-                          ? "h-5 w-5 border-cyan-300/70"
-                          : "border-cyan-400/20 group-hover:border-cyan-400/60"
+                          ? "h-5 w-5 border-[#15E0ED]/70"
+                          : "border-[#15E0ED]/20 group-hover:border-[#15E0ED]/60"
                       }
                     `}
                   />
@@ -290,8 +287,8 @@ export default function Approach() {
                       duration-500
                       ${
                         isActive
-                          ? "h-5 w-5 border-cyan-300/70"
-                          : "border-cyan-400/20 group-hover:border-cyan-400/60"
+                          ? "h-5 w-5 border-[#15E0ED]/70"
+                          : "border-[#15E0ED]/20 group-hover:border-[#15E0ED]/60"
                       }
                     `}
                   />
@@ -310,8 +307,8 @@ export default function Approach() {
                       duration-500
                       ${
                         isActive
-                          ? "h-5 w-5 border-cyan-300/70"
-                          : "border-cyan-400/20 group-hover:border-cyan-400/60"
+                          ? "h-5 w-5 border-[#15E0ED]/70"
+                          : "border-[#15E0ED]/20 group-hover:border-[#15E0ED]/60"
                       }
                     `}
                   />
@@ -341,8 +338,8 @@ export default function Approach() {
                         duration-300
                         ${
                           isActive
-                            ? "text-cyan-300"
-                            : "text-slate-500 group-hover:text-cyan-400"
+                            ? "text-[#15E0ED]"
+                            : "text-[#5c6666] group-hover:text-[#15E0ED]"
                         }
                       `}
                     >
@@ -360,8 +357,8 @@ export default function Approach() {
                         sm:text-[22px]
                         ${
                           isActive
-                            ? "text-cyan-300 [text-shadow:0_0_25px_rgba(34,211,238,0.25)]"
-                            : "text-white group-hover:text-cyan-300"
+                            ? "text-[#15E0ED] [text-shadow:0_0_25px_rgba(21,224,237,0.25)]"
+                            : "text-[#eef2f2] group-hover:text-[#15E0ED]"
                         }
                       `}
                     >
@@ -389,13 +386,13 @@ export default function Approach() {
                         }
                       `}
                     >
-                      <span className="h-px w-5 bg-cyan-400/40" />
+                      <span className="h-px w-5 bg-[#15E0ED]/40" />
 
-                      <span className="font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-cyan-400/70">
+                      <span className="font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-[#15E0ED]/70">
                         Active
                       </span>
 
-                      <span className="h-1 w-1 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                      <span className="h-1 w-1 rounded-full bg-[#15E0ED] shadow-[0_0_8px_rgba(21,224,237,0.8)]" />
                     </div>
                   </div>
 
@@ -414,23 +411,23 @@ export default function Approach() {
                         justify-center
                         rounded-xl
                         border
-                        bg-[#06101b]
+                        bg-[#060707]
                         transition-all
                         duration-500
 
                         ${
                           isActive
                             ? `
-                              border-cyan-300/60
-                              bg-cyan-400/[0.07]
-                              shadow-[0_0_45px_rgba(34,211,238,0.20)]
+                              border-[#15E0ED]/60
+                              bg-[#15E0ED]/[0.07]
+                              shadow-[0_0_45px_rgba(21,224,237,0.20)]
                             `
                             : `
-                              border-cyan-400/15
-                              shadow-[0_0_30px_rgba(34,211,238,0.05)]
-                              group-hover:border-cyan-400/45
-                              group-hover:bg-cyan-400/[0.05]
-                              group-hover:shadow-[0_0_40px_rgba(34,211,238,0.14)]
+                              border-[#15E0ED]/15
+                              shadow-[0_0_30px_rgba(21,224,237,0.05)]
+                              group-hover:border-[#15E0ED]/45
+                              group-hover:bg-[#15E0ED]/[0.05]
+                              group-hover:shadow-[0_0_40px_rgba(21,224,237,0.14)]
                             `
                         }
                       `}
@@ -443,7 +440,7 @@ export default function Approach() {
                           inset-0
                           rounded-xl
                           opacity-50
-                          [background-image:linear-gradient(rgba(34,211,238,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.10)_1px,transparent_1px)]
+                          [background-image:linear-gradient(rgba(21,224,237,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(21,224,237,0.10)_1px,transparent_1px)]
                           [background-size:9px_9px]
                         "
                       />
@@ -459,8 +456,8 @@ export default function Approach() {
                           duration-500
                           ${
                             isActive
-                              ? "border-cyan-400/30"
-                              : "border-white/[0.06] group-hover:border-cyan-400/20"
+                              ? "border-[#15E0ED]/30"
+                              : "border-white/[0.06] group-hover:border-[#15E0ED]/20"
                           }
                         `}
                       />
@@ -472,14 +469,14 @@ export default function Approach() {
                           h-8
                           w-8
                           rounded-full
-                          bg-cyan-400/[0.06]
+                          bg-[#15E0ED]/[0.06]
                           blur-xl
                           transition-all
                           duration-500
                           ${
                             isActive
-                              ? "bg-cyan-400/20"
-                              : "group-hover:bg-cyan-400/15"
+                              ? "bg-[#15E0ED]/20"
+                              : "group-hover:bg-[#15E0ED]/15"
                           }
                         `}
                       />
@@ -496,14 +493,14 @@ export default function Approach() {
                               duration-500
                               ${
                                 isActive
-                                  ? "scale-150 bg-cyan-200 shadow-[0_0_14px_rgba(103,232,249,0.9)]"
-                                  : "bg-cyan-400/60 group-hover:scale-125 group-hover:bg-cyan-300"
+                                  ? "scale-150 bg-[#eef2f2] shadow-[0_0_14px_rgba(21,224,237,0.9)]"
+                                  : "bg-[#15E0ED]/60 group-hover:scale-125 group-hover:bg-[#15E0ED]"
                               }
                             `}
                           />
 
                           {isActive && (
-                            <div className="absolute inset-[-5px] animate-ping rounded-full border border-cyan-300/30" />
+                            <div className="absolute inset-[-5px] animate-ping rounded-full border border-[#15E0ED]/30" />
                           )}
                         </div>
 
@@ -517,8 +514,8 @@ export default function Approach() {
                             duration-300
                             ${
                               isActive
-                                ? "text-cyan-200 [text-shadow:0_0_12px_rgba(34,211,238,0.6)]"
-                                : "text-cyan-400/70 group-hover:text-cyan-300"
+                                ? "text-[#eef2f2] [text-shadow:0_0_12px_rgba(21,224,237,0.6)]"
+                                : "text-[#15E0ED]/70 group-hover:text-[#15E0ED]"
                             }
                           `}
                         >
@@ -537,7 +534,7 @@ export default function Approach() {
                           duration-500
                           ${
                             isActive
-                              ? "border-cyan-300/20"
+                              ? "border-[#15E0ED]/20"
                               : "border-transparent"
                           }
                         `}
@@ -567,8 +564,8 @@ export default function Approach() {
                         duration-500
                         ${
                           isActive
-                            ? "text-slate-300"
-                            : "text-slate-400 group-hover:text-slate-300"
+                            ? "text-[#eef2f2]/90"
+                            : "text-[#8a9494] group-hover:text-[#eef2f2]/80"
                         }
                       `}
                     >
@@ -588,14 +585,14 @@ export default function Approach() {
                       left-0
                       w-[2px]
                       bg-gradient-to-b
-                      from-cyan-300
-                      via-cyan-400
+                      from-[#15E0ED]
+                      via-[#15E0ED]
                       to-transparent
                       transition-all
                       duration-500
                       ${
                         isActive
-                          ? "opacity-100 shadow-[0_0_12px_rgba(34,211,238,0.8)]"
+                          ? "opacity-100 shadow-[0_0_12px_rgba(21,224,237,0.8)]"
                           : "opacity-0 group-hover:opacity-100"
                       }
                     `}
@@ -615,7 +612,7 @@ export default function Approach() {
                       h-px
                       bg-gradient-to-r
                       from-transparent
-                      via-cyan-400
+                      via-[#15E0ED]
                       to-transparent
                       transition-all
                       duration-700
@@ -662,14 +659,14 @@ export default function Approach() {
                 overflow-hidden
                 rounded-2xl
                 border
-                border-white/[0.06]
-                bg-[#0b1120]/55
+                border-[#1a1d1d]
+                bg-[#0b0d0d]/55
                 p-5
                 backdrop-blur-xl
                 transition-all
                 duration-300
-                hover:border-cyan-400/20
-                hover:bg-cyan-400/[0.025]
+                hover:border-[#15E0ED]/20
+                hover:bg-[#15E0ED]/[0.025]
               "
             >
               {/* Grid */}
@@ -682,25 +679,25 @@ export default function Approach() {
                   transition-opacity
                   duration-500
                   group-hover:opacity-100
-                  [background-image:linear-gradient(rgba(34,211,238,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.05)_1px,transparent_1px)]
+                  [background-image:linear-gradient(rgba(21,224,237,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(21,224,237,0.05)_1px,transparent_1px)]
                   [background-size:24px_24px]
                 "
               />
 
-              <span className="relative font-mono text-[9px] font-bold tracking-[0.15em] text-cyan-400">
+              <span className="relative font-mono text-[9px] font-bold tracking-[0.15em] text-[#15E0ED]">
                 {item.label}
               </span>
 
-              <h3 className="relative mt-4 text-sm font-bold text-white transition-colors group-hover:text-cyan-300">
+              <h3 className="relative mt-4 text-sm font-bold text-[#eef2f2] transition-colors group-hover:text-[#15E0ED]">
                 {item.title}
               </h3>
 
-              <p className="relative mt-2 text-[10px] leading-5 text-slate-500">
+              <p className="relative mt-2 text-[10px] leading-5 text-[#5c6666]">
                 {item.text}
               </p>
 
               {/* Bottom accent */}
-              <div className="absolute bottom-0 left-5 right-5 h-px origin-left scale-x-0 bg-gradient-to-r from-cyan-400/50 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
+              <div className="absolute bottom-0 left-5 right-5 h-px origin-left scale-x-0 bg-gradient-to-r from-[#15E0ED]/50 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
             </div>
           ))}
         </div>

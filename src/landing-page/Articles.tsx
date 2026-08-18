@@ -42,10 +42,7 @@ export default function Articles() {
 
         setArticles(response.data || []);
       } catch (error) {
-        console.error(
-          "Failed load articles:",
-          error
-        );
+        console.error("Failed load articles:", error);
       } finally {
         setLoading(false);
       }
@@ -61,10 +58,7 @@ export default function Articles() {
 
         setCategories(data || []);
       } catch (error) {
-        console.error(
-          "Failed load categories:",
-          error
-        );
+        console.error("Failed load categories:", error);
       } finally {
         setCategoryLoading(false);
       }
@@ -90,55 +84,28 @@ export default function Articles() {
         relative
         min-h-screen
         overflow-hidden
-        bg-[#050816]
+        bg-[#060707]
         text-white
       "
     >
-    
+      {/* =====================================================
+          SUBTLE BACKGROUND
+      ====================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
-          -right-[180px]
-          top-[8%]
-          h-[520px]
-          w-[520px]
-          rounded-full
-          bg-violet-500/[0.10]
-          blur-[120px]
+          inset-0
+          opacity-[0.012]
+          [background-image:linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)]
+          [background-size:64px_64px]
         "
       />
 
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -left-[180px]
-          top-[45%]
-          h-[480px]
-          w-[480px]
-          rounded-full
-          bg-purple-500/[0.08]
-          blur-[120px]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[25%]
-          bottom-[5%]
-          h-[420px]
-          w-[420px]
-          rounded-full
-          bg-cyan-400/[0.045]
-          blur-[140px]
-        "
-      />
-
-      
+      {/* =====================================================
+          HEADER
+      ====================================================== */}
 
       <section className="relative border-b border-white/[0.06]">
         <div
@@ -150,26 +117,66 @@ export default function Articles() {
             lg:px-10
           "
         >
-          <span
-            className="
-              text-[10px]
-              font-bold
-              uppercase
-              tracking-[0.25em]
-              text-cyan-400
-            "
-          >
-            CENTA / ARTICLES
-          </span>
+          {/* Label */}
+
+          <div className="flex items-center gap-3">
+            <span
+              className="
+                flex
+                h-7
+                items-center
+                rounded-full
+                border
+                border-white/[0.08]
+                bg-white/[0.025]
+                px-3
+                text-[9px]
+                font-bold
+                uppercase
+                tracking-[0.2em]
+                text-slate-500
+              "
+            >
+              CENTA / ARTICLES
+            </span>
+
+            <span
+              className="
+                hidden
+                h-px
+                w-12
+                bg-white/[0.08]
+                sm:block
+              "
+            />
+
+            <span
+              className="
+                hidden
+                text-[9px]
+                uppercase
+                tracking-[0.18em]
+                text-slate-600
+                sm:block
+              "
+            >
+              Knowledge & Security
+            </span>
+          </div>
+
+          {/* Heading */}
 
           <h1
             className="
-              mt-5
+              mt-7
               max-w-4xl
               text-5xl
               font-black
-              tracking-[-0.045em]
+              leading-[0.95]
+              tracking-[-0.055em]
+              text-white
               sm:text-6xl
+              lg:text-[72px]
             "
           >
             Engineering knowledge,
@@ -177,25 +184,34 @@ export default function Articles() {
             <span
               className="
                 block
-                bg-gradient-to-r
-                from-cyan-300
-                via-cyan-400
-                to-blue-500
-                bg-clip-text
-                text-transparent
+                text-[#15E0ED]
               "
             >
               secure digital futures.
             </span>
           </h1>
 
+          {/* Accent */}
+
+          <div
+            className="
+              mt-7
+              h-px
+              w-20
+              bg-[#15E0ED]/40
+            "
+          />
+
+          {/* Description */}
+
           <p
             className="
-              mt-6
-              max-w-xl
+              mt-7
+              max-w-2xl
               text-sm
               leading-7
-              text-slate-500
+              text-[#7f8989]
+              sm:text-base
             "
           >
             Explore insights, technical knowledge,
@@ -207,7 +223,7 @@ export default function Articles() {
 
       {/* =====================================================
           CATEGORY FILTER
-      ===================================================== */}
+      ====================================================== */}
 
       <section className="relative">
         <div
@@ -235,7 +251,7 @@ export default function Articles() {
                 setSelectedCategory("all")
               }
               className={`
-                rounded-full
+                rounded-lg
                 border
                 px-4
                 py-2
@@ -249,10 +265,9 @@ export default function Articles() {
                 ${
                   selectedCategory === "all"
                     ? `
-                      border-cyan-400/40
-                      bg-cyan-400/10
-                      text-cyan-300
-                      shadow-[0_0_20px_rgba(34,211,238,0.08)]
+                      border-[#15E0ED]/30
+                      bg-[#15E0ED]/[0.06]
+                      text-[#15E0ED]
                     `
                     : `
                       border-white/[0.08]
@@ -276,12 +291,10 @@ export default function Articles() {
                   key={category.id}
                   type="button"
                   onClick={() =>
-                    setSelectedCategory(
-                      category.id
-                    )
+                    setSelectedCategory(category.id)
                   }
                   className={`
-                    rounded-full
+                    rounded-lg
                     border
                     px-4
                     py-2
@@ -293,13 +306,11 @@ export default function Articles() {
                     duration-300
 
                     ${
-                      selectedCategory ===
-                      category.id
+                      selectedCategory === category.id
                         ? `
-                          border-cyan-400/40
-                          bg-cyan-400/10
-                          text-cyan-300
-                          shadow-[0_0_20px_rgba(34,211,238,0.08)]
+                          border-[#15E0ED]/30
+                          bg-[#15E0ED]/[0.06]
+                          text-[#15E0ED]
                         `
                         : `
                           border-white/[0.08]
@@ -319,7 +330,10 @@ export default function Articles() {
         </div>
       </section>
 
-    
+      {/* =====================================================
+          ARTICLES
+      ====================================================== */}
+
       <section className="relative">
         <div
           className="
@@ -340,7 +354,7 @@ export default function Articles() {
                 items-center
                 justify-center
                 text-sm
-                text-slate-500
+                text-slate-600
               "
             >
               Loading articles...
@@ -353,7 +367,7 @@ export default function Articles() {
             filteredArticles.length === 0 && (
               <div
                 className="
-                  rounded-3xl
+                  rounded-2xl
                   border
                   border-white/[0.06]
                   bg-white/[0.02]
@@ -363,8 +377,7 @@ export default function Articles() {
                 "
               >
                 <p className="text-sm text-slate-500">
-                  No articles available in this
-                  category.
+                  No articles available in this category.
                 </p>
               </div>
             )}
@@ -381,263 +394,244 @@ export default function Articles() {
                   lg:grid-cols-3
                 "
               >
-                {filteredArticles.map(
-                  (article) => {
-                    const categoryName =
-                      article.category?.name ||
-                      "Technology";
+                {filteredArticles.map((article) => {
+                  const categoryName =
+                    article.category?.name ||
+                    "Technology";
 
-                    const articleDate =
-                      article.publishedAt ||
-                      article.createdAt ||
-                      "";
+                  const articleDate =
+                    article.publishedAt ||
+                    article.createdAt ||
+                    "";
 
-                    return (
-                      <article
-                        key={article.id}
-                        className="
-                          group
-                          relative
-                          overflow-hidden
-                          rounded-3xl
-                          border
-                          border-white/[0.07]
-                          bg-white/[0.02]
-                          transition-all
-                          duration-500
-                          hover:-translate-y-1
-                          hover:border-cyan-400/20
-                          hover:bg-white/[0.035]
-                        "
-                      >
-                       
+                  return (
+                    <article
+                      key={article.id}
+                      className="
+                        group
+                        relative
+                        overflow-hidden
+                        rounded-2xl
+                        border
+                        border-white/[0.07]
+                        bg-[#0b0d0d]
+                        transition-all
+                        duration-500
+                        hover:-translate-y-1
+                        hover:border-[#15E0ED]/20
+                        hover:bg-[#0d1010]
+                        hover:shadow-[0_20px_60px_rgba(0,0,0,0.25)]
+                      "
+                    >
+                      {/* =================================================
+                          THUMBNAIL
+                      ================================================== */}
 
+                      {article.thumbnail && (
                         <div
                           className="
-                            pointer-events-none
-                            absolute
-                            -right-24
-                            -top-24
-                            h-56
-                            w-56
-                            rounded-full
-                            bg-cyan-400/[0.10]
-                            opacity-0
-                            blur-[90px]
-                            transition-opacity
-                            duration-700
-                            group-hover:opacity-100
+                            relative
+                            aspect-[16/9]
+                            overflow-hidden
+                            border-b
+                            border-white/[0.06]
+                            bg-[#080a0a]
                           "
-                        />
-
-                        <div
-                          className="
-                            pointer-events-none
-                            absolute
-                            -bottom-24
-                            -left-20
-                            h-48
-                            w-48
-                            rounded-full
-                            bg-violet-500/[0.08]
-                            opacity-0
-                            blur-[90px]
-                            transition-opacity
-                            duration-700
-                            group-hover:opacity-100
-                          "
-                        />
-
-                  
-
-                    {article.thumbnail && (
-  <div
-    className="
-      relative
-      aspect-[16/9]
-      overflow-hidden
-      border-b
-      border-white/[0.06]
-      bg-slate-900
-    "
-  >
-    <img
-      src={
-        article.thumbnail.startsWith("http")
-          ? article.thumbnail
-          : `${API_BASE_URL}${article.thumbnail}`
-      }
-      alt={article.title}
-      className="
-        h-full
-        w-full
-        object-cover
-        transition-transform
-        duration-700
-        group-hover:scale-105
-      "
-    />
-
-    <div
-      className="
-        pointer-events-none
-        absolute
-        inset-0
-        bg-gradient-to-t
-        from-[#050816]/70
-        via-transparent
-        to-transparent
-      "
-    />
-  </div>
-)}
-
-                              
-
-                        <div className="relative p-6">
-                          {/* Category */}
-
-                          <div
+                        >
+                          <img
+                            src={
+                              article.thumbnail.startsWith(
+                                "http"
+                              )
+                                ? article.thumbnail
+                                : `${API_BASE_URL}${article.thumbnail}`
+                            }
+                            alt={article.title}
                             className="
-                              flex
-                              items-center
-                              justify-between
-                              gap-4
-                            "
-                          >
-                            <span
-                              className="
-                                inline-flex
-                                items-center
-                                rounded-full
-                                border
-                                border-cyan-400/20
-                                bg-cyan-400/[0.06]
-                                px-3
-                                py-1
-                                text-[9px]
-                                font-bold
-                                uppercase
-                                tracking-[0.18em]
-                                text-cyan-400
-                              "
-                            >
-                              {categoryName}
-                            </span>
-
-                            <span
-                              className="
-                                h-1.5
-                                w-1.5
-                                shrink-0
-                                rounded-full
-                                bg-cyan-400/70
-                                shadow-[0_0_10px_rgba(34,211,238,0.5)]
-                              "
-                            />
-                          </div>
-
-                          {/* Title */}
-
-                          <h2
-                            className="
-                              mt-5
-                              text-xl
-                              font-bold
-                              leading-snug
-                              tracking-tight
-                              text-white
-                              transition-colors
-                              duration-300
-                              group-hover:text-cyan-50
-                            "
-                          >
-                            {article.title}
-                          </h2>
-
-                          {/* Excerpt */}
-
-                          <p
-                            className="
-                              mt-3
-                              line-clamp-3
-                              text-sm
-                              leading-6
-                              text-slate-500
-                            "
-                          >
-                            {article.excerpt ||
-                              "Explore the latest insight from Centa Limited."}
-                          </p>
-
-                          {/* Divider */}
-
-                          <div
-                            className="
-                              mt-6
-                              h-px
-                              bg-gradient-to-r
-                              from-white/[0.08]
-                              via-white/[0.04]
-                              to-transparent
+                              h-full
+                              w-full
+                              object-cover
+                              transition-transform
+                              duration-700
+                              group-hover:scale-105
                             "
                           />
 
-                          {/* Footer */}
-
                           <div
                             className="
-                              mt-4
-                              flex
+                              pointer-events-none
+                              absolute
+                              inset-0
+                              bg-gradient-to-t
+                              from-[#060707]/80
+                              via-transparent
+                              to-transparent
+                            "
+                          />
+                        </div>
+                      )}
+
+                      {/* =================================================
+                          CONTENT
+                      ================================================== */}
+
+                      <div className="relative p-6">
+                        {/* Category */}
+
+                        <div
+                          className="
+                            flex
+                            items-center
+                            justify-between
+                            gap-4
+                          "
+                        >
+                          <span
+                            className="
+                              inline-flex
                               items-center
-                              justify-between
-                              gap-4
+                              rounded-md
+                              border
+                              border-[#15E0ED]/15
+                              bg-[#15E0ED]/[0.035]
+                              px-2.5
+                              py-1
+                              text-[9px]
+                              font-bold
+                              uppercase
+                              tracking-[0.18em]
+                              text-[#15E0ED]
                             "
                           >
-                            <span
-                              className="
-                                text-[9px]
-                                font-medium
-                                uppercase
-                                tracking-[0.12em]
-                                text-slate-600
-                              "
-                            >
-                              {articleDate
-                                ? new Date(
-                                    articleDate
-                                  ).toLocaleDateString(
-                                    "en-US",
-                                    {
-                                      year: "numeric",
-                                      month:
-                                        "short",
-                                      day: "numeric",
-                                    }
-                                  )
-                                : "CENTA"}
-                            </span>
+                            {categoryName}
+                          </span>
 
-                            <Link
-                              to={`/articles/${article.id}`}
-                              className="
-                                text-xs
-                                font-bold
-                                text-cyan-400
-                                transition-all
-                                duration-300
-                                hover:text-cyan-300
-                                group-hover:translate-x-0.5
-                              "
-                            >
-                              Read Article →
-                            </Link>
-                          </div>
+                          <span
+                            className="
+                              h-1.5
+                              w-1.5
+                              shrink-0
+                              rounded-full
+                              bg-[#15E0ED]/60
+                            "
+                          />
                         </div>
-                      </article>
-                    );
-                  }
-                )}
+
+                        {/* Title */}
+
+                        <h2
+                          className="
+                            mt-5
+                            text-xl
+                            font-bold
+                            leading-snug
+                            tracking-tight
+                            text-white
+                            transition-colors
+                            duration-300
+                            group-hover:text-[#15E0ED]
+                          "
+                        >
+                          {article.title}
+                        </h2>
+
+                        {/* Excerpt */}
+
+                        <p
+                          className="
+                            mt-3
+                            line-clamp-3
+                            text-sm
+                            leading-6
+                            text-[#606a6a]
+                          "
+                        >
+                          {article.excerpt ||
+                            "Explore the latest insight from Centa Limited."}
+                        </p>
+
+                        {/* Divider */}
+
+                        <div
+                          className="
+                            mt-6
+                            h-px
+                            bg-[#1a1d1d]
+                          "
+                        />
+
+                        {/* Footer */}
+
+                        <div
+                          className="
+                            mt-4
+                            flex
+                            items-center
+                            justify-between
+                            gap-4
+                          "
+                        >
+                          <span
+                            className="
+                              text-[9px]
+                              font-medium
+                              uppercase
+                              tracking-[0.12em]
+                              text-[#555f5f]
+                            "
+                          >
+                            {articleDate
+                              ? new Date(
+                                  articleDate
+                                ).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                  }
+                                )
+                              : "CENTA"}
+                          </span>
+
+                          <Link
+                            to={`/articles/${article.id}`}
+                            className="
+                              text-xs
+                              font-bold
+                              text-[#15E0ED]
+                              transition-colors
+                              duration-300
+                              hover:text-white
+                            "
+                          >
+                            Read Article →
+                          </Link>
+                        </div>
+                      </div>
+
+                      {/* =================================================
+                          SUBTLE HOVER EDGE
+                      ================================================== */}
+
+                      <div
+                        className="
+                          pointer-events-none
+                          absolute
+                          inset-y-5
+                          left-0
+                          w-[1px]
+                          rounded-full
+                          bg-[#15E0ED]
+                          opacity-0
+                          transition-opacity
+                          duration-500
+                          group-hover:opacity-60
+                        "
+                      />
+                    </article>
+                  );
+                })}
               </div>
             )}
         </div>

@@ -43,13 +43,8 @@ export default function Navbar() {
    * =====================================================
    * SERVICES NAVIGATION
    * =====================================================
-   *
-   * If already on landing page:
-   *   -> smooth scroll to #services
-   *
-   * If on another public page:
-   *   -> navigate back to landing page with #services
    */
+
   const handleServicesClick = () => {
     setMobileMenuOpen(false);
 
@@ -65,17 +60,39 @@ export default function Navbar() {
     navigate("/#services");
   };
 
- 
- 
- 
- 
+  /*
+   * =====================================================
+   * SECTION NAVIGATION
+   * =====================================================
+   */
+
+  const handleSectionClick = (section: string) => {
+    setMobileMenuOpen(false);
+
+    if (location.pathname === "/") {
+      document.getElementById(section)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+
+      return;
+    }
+
+    navigate(`/#${section}`);
+  };
+
+  /*
+   * =====================================================
+   * NAV LINK CLASS
+   * =====================================================
+   */
 
   const navLinkClass = (path: string) => `
     relative
     flex
     items-center
     h-full
-    text-[13px]
+    text-[14px]
     font-semibold
     tracking-[-0.01em]
     transition-all
@@ -83,8 +100,8 @@ export default function Navbar() {
 
     ${
       isActive(path)
-        ? "text-white"
-        : "text-slate-400 hover:text-white"
+        ? "text-[#eef2f2]"
+        : "text-[#8a9494] hover:text-[#eef2f2]"
     }
   `;
 
@@ -102,9 +119,9 @@ export default function Navbar() {
           isScrolled
             ? `
               border-b
-              border-white/[0.08]
-              bg-slate-950/65
-              shadow-[0_12px_45px_rgba(2,6,23,0.22)]
+              border-[#1a1d1d]
+              bg-[#060707]/90
+              shadow-[0_12px_45px_rgba(0,0,0,0.35)]
               backdrop-blur-2xl
             `
             : `
@@ -113,6 +130,7 @@ export default function Navbar() {
         }
       `}
     >
+
       {/* =====================================================
           AMBIENT NAVBAR GLOW
       ====================================================== */}
@@ -135,7 +153,7 @@ export default function Navbar() {
             h-32
             w-64
             rounded-full
-            bg-cyan-400/[0.06]
+            bg-[#15E0ED]/[0.05]
             blur-3xl
           "
         />
@@ -148,11 +166,15 @@ export default function Navbar() {
             h-36
             w-72
             rounded-full
-            bg-violet-500/[0.055]
+            bg-[#15E0ED]/[0.025]
             blur-3xl
           "
         />
       </div>
+
+      {/* =====================================================
+          MAIN NAVBAR CONTAINER
+      ====================================================== */}
 
       <div
         className="
@@ -162,15 +184,14 @@ export default function Navbar() {
           h-[82px]
           max-w-[1440px]
           items-center
-          justify-between
-          gap-8
           px-6
           lg:px-10
           xl:px-12
         "
       >
+
         {/* =====================================================
-            BRAND
+            BRAND — LEFT
         ====================================================== */}
 
         <Link
@@ -191,7 +212,7 @@ export default function Navbar() {
               text-white
               transition-colors
               duration-300
-              group-hover:text-slate-100
+              group-hover:text-[#eef2f2]
               sm:text-2xl
               lg:text-[27px]
             "
@@ -204,10 +225,10 @@ export default function Navbar() {
               text-xl
               font-black
               tracking-[0.12em]
-              text-cyan-400
+              text-[#15E0ED]
               transition-colors
               duration-300
-              group-hover:text-cyan-300
+              group-hover:text-[#15E0ED]
               sm:text-2xl
               lg:text-[27px]
             "
@@ -216,21 +237,26 @@ export default function Navbar() {
           </span>
         </Link>
 
+
         {/* =====================================================
-            DESKTOP NAVIGATION
+            DESKTOP CENTER NAVIGATION
         ====================================================== */}
 
-       <nav
-  className="
-    relative
-    z-10
-    hidden
-    h-full
-    items-center
-    gap-8
-    lg:flex
-  "
->
+        <nav
+          className="
+            absolute
+            left-1/2
+            top-1/2
+            hidden
+            h-full
+            -translate-x-1/2
+            -translate-y-1/2
+            items-center
+            gap-7
+            lg:flex
+          "
+        >
+
           {/* HOME */}
 
           <Link
@@ -249,12 +275,13 @@ export default function Navbar() {
                   w-5
                   -translate-x-1/2
                   rounded-full
-                  bg-cyan-300
-                  shadow-[0_0_12px_rgba(103,232,249,0.8)]
+                  bg-[#15E0ED]
+                  shadow-[0_0_12px_rgba(21,224,237,0.6)]
                 "
               />
             )}
           </Link>
+
 
           {/* ARTICLES */}
 
@@ -274,12 +301,13 @@ export default function Navbar() {
                   w-5
                   -translate-x-1/2
                   rounded-full
-                  bg-cyan-300
-                  shadow-[0_0_12px_rgba(103,232,249,0.8)]
+                  bg-[#15E0ED]
+                  shadow-[0_0_12px_rgba(21,224,237,0.6)]
                 "
               />
             )}
           </Link>
+
 
           {/* APPROACH */}
 
@@ -299,12 +327,13 @@ export default function Navbar() {
                   w-5
                   -translate-x-1/2
                   rounded-full
-                  bg-cyan-300
-                  shadow-[0_0_12px_rgba(103,232,249,0.8)]
+                  bg-[#15E0ED]
+                  shadow-[0_0_12px_rgba(21,224,237,0.6)]
                 "
               />
             )}
           </Link>
+
 
           {/* TEAM */}
 
@@ -324,16 +353,15 @@ export default function Navbar() {
                   w-5
                   -translate-x-1/2
                   rounded-full
-                  bg-cyan-300
-                  shadow-[0_0_12px_rgba(103,232,249,0.8)]
+                  bg-[#15E0ED]
+                  shadow-[0_0_12px_rgba(21,224,237,0.6)]
                 "
               />
             )}
           </Link>
 
-          {/* =================================================
-              SERVICES
-          ================================================== */}
+
+          {/* SERVICES */}
 
           <button
             type="button"
@@ -345,129 +373,126 @@ export default function Navbar() {
               border-0
               bg-transparent
               p-0
-              text-[13px]
+              text-[14px]
               font-semibold
               tracking-[-0.01em]
-              text-slate-400
+              text-[#8a9494]
               transition-colors
               duration-200
-              hover:text-white
+              hover:text-[#eef2f2]
             "
           >
             Services
           </button>
 
+
           {/* ABOUT */}
 
-          <a
-            href="/#about"
+          <button
+            type="button"
+            onClick={() => handleSectionClick("about")}
             className="
               flex
               h-full
               items-center
-              text-[13px]
+              border-0
+              bg-transparent
+              p-0
+              text-[14px]
               font-semibold
               tracking-[-0.01em]
-              text-slate-400
+              text-[#8a9494]
               transition-colors
               duration-200
-              hover:text-white
+              hover:text-[#eef2f2]
             "
           >
             About
-          </a>
+          </button>
 
-         
-         {/* FAQ */}
 
-    <a
-  href="/#faq"
-  className="
-    flex
-    h-full
-    items-center
-    text-[13px]
-    font-semibold
-    tracking-[-0.01em]
-    text-slate-400
-    transition-colors
-    duration-200
-    hover:text-white
-  "
->
-  FAQ
-</a>
+          {/* FAQ */}
+
+          <button
+            type="button"
+            onClick={() => handleSectionClick("faq")}
+            className="
+              flex
+              h-full
+              items-center
+              border-0
+              bg-transparent
+              p-0
+              text-[14px]
+              font-semibold
+              tracking-[-0.01em]
+              text-[#8a9494]
+              transition-colors
+              duration-200
+              hover:text-[#eef2f2]
+            "
+          >
+            FAQ
+          </button>
+
         </nav>
 
-      
-    {/* CONTACT US */}
 
-<a
-  href="/#contact"
-  className="
-    flex
-    h-full
-    items-center
-    text-[13px]
-    font-semibold
-    tracking-[-0.01em]
-    text-slate-400
-    transition-colors
-    duration-200
-    hover:text-white
-  "
->
-  Contact Us
-</a>
-      
-      
         {/* =====================================================
-            CTA
+            DESKTOP CTA — RIGHT
         ====================================================== */}
 
-        <a
-          href="/#contact"
+        <div
           className="
-            group
+            ml-auto
             hidden
-            items-center
-            gap-2.5
-            rounded-2xl
-            border
-            border-cyan-300/20
-            bg-gradient-to-r
-            from-cyan-300
-            via-cyan-200
-            to-sky-300
-            px-5
-            py-3
-            text-[11px]
-            font-black
-            tracking-wide
-            text-slate-950
-            shadow-[0_8px_30px_rgba(34,211,238,0.12)]
-            transition-all
-            duration-300
-            hover:-translate-y-0.5
-            hover:shadow-[0_12px_40px_rgba(34,211,238,0.22)]
-            lg:inline-flex
+            lg:flex
+            lg:items-center
           "
         >
-          Let's Work Together
-
-          <ArrowRight
+          <button
+            type="button"
+            onClick={() => handleSectionClick("contact")}
             className="
-              h-3.5
-              w-3.5
-              transition-transform
+              group
+              flex
+              items-center
+              gap-2
+              rounded-lg
+              border
+              border-[#15E0ED]/30
+              bg-[#15E0ED]
+              px-5
+              py-3
+              text-[12px]
+              font-black
+              tracking-wide
+              text-[#00171a]
+              shadow-[0_8px_30px_rgba(21,224,237,0.12)]
+              transition-all
               duration-300
-              group-hover:translate-x-1
+              hover:-translate-y-0.5
+              hover:bg-[#15E0ED]
+              hover:shadow-[0_12px_40px_rgba(21,224,237,0.22)]
             "
-          />
-        </a>
+          >
+            Work with us
+
+            <ArrowRight
+              className="
+                h-3.5
+                w-3.5
+                transition-transform
+                duration-300
+                group-hover:translate-x-1
+              "
+            />
+          </button>
+        </div>
+
 
         {/* =====================================================
-            MOBILE BUTTON
+            MOBILE MENU BUTTON — RIGHT
         ====================================================== */}
 
         <button
@@ -481,6 +506,7 @@ export default function Navbar() {
             setMobileMenuOpen((open) => !open)
           }
           className="
+            ml-auto
             flex
             h-11
             w-11
@@ -488,16 +514,16 @@ export default function Navbar() {
             justify-center
             rounded-2xl
             border
-            border-white/[0.09]
-            bg-white/[0.045]
-            text-slate-300
-            shadow-[0_8px_25px_rgba(0,0,0,0.12)]
+            border-[#1a1d1d]
+            bg-[#0b0d0d]
+            text-[#8a9494]
+            shadow-[0_8px_25px_rgba(0,0,0,0.25)]
             backdrop-blur-xl
             transition-all
             duration-300
-            hover:border-cyan-300/20
-            hover:bg-cyan-300/[0.06]
-            hover:text-white
+            hover:border-[#15E0ED]/30
+            hover:bg-[#15E0ED]/[0.06]
+            hover:text-[#eef2f2]
             lg:hidden
           "
         >
@@ -507,7 +533,9 @@ export default function Navbar() {
             <Menu className="h-5 w-5" />
           )}
         </button>
+
       </div>
+
 
       {/* =====================================================
           MOBILE MENU
@@ -517,9 +545,9 @@ export default function Navbar() {
         className={`
           overflow-hidden
           border-t
-          border-white/[0.07]
-          bg-slate-950/90
-          shadow-[0_20px_60px_rgba(2,6,23,0.3)]
+          border-[#1a1d1d]
+          bg-[#060707]/95
+          shadow-[0_20px_60px_rgba(0,0,0,0.4)]
           backdrop-blur-2xl
           transition-all
           duration-300
@@ -527,11 +555,12 @@ export default function Navbar() {
 
           ${
             mobileMenuOpen
-              ? "max-h-[520px] opacity-100"
+              ? "max-h-[calc(100vh-82px)] opacity-100"
               : "max-h-0 border-t-transparent opacity-0"
           }
         `}
       >
+
         <nav
           className="
             mx-auto
@@ -543,6 +572,7 @@ export default function Navbar() {
             py-5
           "
         >
+
           {/* HOME */}
 
           <Link
@@ -551,16 +581,17 @@ export default function Navbar() {
               rounded-2xl
               px-4
               py-3.5
-              text-sm
+              text-[15px]
               font-semibold
-              text-slate-300
+              text-[#8a9494]
               transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
+              hover:bg-[#0b0d0d]
+              hover:text-[#eef2f2]
             "
           >
             Home
           </Link>
+
 
           {/* ARTICLES */}
 
@@ -570,16 +601,17 @@ export default function Navbar() {
               rounded-2xl
               px-4
               py-3.5
-              text-sm
+              text-[15px]
               font-semibold
-              text-slate-300
+              text-[#8a9494]
               transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
+              hover:bg-[#0b0d0d]
+              hover:text-[#eef2f2]
             "
           >
             Articles
           </Link>
+
 
           {/* APPROACH */}
 
@@ -589,16 +621,17 @@ export default function Navbar() {
               rounded-2xl
               px-4
               py-3.5
-              text-sm
+              text-[15px]
               font-semibold
-              text-slate-300
+              text-[#8a9494]
               transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
+              hover:bg-[#0b0d0d]
+              hover:text-[#eef2f2]
             "
           >
             Approach
           </Link>
+
 
           {/* TEAM */}
 
@@ -608,20 +641,19 @@ export default function Navbar() {
               rounded-2xl
               px-4
               py-3.5
-              text-sm
+              text-[15px]
               font-semibold
-              text-slate-300
+              text-[#8a9494]
               transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
+              hover:bg-[#0b0d0d]
+              hover:text-[#eef2f2]
             "
           >
             Team
           </Link>
 
-          {/* =================================================
-              SERVICES
-          ================================================== */}
+
+          {/* SERVICES */}
 
           <button
             type="button"
@@ -631,105 +663,118 @@ export default function Navbar() {
               px-4
               py-3.5
               text-left
-              text-sm
+              text-[15px]
               font-semibold
-              text-slate-300
+              text-[#8a9494]
               transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
+              hover:bg-[#0b0d0d]
+              hover:text-[#eef2f2]
             "
           >
             Services
           </button>
 
+
           {/* ABOUT */}
 
-          <a
-            href="/#about"
+          <button
+            type="button"
+            onClick={() => handleSectionClick("about")}
             className="
+              w-full
               rounded-2xl
               px-4
               py-3.5
-              text-sm
+              text-left
+              text-[15px]
               font-semibold
-              text-slate-300
+              text-[#8a9494]
               transition-all
-              hover:bg-white/[0.045]
-              hover:text-white
+              hover:bg-[#0b0d0d]
+              hover:text-[#eef2f2]
             "
           >
             About
-          </a>
+          </button>
+
 
           {/* FAQ */}
-<a
-  href="/#faq"
-  className="
-    rounded-2xl
-    px-4
-    py-3.5
-    text-sm
-    font-semibold
-    text-slate-300
-    transition-all
-    hover:bg-white/[0.045]
-    hover:text-white
-  "
->
-  FAQ
-</a>
 
-         
-         
-         {/* CONTACT US */}
-
-<a
-  href="/#contact"
-  className="
-    rounded-2xl
-    px-4
-    py-3.5
-    text-sm
-    font-semibold
-    text-slate-300
-    transition-all
-    hover:bg-white/[0.045]
-    hover:text-white
-  "
->
-  Contact Us
-</a>
-         
-          {/* CTA */}
-
-          <a
-            href="/#contact"
+          <button
+            type="button"
+            onClick={() => handleSectionClick("faq")}
             className="
-              mt-2
-              flex
-              items-center
-              justify-center
-              gap-2
+              w-full
               rounded-2xl
-              bg-gradient-to-r
-              from-cyan-300
-              to-sky-300
               px-4
               py-3.5
-              text-sm
-              font-black
-              text-slate-950
-              shadow-[0_10px_35px_rgba(34,211,238,0.12)]
+              text-left
+              text-[15px]
+              font-semibold
+              text-[#8a9494]
               transition-all
-              hover:shadow-[0_12px_40px_rgba(34,211,238,0.2)]
+              hover:bg-[#0b0d0d]
+              hover:text-[#eef2f2]
             "
           >
-            Let's Work Together
+            FAQ
+          </button>
 
-            <ArrowRight className="h-4 w-4" />
-          </a>
+
+          {/* =================================================
+              MOBILE CTA — RIGHT
+          ================================================== */}
+
+          <div
+            className="
+              mt-3
+              flex
+              justify-end
+            "
+          >
+            <button
+              type="button"
+              onClick={() => handleSectionClick("contact")}
+              className="
+                group
+                flex
+                items-center
+                justify-center
+                gap-2
+                rounded-lg
+                border
+                border-[#15E0ED]/30
+                bg-[#15E0ED]
+                px-5
+                py-3
+                text-[15px]
+                font-black
+                text-[#00171a]
+                shadow-[0_10px_35px_rgba(21,224,237,0.12)]
+                transition-all
+                duration-300
+                hover:bg-[#15E0ED]
+                hover:shadow-[0_12px_40px_rgba(21,224,237,0.2)]
+              "
+            >
+              Work With Us
+
+              <ArrowRight
+                className="
+                  h-4
+                  w-4
+                  transition-transform
+                  duration-300
+                  group-hover:translate-x-1
+                "
+              />
+            </button>
+          </div>
+
         </nav>
+
       </div>
+
     </header>
   );
 }

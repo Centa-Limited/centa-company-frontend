@@ -19,7 +19,7 @@ export default function TeamProfile() {
   return (
     <section className="
       min-h-screen
-      bg-[#050b1d]
+     bg-black
       py-24
       px-6
     ">
