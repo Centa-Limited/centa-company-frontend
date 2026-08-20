@@ -10,19 +10,10 @@ export default function Team() {
         relative
         scroll-mt-24
         overflow-hidden
-       bg-[#060707]
+        bg-[#060707]
         text-white
       "
     >
-      {/* =========================================================
-          AMBIENT BACKGROUND
-      ========================================================== */}
-
-     
-      
-
-     
-
       {/* =========================================================
           GLOBAL GRID
       ========================================================== */}
@@ -87,8 +78,6 @@ export default function Team() {
           {/* LEFT */}
 
           <div>
-          
-
             <h2
               className="
                 mt-6
@@ -101,7 +90,7 @@ export default function Team() {
                 lg:text-[60px]
               "
             >
-              People behind
+              Leader behind
               <span
                 className="
                   block
@@ -139,17 +128,22 @@ export default function Team() {
         <div
           className="
             mt-16
-            grid
+            flex
+            flex-wrap
+            justify-center
             gap-5
-            sm:grid-cols-2
-            lg:grid-cols-5
           "
         >
-          {teamMembers.map((member, index) => (
+          {teamMembers.slice(0, 2).map((member, index) => (
             <Link
               key={member.name}
               to={`/team/${member.slug}`}
-              className="group block"
+              className="
+                group
+                block
+                w-full
+                sm:w-[300px]
+              "
             >
               <article
                 className="
@@ -336,32 +330,7 @@ export default function Team() {
                       NUMBER
                   ================================================== */}
 
-                  <div
-                    className="
-                      absolute
-                      right-4
-                      top-4
-                      rounded-lg
-                      border
-                      border-white/[0.08]
-                      bg-black/30
-                      px-2.5
-                      py-1.5
-                      font-mono
-                      text-[8px]
-                      font-bold
-                      tracking-[0.15em]
-                      text-white/45
-                      backdrop-blur-md
-                      transition-all
-                      duration-300
-                      group-hover:border-[#15E0ED]/30
-                      group-hover:text-[#15E0ED]
-                    "
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </div>
-
+                 
                   {/* =================================================
                       STATUS
                   ================================================== */}
@@ -402,7 +371,7 @@ export default function Team() {
                         text-white/55
                       "
                     >
-                      Centa Team
+                     Lead Of Centa
                     </span>
                   </div>
                 </div>

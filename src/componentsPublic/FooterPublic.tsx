@@ -1,10 +1,5 @@
-import {
-  ArrowRight,
-  Globe,
-  LockKeyhole,
-  MessageCircle,
-  ShieldCheck,
-} from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
+
 import {
   Link,
   useLocation,
@@ -59,7 +54,7 @@ export default function FooterPublic() {
     "Software Engineering",
     "Web Development",
     "Application Development",
-    "Cyber Security",
+    "Cyber Security Service",
     "Cloud Infrastructure",
     "Security Advisory",
   ];
@@ -335,46 +330,46 @@ export default function FooterPublic() {
                   WHATSAPP
               ================================================== */}
 
-              <a
-                href="https://wa.me/628786773817"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp Centa Limited"
-                className="
-                  group
-                  inline-flex
-                  items-center
-                  gap-3
-                  rounded-xl
-                  border
-                  border-white/[0.08]
-                  bg-white/[0.025]
-                  px-4
-                  py-3
-                  text-xs
-                  text-white/45
-                  transition-all
-                  duration-300
-                  hover:border-[#15E0ED]/25
-                  hover:bg-[#15E0ED]/[0.05]
-                  hover:text-[#15E0ED]
-                "
-              >
-                <MessageCircle
-                  className="
-                    h-4
-                    w-4
-                    text-white/40
-                    transition-colors
-                    duration-300
-                    group-hover:text-[#15E0ED]
-                  "
-                />
+         <a
+  href="https://wa.me/628786773817"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="WhatsApp Centa Limited"
+  className="
+    group
+    inline-flex
+    items-center
+    gap-3
+    rounded-xl
+    border
+    border-white/[0.08]
+    bg-white/[0.025]
+    px-4
+    py-3
+    text-xs
+    text-white/45
+    transition-all
+    duration-300
+    hover:border-[#15E0ED]/25
+    hover:bg-[#15E0ED]/[0.05]
+    hover:text-[#15E0ED]
+  "
+>
+  <FaWhatsapp
+    className="
+      h-4
+      w-4
+      text-white/40
+      transition-colors
+      duration-300
+      group-hover:text-[#15E0ED]
+    "
+  />
 
-                <span>
-                  +62 878-6773-817
-                </span>
-              </a>
+  <span>
+    +62 878-6773-817
+  </span>
+</a>
             </div>
 
             {/* =================================================
@@ -431,7 +426,7 @@ export default function FooterPublic() {
                 text-white/70
               "
             >
-              COMPANY
+              RESOURCES
             </h4>
 
             <ul
@@ -506,7 +501,7 @@ export default function FooterPublic() {
           </div>
 
           {/* =====================================================
-              CAPABILITIES
+              SERVICES
           ====================================================== */}
 
           <div>
@@ -518,7 +513,7 @@ export default function FooterPublic() {
                 text-white/70
               "
             >
-              CAPABILITIES
+              SERVICES
             </h4>
 
             <ul
@@ -548,17 +543,6 @@ export default function FooterPublic() {
                       hover:text-cyan-300
                     "
                   >
-                    <LockKeyhole
-                      className="
-                        h-4
-                        w-4
-                        shrink-0
-                        text-cyan-400/70
-                        transition-all
-                        duration-300
-                        group-hover:text-cyan-300
-                      "
-                    />
 
                     <span className="transition-colors">
                       {item}
@@ -570,115 +554,7 @@ export default function FooterPublic() {
           </div>
         </div>
 
-        {/* =========================================================
-            CTA
-        ========================================================== */}
-
-        <div
-          className="
-            relative
-            mt-16
-            overflow-hidden
-            rounded-3xl
-            border
-            border-white/[0.08]
-            bg-gradient-to-br
-            from-cyan-400/[0.08]
-            via-white/[0.03]
-            to-transparent
-            p-8
-            backdrop-blur-xl
-          "
-        >
-          <div
-            className="
-              relative
-              flex
-              flex-col
-              gap-6
-              md:flex-row
-              md:items-center
-              md:justify-between
-            "
-          >
-            <div>
-              <div
-                className="
-                  mb-3
-                  flex
-                  items-center
-                  gap-3
-                  text-[10px]
-                  tracking-[0.4em]
-                  text-cyan-400/80
-                "
-              >
-                <ShieldCheck className="h-4 w-4" />
-
-                SECURE PROJECT INITIATION
-              </div>
-
-              <h3
-                className="
-                  text-xl
-                  font-bold
-                  text-white
-                "
-              >
-                Build secure digital systems
-              </h3>
-
-              <p
-                className="
-                  mt-3
-                  max-w-xl
-                  text-sm
-                  text-white/45
-                "
-              >
-                Tell us your challenge.
-                Our engineering and security team
-                will design the right solution.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() =>
-                handleSectionNavigation("contact")
-              }
-              className="
-                group
-                inline-flex
-                items-center
-                gap-3
-                rounded-2xl
-                border
-                border-cyan-300/20
-                bg-cyan-300/10
-                px-6
-                py-3
-                text-sm
-                font-semibold
-                text-cyan-200
-                transition
-                hover:bg-cyan-300/20
-              "
-            >
-              Start a project
-
-              <ArrowRight
-                className="
-                  h-4
-                  w-4
-                  transition
-                  group-hover:translate-x-1
-                "
-              />
-            </button>
-          </div>
-        </div>
-
+    
         {/* =========================================================
             BOTTOM
         ========================================================== */}
@@ -710,25 +586,7 @@ export default function FooterPublic() {
               gap-5
             "
           >
-            <span
-              className="
-                flex
-                items-center
-                gap-2
-              "
-            >
-              <Globe className="h-3.5 w-3.5" />
-
-              Indonesia
-            </span>
-
-            <span
-              className="
-                text-cyan-400/70
-              "
-            >
-              Build. Secure. Scale.
-            </span>
+          
           </div>
         </div>
       </div>

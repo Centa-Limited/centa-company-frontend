@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
 const process = [
   {
     step: "01",
@@ -35,6 +34,29 @@ const process = [
 
 export default function Approach() {
   const [activeProcess, setActiveProcess] = useState<string | null>(null);
+const [,setVisibleCards] = useState(false);
+
+const processRef = useRef<HTMLDivElement | null>(null);
+
+useEffect(() => {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setVisibleCards(true);
+        observer.disconnect();
+      }
+    },
+    {
+      threshold: 0.15,
+    }
+  );
+
+  if (processRef.current) {
+    observer.observe(processRef.current);
+  }
+
+  return () => observer.disconnect();
+}, []);
 
   return (
     <section className="relative scroll-mt-24 overflow-hidden">
@@ -108,7 +130,10 @@ export default function Approach() {
             "
           />
 
-          <div className="space-y-4">
+<div
+  ref={processRef}
+  className="space-y-4"
+>
             {process.map((item, index) => {
               const isActive = activeProcess === item.step;
 

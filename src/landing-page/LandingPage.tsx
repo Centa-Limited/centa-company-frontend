@@ -1,92 +1,155 @@
-import { useEffect, useState, } from "react";
+import { useEffect, useRef, useState } from "react";
+import {
+  FaWhatsapp,
+  FaInstagram,
+  FaEnvelope,
+  FaGithub,
+} from "react-icons/fa6";
 import toast from "react-hot-toast";
 
 import {
   sendContactMessage,
 } from "../services/contact.service";
+
 import {
   ArrowRight,
-  Check,
   ChevronDown,
-
-  Globe2,
-  Mail,
-  MessageCircle,
-
-  Phone,
-  Send,
-
-
-  User,
 } from "lucide-react";
 
+function useReveal() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(element);
+        }
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -60px 0px",
+      }
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, visible };
+}
+
 export default function LandingPage() {
+  /* =====================================================
+     REVEAL
+  ====================================================== */
 
-const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const servicesReveal = useReveal();
+  const whyReveal = useReveal();
+  const contactReveal = useReveal();
 
+  /* =====================================================
+     FAQ STATE
+  ====================================================== */
 
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  const [faqVisible, setFaqVisible] = useState(false);
 
+  const faqSectionRef = useRef<HTMLDivElement | null>(null);
 
+  /* =====================================================
+     FAQ REVEAL OBSERVER
+  ====================================================== */
 
+  useEffect(() => {
+    const element = faqSectionRef.current;
 
+    if (!element) return;
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setFaqVisible(true);
+          observer.unobserve(element);
+        }
+      },
+      {
+        threshold: 0.15,
+      }
+    );
 
-useEffect(() => {
-  const id = window.location.hash.replace("#", "");
+    observer.observe(element);
 
-  if (!id) return;
+    return () => observer.disconnect();
+  }, []);
 
-  const target = document.getElementById(id);
+  /* =====================================================
+     HASH SCROLL
+  ====================================================== */
 
-  if (target) {
-    setTimeout(() => {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 100);
-  }
-}, []);
+  useEffect(() => {
+    const id = window.location.hash.replace("#", "");
+
+    if (!id) return;
+
+    const target = document.getElementById(id);
+
+    if (target) {
+      setTimeout(() => {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100);
+    }
+  }, []);
+
+  /* =====================================================
+     CONTACT FORM
+  ====================================================== */
+
   const [formData, setFormData] = useState({
-  name: "",
-  email: "",
-  phone: "",
-  company: "",
-  service: "",
-  message: "",
-});
-
-const handleInputChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-) => {
-  setFormData({
-    ...formData,
-    [e.target.name]: e.target.value,
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    service: "",
+    message: "",
   });
-};
 
-const handleSubmit = async (
-  e: React.FormEvent
-) => {
-  e.preventDefault();
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  
+  const handleSubmit = async (
+    e: React.FormEvent
+  ) => {
+    e.preventDefault();
 
-
-  try {
-
-    await sendContactMessage({
-
-      name: formData.name,
-
-      email: formData.email,
-
-      subject:
-        `${formData.service || "Project Inquiry"} - ${formData.company || "Website Visitor"}`,
-
-      message:
-        `
+    try {
+      await sendContactMessage({
+        name: formData.name,
+        email: formData.email,
+        subject:
+          `${formData.service || "Project Inquiry"} - ${
+            formData.company || "Website Visitor"
+          }`,
+        message: `
 Phone: ${formData.phone}
 
 Company:
@@ -98,45 +161,39 @@ ${formData.service}
 Project Details:
 ${formData.message}
         `.trim(),
+      });
 
-    });
+      toast.success(
+        "Message sent successfully. Our team will contact you soon."
+      );
 
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        service: "",
+        message: "",
+      });
+    } catch (error: any) {
+      console.error(
+        "CONTACT ERROR:",
+        error
+      );
 
-    toast.success(
-      "Message sent successfully. Our team will contact you soon."
-    );
+      toast.error(
+        error?.response?.data?.message ??
+          "Failed sending message."
+      );
+    }
+  };
 
+  /* =====================================================
+     SERVICES
+  ====================================================== */
 
-    setFormData({
-      name:"",
-      email:"",
-      phone:"",
-      company:"",
-      service:"",
-      message:"",
-    });
-
-
-  } catch(error:any){
-
-    console.error(
-      "CONTACT ERROR:",
-      error
-    );
-
-
-    toast.error(
-      error?.response?.data?.message ??
-      "Failed sending message."
-    );
-
-  }
-
-};
   const services = [
     {
-      
-      
       title: "Software Development",
       description:
         "Pengembangan software custom yang dirancang sesuai kebutuhan bisnis, workflow, dan skala organisasi.",
@@ -155,8 +212,6 @@ ${formData.message}
       tags: ["Application", "Integration", "Automation"],
     },
     {
-      
-      
       title: "Cyber Security",
       description:
         "Mengidentifikasi dan mengurangi risiko keamanan melalui security assessment, penetration testing, dan hardening.",
@@ -169,14 +224,16 @@ ${formData.message}
       tags: ["Cloud", "Network", "Infrastructure"],
     },
     {
-      title: "Security Advisory",
+      title: "Game Development",
       description:
-        "Pendampingan teknis untuk membantu organisasi memahami risiko, meningkatkan security posture, dan mengambil keputusan yang tepat.",
-      tags: ["Advisory", "Risk", "Compliance"],
+        "Pengalaman interaktif dan permainan yang dikembangkan dengan teknologi modern, mulai dari konsep dan rekayasa hingga produk digital yang matang.",
+      tags: ["Game", "Development", "Integration"],
     },
   ];
 
-  
+  /* =====================================================
+     FAQ DATA
+  ====================================================== */
 
   const faqs = [
     {
@@ -195,54 +252,72 @@ ${formData.message}
         "Ya. Kami dapat membantu mengembangkan aplikasi berdasarkan kebutuhan bisnis, mulai dari perancangan konsep, UI/UX, backend, frontend, database, API integration, deployment, hingga security review.",
     },
     {
-      question: "Apakah security testing bisa dilakukan pada aplikasi yang sudah ada?",
+      question:
+        "Apakah security testing bisa dilakukan pada aplikasi yang sudah ada?",
       answer:
         "Bisa. Kami dapat melakukan assessment terhadap aplikasi atau infrastructure yang sudah berjalan untuk membantu mengidentifikasi vulnerability, configuration issue, dan risiko keamanan lainnya.",
     },
   ];
-const headings = [
-  "Build secure digital products with confidence",
-  "Protect your business from modern cyber threats",
-  "Create software that grows with your needs",
-  "Empower your team with reliable technology",
-];
 
-const [headingIndex, setHeadingIndex] = useState(0);
-const [charIndex, setCharIndex] = useState(0);
-const [isDeleting, setIsDeleting] = useState(false);
+  /* =====================================================
+     HERO TYPING
+  ====================================================== */
 
-useEffect(() => {
-  const currentHeading = headings[headingIndex];
+  const headings = [
+    "Build secure digital products with confidence",
+    "Protect your business from modern cyber threats",
+    "Create software that grows with your needs",
+    "Empower your team with reliable technology",
+  ];
 
-  let speed = isDeleting ? 40 : 80;
+  const [headingIndex, setHeadingIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  if (!isDeleting && charIndex === currentHeading.length) {
-    speed = 2000;
-  }
+  useEffect(() => {
+    const currentHeading = headings[headingIndex];
 
-  const timeout = setTimeout(() => {
-    if (!isDeleting) {
-      if (charIndex < currentHeading.length) {
-        setCharIndex((prev) => prev + 1);
-      } else {
-        setIsDeleting(true);
-      }
-    } else {
-      if (charIndex > 0) {
-        setCharIndex((prev) => prev - 1);
-      } else {
-        setIsDeleting(false);
-        setHeadingIndex((prev) => (prev + 1) % headings.length);
-      }
+    let speed = isDeleting ? 40 : 80;
+
+    if (
+      !isDeleting &&
+      charIndex === currentHeading.length
+    ) {
+      speed = 2000;
     }
-  }, speed);
 
-  return () => clearTimeout(timeout);
-}, [charIndex, headingIndex, isDeleting]);
-  
-    return (
-  <div className="min-h-screen overflow-hidden text-white">
-     
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        if (charIndex < currentHeading.length) {
+          setCharIndex((prev) => prev + 1);
+        } else {
+          setIsDeleting(true);
+        }
+      } else {
+        if (charIndex > 0) {
+          setCharIndex((prev) => prev - 1);
+        } else {
+          setIsDeleting(false);
+          setHeadingIndex(
+            (prev) => (prev + 1) % headings.length
+          );
+        }
+      }
+    }, speed);
+
+    return () => clearTimeout(timeout);
+  }, [
+    charIndex,
+    headingIndex,
+    isDeleting,
+  ]);
+
+  return (
+    <div className="min-h-screen overflow-hidden text-white">
+
+      {/* =====================================================
+          ISI LANDING PAGE KAMU LANJUT DI SINI
+      ====================================================== */}
 
     <main>
   {/* =========================================================
@@ -261,7 +336,8 @@ useEffect(() => {
     px-6
     py-24
     sm:px-8
-    lg:px-12
+    lg:px-12Cannot find name 'faqSectionRef'.ts(2304)
+any
   "
 >
   {/* =========================================================
@@ -312,18 +388,7 @@ useEffect(() => {
     "
   />
 
-  {/* Background grid */}
-
-  <div
-    className="
-      pointer-events-none
-      absolute
-      inset-0
-      opacity-[0.015]
-      [background-image:linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)]
-      [background-size:64px_64px]
-    "
-  />
+  
 
   {/* =========================================================
       HERO CONTAINER
@@ -639,12 +704,12 @@ useEffect(() => {
     className="
       pointer-events-none
       absolute
-      -right-[220px]
+      -left-[220px]
       top-[12%]
       h-[520px]
       w-[520px]
       rounded-full
-      bg-cyan-400/[0.035]
+      bg-cyan-400/[0.08]
       blur-[150px]
     "
   />
@@ -664,19 +729,7 @@ useEffect(() => {
     "
   />
 
-  {/* Section grid */}
-  <div
-    aria-hidden="true"
-    className="
-      pointer-events-none
-      absolute
-      inset-0
-      opacity-[0.012]
-      [background-image:linear-gradient(rgba(34,211,238,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.35)_1px,transparent_1px)]
-      [background-size:64px_64px]
-      [mask-image:linear-gradient(to_bottom,black,transparent_85%)]
-    "
-  />
+  
 
   <div className="relative mx-auto max-w-7xl px-6 py-24 sm:px-8 lg:px-10 lg:py-32">
 
@@ -736,594 +789,619 @@ useEffect(() => {
 
 </div>
 
-    {/* =========================================================
-        SERVICE GRID
-    ========================================================== */}
+  {/* =========================================================
+    SERVICE GRID
+========================================================== */}
 
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+<div
+  ref={servicesReveal.ref}
+  className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+>
+  {services.map((service, index) => {
 
-   {services.map((service) => {
-  
+    const fromLeft = index % 2 === 0;
 
-  return (
-    <article
-     
-    className="
-  group
-  relative
-  isolate
-  h-full
-  overflow-hidden
-  rounded-[1.75rem]
-  border
-  border-[#1a1d1d]
-  bg-[#0b0d0d]/75
-  p-7
-  backdrop-blur-xl
-  transition-all
-  duration-500
-  hover:-translate-y-0.5
-  hover:border-[#15E0ED]/25
-  hover:bg-[#0f1414]/90
-  hover:shadow-[0_20px_70px_rgba(0,0,0,0.35)]
+    return (
+      <article
+        key={service.title}
+        style={{
+          transitionDelay: servicesReveal.visible
+            ? `${index * 90}ms`
+            : "0ms",
+        }}
+        className={`
+          group
+          relative
+          isolate
+          h-full
+          overflow-hidden
+          rounded-[1.75rem]
+          border
+          border-[#1a1d1d]
+          bg-[#0b0d0d]/75
+          p-7
+          backdrop-blur-xl
 
-      "
-    >
-
-      {/* Subtle Grid */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          opacity-[0.025]
-          transition-opacity
-          duration-500
-          group-hover:opacity-[0.05]
-          [background-image:linear-gradient(rgba(34,211,238,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.4)_1px,transparent_1px)]
-          [background-size:32px_32px]
-        "
-      />
-
-      {/* Glow */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          -right-16
-          -top-16
-          h-40
-          w-40
-          rounded-full
-          bg-cyan-400/[0.04]
-          blur-3xl
           transition-all
           duration-700
-          group-hover:scale-125
-          group-hover:bg-cyan-400/[0.08]
-        "
-      />
+          ease-[cubic-bezier(0.22,1,0.36,1)]
 
-     {/* Content */}
-<div className="relative z-10">
+          hover:-translate-y-0.5
+          hover:border-[#15E0ED]/25
+          hover:bg-[#0f1414]/90
+          hover:shadow-[0_20px_70px_rgba(0,0,0,0.35)]
 
-  {/* Title */}
-  <h3
-    className="
-      text-xl
-      font-bold
-      tracking-[-0.02em]
-      text-white
-      transition-colors
-      duration-300
-      group-hover:text-cyan-300
-    "
-  >
-    {service.title}
-  </h3>
-
-  {/* Description */}
-  <p
-    className="
-      mt-3
-      text-[11px]
-      leading-5
-      text-slate-400
-      transition-colors
-      duration-300
-      group-hover:text-slate-300
-    "
-  >
-    {service.description}
-  </p>
-{/* =====================================================
-    CONTACT CTA
-===================================================== */}
-
-<div
-  className="
-    mt-6
-    flex
-    items-center
-    justify-between
-    border-t
-    border-white/[0.06]
-    pt-4
-  "
->
- 
-  <a
-    href="#contact"
-    onClick={(event) => {
-      event.stopPropagation();
-    }}
-    className="
-      group/contact
-      inline-flex
-      items-center
-      gap-2
-      rounded-lg
-      border
-      border-cyan-400/20
-      bg-cyan-400/[0.04]
-      px-3
-      py-2
-      font-mono
-      text-[8px]
-      font-bold
-      uppercase
-      tracking-[0.14em]
-      text-cyan-400
-      transition-all
-      duration-300
-      hover:border-cyan-400/40
-      hover:bg-cyan-400/[0.08]
-      hover:text-cyan-300
-      hover:shadow-[0_0_20px_rgba(34,211,238,0.10)]
-    "
-  >
-    Contact Us
-
-    <ArrowRight
-      className="
-        h-3
-        w-3
-        transition-transform
-        duration-300
-        group-hover/contact:translate-x-1
-      "
-    />
-  </a>
-</div>
-
-</div>
-
-{/* HUD Corner */}
-<div
-  className="
-    pointer-events-none
-    absolute
-    left-0
-    top-0
-    h-6
-    w-6
-    border-l
-    border-t
-    border-cyan-400/10
-    transition-all
-    duration-500
-    group-hover:h-8
-    group-hover:w-8
-    group-hover:border-cyan-400/40
-  "
-/>
-
-<div
-  className="
-    pointer-events-none
-    absolute
-    bottom-0
-    right-0
-    h-6
-    w-6
-    border-b
-    border-r
-    border-cyan-400/10
-    transition-all
-    duration-500
-    group-hover:h-8
-    group-hover:w-8
-    group-hover:border-cyan-400/40
-  "
-/>
-
-</article>
-  );
-})}
-
-    </div>
-
-    
-
-{/* =========================================================
-    BOTTOM PRINCIPLE
-========================================================= */}
-
-<div className="mt-5 grid gap-3 sm:grid-cols-3">
-
-  {[
-    {
-      label: "01",
-      title: "Engineering-first",
-      text: "Built around reliable technical foundations.",
-    },
-    {
-      label: "02",
-      title: "Security-aware",
-      text: "Security considered throughout the lifecycle.",
-    },
-    {
-      label: "03",
-      title: "Built to scale",
-      text: "Architecture designed for future growth.",
-    },
-  ].map((item) => (
-
-    <div
-      key={item.label}
-      className="
-        group
-        relative
-        overflow-hidden
-        rounded-2xl
-        border
-        border-[#1a1d1d]
-        bg-[#0b0d0d]/55
-        p-5
-        backdrop-blur-xl
-        transition-all
-        duration-300
-        hover:border-[#15E0ED]/20
-        hover:bg-[#15E0ED]/[0.025]
-      "
-    >
-
-      {/* GRID */}
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          opacity-0
-          transition-opacity
-          duration-500
-          group-hover:opacity-100
-          [background-image:linear-gradient(rgba(21,224,237,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(21,224,237,0.05)_1px,transparent_1px)]
-          [background-size:24px_24px]
-        "
-      />
-
-      {/* LABEL */}
-      <span
-        className="
-          relative
-          font-mono
-          text-[9px]
-          font-bold
-          tracking-[0.15em]
-          text-[#15E0ED]
-        "
+          ${
+            servicesReveal.visible
+              ? `
+                translate-x-0
+                translate-y-0
+                scale-100
+                opacity-100
+                blur-0
+              `
+              : fromLeft
+                ? `
+                  -translate-x-12
+                  translate-y-2
+                  scale-[0.97]
+                  opacity-0
+                  blur-[5px]
+                `
+                : `
+                  translate-x-12
+                  translate-y-2
+                  scale-[0.97]
+                  opacity-0
+                  blur-[5px]
+                `
+          }
+        `}
       >
-        {item.label}
-      </span>
 
-      {/* TITLE */}
-      <h3
-        className="
-          relative
-          mt-4
-          text-sm
-          font-bold
-          text-[#eef2f2]
-          transition-colors
-          group-hover:text-[#15E0ED]
-        "
-      >
-        {item.title}
-      </h3>
+        {/* =================================================
+            SUBTLE GRID
+        ================================================== */}
 
-      {/* DESCRIPTION */}
-      <p
-        className="
-          relative
-          mt-2
-          text-[10px]
-          leading-5
-          text-[#5c6666]
-        "
-      >
-        {item.text}
-      </p>
+        <div
+          aria-hidden="true"
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            opacity-[0.025]
+            transition-opacity
+            duration-500
+            group-hover:opacity-[0.05]
 
-      {/* BOTTOM ACCENT */}
-      <div
-        className="
-          absolute
-          bottom-0
-          left-5
-          right-5
-          h-px
-          origin-left
-          scale-x-0
-          bg-gradient-to-r
-          from-[#15E0ED]/50
-          to-transparent
-          transition-transform
-          duration-500
-          group-hover:scale-x-100
-        "
-      />
+            [background-image:linear-gradient(rgba(34,211,238,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.4)_1px,transparent_1px)]
 
-    </div>
-
-  ))}
+            [background-size:32px_32px]
+          "
+        />
 
 
+        {/* =================================================
+            GLOW
+        ================================================== */}
 
-    </div>
+        <div
+          aria-hidden="true"
+          className="
+            pointer-events-none
+            absolute
+            -right-16
+            -top-16
+            h-40
+            w-40
+            rounded-full
+            bg-cyan-400/[0.04]
+            blur-3xl
+            transition-all
+            duration-700
+            group-hover:scale-125
+            group-hover:bg-cyan-400/[0.08]
+          "
+        />
 
-  </div>
-</section>
-       
-        
-{/* =========================================================
-    ABOUT — COMPANY SYSTEM
-========================================================= */}
 
-<section
-  id="about"
-  className="scroll-mt-24 border-t border-[#1a1d1d]"
->
-  <div className="mx-auto max-w-7xl px-6 py-24 sm:px-8 lg:px-10 lg:py-32">
+        {/* =================================================
+            CONTENT
+        ================================================== */}
 
-    {/* Main About */}
-    <div className="max-w-4xl">
+        <div className="relative z-10">
 
-      {/* Badge */}
-    
+          {/* TITLE */}
 
-      {/* Heading */}
-      <h2 className="mt-6 text-4xl font-black tracking-[-0.045em] text-[#eef2f2] sm:text-5xl lg:text-[58px] lg:leading-[1.02]">
-        Technology is the product.
+          <h3
+            className="
+              text-xl
+              font-bold
+              tracking-[-0.02em]
+              text-white
+              transition-colors
+              duration-300
+              group-hover:text-cyan-300
+            "
+          >
+            {service.title}
+          </h3>
 
-        <span className="block bg-gradient-to-r from-white via-[#15E0ED] to-white bg-clip-text text-transparent">
-          Security is the foundation.
-        </span>
-      </h2>
 
-      {/* Description */}
-      <div className="mt-8 max-w-2xl space-y-5">
-        <p className="text-sm leading-7 text-[#8a9494]">
-          Centa Limited is a technology company focused on building
-          digital products, software systems, and secure technology
-          infrastructure for modern businesses.
-        </p>
+          {/* DESCRIPTION */}
 
-        <p className="text-sm leading-7 text-[#8a9494]">
-          We combine software engineering and cyber security so teams
-          don't have to treat development and protection as two
-          separate problems.
-        </p>
-      </div>
+          <p
+            className="
+              mt-3
+              text-[11px]
+              leading-5
+              text-slate-400
+              transition-colors
+              duration-300
+              group-hover:text-slate-300
+            "
+          >
+            {service.description}
+          </p>
 
-      {/* Principles */}
-      <div className="mt-10 grid grid-cols-1 gap-2 sm:grid-cols-2">
 
-        {[
-          "Engineering-first",
-          "Security-aware",
-          "Scalable by design",
-          "Built for business",
-        ].map((item) => (
+          {/* =================================================
+              CONTACT CTA
+          ================================================== */}
 
           <div
-            key={item}
             className="
-              group
+              mt-6
               flex
               items-center
-              gap-3
-              rounded-xl
-              border
-              border-[#1a1d1d]
-              bg-[#0b0d0d]/55
-              px-4
-              py-3
-              backdrop-blur-xl
-              transition-all
-              duration-300
-              hover:border-[#15E0ED]/20
-              hover:bg-[#15E0ED]/[0.025]
+              justify-between
+              pt-4
             "
           >
 
-            <div
+            <a
+              href="#contact"
+              onClick={(event) => {
+                event.stopPropagation();
+              }}
               className="
-                flex
-                h-5
-                w-5
+                group/contact
+                inline-flex
                 items-center
-                justify-center
-                rounded-md
+                gap-2
+                rounded-lg
                 border
-                border-[#15E0ED]/10
-                bg-[#15E0ED]/[0.05]
+                border-cyan-400/20
+                bg-cyan-400/[0.04]
+                px-3
+                py-2
+                font-mono
+                text-[8px]
+                font-bold
+                uppercase
+                tracking-[0.14em]
+                text-cyan-400
+
                 transition-all
                 duration-300
-                group-hover:border-[#15E0ED]/25
-                group-hover:bg-[#15E0ED]/[0.08]
-              "
-            >
-              <Check className="h-3 w-3 text-[#15E0ED]" />
-            </div>
 
-            <span
-              className="
-                text-[10px]
-                font-medium
-                text-[#5c6666]
-                transition-colors
-                duration-300
-                group-hover:text-[#b5bebe]
+                hover:border-cyan-400/40
+                hover:bg-cyan-400/[0.08]
+                hover:text-cyan-300
+                hover:shadow-[0_0_20px_rgba(34,211,238,0.10)]
               "
             >
-              {item}
-            </span>
+              Contact Us
+
+              <ArrowRight
+                className="
+                  h-3
+                  w-3
+                  transition-transform
+                  duration-300
+                  group-hover/contact:translate-x-1
+                "
+              />
+            </a>
 
           </div>
 
-        ))}
-
-      </div>
-
-    </div>
-
-    {/* =====================================================
-        BOTTOM METRICS
-    ====================================================== */}
-
-    <div className="mt-16 grid gap-3 sm:grid-cols-3">
-
-      {[
-        {
-          value: "01",
-          title: "Engineering",
-          text: "Build the right technical foundation.",
-        },
-        {
-          value: "02",
-          title: "Security",
-          text: "Reduce risk before it becomes a problem.",
-        },
-        {
-          value: "03",
-          title: "Scale",
-          text: "Keep systems ready for what's next.",
-        },
-      ].map((item) => (
-
-        <div
-          key={item.value}
-          className="
-            group
-            relative
-            overflow-hidden
-            rounded-2xl
-            border
-            border-[#1a1d1d]
-            bg-[#0b0d0d]/55
-            p-5
-            backdrop-blur-xl
-            transition-all
-            duration-300
-            hover:-translate-y-0.5
-            hover:border-[#15E0ED]/20
-            hover:bg-[#15E0ED]/[0.025]
-          "
-        >
-
-          {/* Grid */}
-          <div
-            className="
-              pointer-events-none
-              absolute
-              inset-0
-              opacity-0
-              transition-opacity
-              duration-500
-              group-hover:opacity-100
-              [background-image:linear-gradient(rgba(21,224,237,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(21,224,237,0.05)_1px,transparent_1px)]
-              [background-size:24px_24px]
-            "
-          />
-
-          {/* Number */}
-          <span
-            className="
-              relative
-              font-mono
-              text-[8px]
-              font-bold
-              tracking-[0.15em]
-              text-[#15E0ED]
-            "
-          >
-            {item.value}
-          </span>
-
-          {/* Title */}
-          <h3
-            className="
-              relative
-              mt-4
-              text-xs
-              font-bold
-              text-[#eef2f2]
-              transition-colors
-              duration-300
-              group-hover:text-[#15E0ED]
-            "
-          >
-            {item.title}
-          </h3>
-
-          {/* Description */}
-          <p
-            className="
-              relative
-              mt-1.5
-              text-[10px]
-              leading-5
-              text-[#5c6666]
-              transition-colors
-              duration-300
-              group-hover:text-[#8a9494]
-            "
-          >
-            {item.text}
-          </p>
-
-          {/* Bottom accent */}
-          <div
-            className="
-              absolute
-              bottom-0
-              left-5
-              right-5
-              h-px
-              origin-left
-              scale-x-0
-              bg-gradient-to-r
-              from-[#15E0ED]/50
-              to-transparent
-              transition-transform
-              duration-500
-              group-hover:scale-x-100
-            "
-          />
-
         </div>
 
-      ))}
 
-    </div>
+        {/* =================================================
+            HUD CORNER — TOP LEFT
+        ================================================== */}
 
-  </div>
+        <div
+          className="
+            pointer-events-none
+            absolute
+            left-0
+            top-0
+            h-6
+            w-6
+            border-l
+            border-t
+            border-cyan-400/10
+
+            transition-all
+            duration-500
+
+            group-hover:h-8
+            group-hover:w-8
+            group-hover:border-cyan-400/40
+          "
+        />
+
+
+        {/* =================================================
+            HUD CORNER — BOTTOM RIGHT
+        ================================================== */}
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            bottom-0
+            right-0
+            h-6
+            w-6
+            border-b
+            border-r
+            border-cyan-400/10
+
+            transition-all
+            duration-500
+
+            group-hover:h-8
+            group-hover:w-8
+            group-hover:border-cyan-400/40
+          "
+        />
+
+      </article>
+    );
+  })}
+</div>
+
+</div>
+
 </section>
 
-  
+
+{/* =====================================================
+    WHY CENTA
+====================================================== */}
+
+<section
+  id="why"
+  className="relative z-[1] py-[100px]"
+>
+  <div className="mx-auto max-w-[1180px] px-8">
+
+    {/* TITLE */}
+    <h2
+      className="
+        mb-4
+        max-w-[640px]
+        text-[clamp(26px,3.6vw,40px)]
+        font-extrabold
+        tracking-[-1px]
+        text-[#eef2f2]
+      "
+    >
+      Why Centa?
+    </h2>
+
+    {/* DESCRIPTION */}
+    <p
+      className="
+        mb-14
+        max-w-[560px]
+        text-base
+        leading-relaxed
+        text-[#8a9494]
+      "
+    >
+      Built with a focus on innovation, security, and reliability,
+      Centa develops technology designed to solve real-world challenges,
+      empowering developers, businesses, and communities with solutions
+      built for today and ready for tomorrow.
+    </p>
+
+   {/* CARDS */}
+<div
+  ref={whyReveal.ref}
+  className="
+    grid
+    grid-cols-1
+    overflow-hidden
+    rounded-xl
+    border
+    border-[#1a1d1d]
+    sm:grid-cols-2
+    lg:grid-cols-4
+  "
+>
+
+  {/* =====================================================
+      CARD 01 — INNOVATIVE
+  ====================================================== */}
+  <div
+    style={{
+      transitionDelay: whyReveal.visible ? "0ms" : "0ms",
+    }}
+    className={`
+      group
+      bg-[#0b0d0d]
+      px-[22px]
+      py-7
+      transition-all
+      duration-700
+      ease-[cubic-bezier(0.22,1,0.36,1)]
+      hover:bg-[#0f1414]
+
+      ${
+        whyReveal.visible
+          ? "translate-y-0 opacity-100 blur-0"
+          : "translate-y-8 opacity-0 blur-[4px]"
+      }
+    `}
+  >
+    <svg
+      className="
+        mb-[18px]
+        h-[34px]
+        w-[34px]
+        text-[#15E0ED]
+      "
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+    >
+      <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />
+    </svg>
+
+    <h3
+      className="
+        mb-2
+        text-base
+        font-bold
+        text-[#eef2f2]
+      "
+    >
+      Innovative
+    </h3>
+
+    <p
+      className="
+        text-[13.5px]
+        text-[#8a9494]
+      "
+    >
+      Modern technology built to create meaningful solutions.
+    </p>
+  </div>
+
+
+  {/* =====================================================
+      CARD 02 — RELIABLE
+  ====================================================== */}
+  <div
+    style={{
+      transitionDelay: whyReveal.visible ? "100ms" : "0ms",
+    }}
+    className={`
+      group
+      bg-[#0b0d0d]
+      px-[22px]
+      py-7
+      transition-all
+      duration-700
+      ease-[cubic-bezier(0.22,1,0.36,1)]
+      hover:bg-[#0f1414]
+
+      ${
+        whyReveal.visible
+          ? "translate-y-0 opacity-100 blur-0"
+          : "translate-y-8 opacity-0 blur-[4px]"
+      }
+    `}
+  >
+    <svg
+      className="
+        mb-[18px]
+        h-[34px]
+        w-[34px]
+        text-[#15E0ED]
+      "
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+    >
+      <rect
+        x="3"
+        y="3"
+        width="7"
+        height="7"
+        rx="1.2"
+      />
+
+      <rect
+        x="14"
+        y="3"
+        width="7"
+        height="7"
+        rx="1.2"
+      />
+
+      <rect
+        x="3"
+        y="14"
+        width="7"
+        height="7"
+        rx="1.2"
+      />
+
+      <rect
+        x="14"
+        y="14"
+        width="7"
+        height="7"
+        rx="1.2"
+      />
+    </svg>
+
+    <h3
+      className="
+        mb-2
+        text-base
+        font-bold
+        text-[#eef2f2]
+      "
+    >
+      Reliable
+    </h3>
+
+    <p
+      className="
+        text-[13.5px]
+        text-[#8a9494]
+      "
+    >
+      Dependable products designed for consistent everyday use.
+    </p>
+  </div>
+
+
+  {/* =====================================================
+      CARD 03 — SECURITY-FIRST
+  ====================================================== */}
+  <div
+    style={{
+      transitionDelay: whyReveal.visible ? "200ms" : "0ms",
+    }}
+    className={`
+      group
+      bg-[#0b0d0d]
+      px-[22px]
+      py-7
+      transition-all
+      duration-700
+      ease-[cubic-bezier(0.22,1,0.36,1)]
+      hover:bg-[#0f1414]
+
+      ${
+        whyReveal.visible
+          ? "translate-y-0 opacity-100 blur-0"
+          : "translate-y-8 opacity-0 blur-[4px]"
+      }
+    `}
+  >
+    <svg
+      className="
+        mb-[18px]
+        h-[34px]
+        w-[34px]
+        text-[#15E0ED]
+      "
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+    >
+      <path d="M3 12a9 9 0 1 0 3-6.7" />
+      <path d="M3 4v5h5" />
+    </svg>
+
+    <h3
+      className="
+        mb-2
+        text-base
+        font-bold
+        text-[#eef2f2]
+      "
+    >
+      Security-first
+    </h3>
+
+    <p
+      className="
+        text-[13.5px]
+        text-[#8a9494]
+      "
+    >
+      Security is considered throughout every product we build.
+    </p>
+  </div>
+
+
+  {/* =====================================================
+      CARD 04 — SCALABLE
+  ====================================================== */}
+  <div
+    style={{
+      transitionDelay: whyReveal.visible ? "300ms" : "0ms",
+    }}
+    className={`
+      group
+      bg-[#0b0d0d]
+      px-[22px]
+      py-7
+      transition-all
+      duration-700
+      ease-[cubic-bezier(0.22,1,0.36,1)]
+      hover:bg-[#0f1414]
+
+      ${
+        whyReveal.visible
+          ? "translate-y-0 opacity-100 blur-0"
+          : "translate-y-8 opacity-0 blur-[4px]"
+      }
+    `}
+  >
+    <svg
+      className="
+        mb-[18px]
+        h-[34px]
+        w-[34px]
+        text-[#15E0ED]
+      "
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+    >
+      <path d="M7 18a5 5 0 0 1-1-9.9A6 6 0 0 1 17.5 8 4.5 4.5 0 0 1 17 17H7Z" />
+    </svg>
+
+    <h3
+      className="
+        mb-2
+        text-base
+        font-bold
+        text-[#eef2f2]
+      "
+    >
+      Scalable
+    </h3>
+
+    <p
+      className="
+        text-[13.5px]
+        text-[#8a9494]
+      "
+    >
+      Solutions designed to grow with people, teams, and businesses.
+    </p>
+  </div>
+
+</div>
+</div>
+</section>
 
       {/* =========================================================
     FAQ — PRODUCT STYLE
@@ -1331,7 +1409,8 @@ useEffect(() => {
 
 <section
   id="faq"
-  className="border-t border-[#1a1d1d]"
+  ref={faqSectionRef}
+  className="relative"
 >
   <div className="mx-auto max-w-7xl px-6 py-24 sm:px-8 lg:px-10 lg:py-32">
 
@@ -1398,753 +1477,1105 @@ useEffect(() => {
         >
 
        
-         
-         
-
-          
+             
         </div>
 
       </div>
 
 
-      {/* =====================================================
-          RIGHT — FAQ LIST
-      ====================================================== */}
+{/* =====================================================
+    RIGHT — FAQ LIST
+====================================================== */}
 
-      <div className="space-y-3">
+<div className="space-y-3">
 
-        {faqs.map((faq, index) => {
-          const isOpen = openFaq === index;
+  {faqs.map((faq, index) => {
+    const isOpen = openFaq === index;
 
-          return (
+    return (
+      <div
+        key={faq.question}
+        style={{
+          transitionDelay: faqVisible
+            ? `${index * 100}ms`
+            : "0ms",
+        }}
+        className={`
+          group
+          overflow-hidden
+          rounded-3xl
+          border
+
+          /* =========================
+             REVEAL ANIMATION
+          ========================== */
+
+          transition-all
+          duration-700
+          ease-[cubic-bezier(0.22,1,0.36,1)]
+
+          ${
+            faqVisible
+              ? `
+                translate-x-0
+                opacity-100
+                blur-0
+              `
+              : `
+                translate-x-12
+                opacity-0
+                blur-[4px]
+              `
+          }
+
+          /* =========================
+             FAQ OPEN / CLOSED STATE
+          ========================== */
+
+          ${
+            isOpen
+              ? `
+                border-[#15E0ED]/20
+                bg-[#15E0ED]/[0.025]
+                shadow-[0_15px_50px_rgba(21,224,237,0.045)]
+              `
+              : `
+                border-[#1a1d1d]
+                bg-[#0b0d0d]/60
+                backdrop-blur-xl
+                hover:border-[#15E0ED]/10
+                hover:bg-[#0e1111]
+              `
+          }
+        `}
+      >
+
+        <button
+          type="button"
+          onClick={() =>
+            setOpenFaq(isOpen ? null : index)
+          }
+          className="
+            flex
+            w-full
+            items-start
+            gap-5
+            px-6
+            py-6
+            text-left
+            sm:px-7
+          "
+        >
+
+          {/* =================================================
+              NUMBER
+          ================================================== */}
+
+          <div
+            className={`
+              mt-0.5
+              flex
+              h-8
+              w-8
+              shrink-0
+              items-center
+              justify-center
+              rounded-xl
+              border
+              text-[10px]
+              font-black
+              transition-all
+              duration-300
+
+              ${
+                isOpen
+                  ? `
+                    border-[#15E0ED]/20
+                    bg-[#15E0ED]/10
+                    text-[#15E0ED]
+                    shadow-[0_0_15px_rgba(21,224,237,0.08)]
+                  `
+                  : `
+                    border-[#1a1d1d]
+                    bg-white/[0.015]
+                    text-[#3f4949]
+                    group-hover:border-[#15E0ED]/10
+                    group-hover:text-[#687272]
+                  `
+              }
+            `}
+          >
+            0{index + 1}
+          </div>
+
+
+          {/* =================================================
+              QUESTION + ANSWER
+          ================================================== */}
+
+          <div className="flex-1">
+
+            {/* QUESTION */}
+
             <div
-              key={faq.question}
               className={`
-                group
-                overflow-hidden
-                rounded-3xl
-                border
-                transition-all
+                text-sm
+                font-bold
+                transition-colors
                 duration-300
+                sm:text-[15px]
 
                 ${
                   isOpen
-                    ? `
-                      border-[#15E0ED]/20
-                      bg-[#15E0ED]/[0.025]
-                      shadow-[0_15px_50px_rgba(21,224,237,0.045)]
-                    `
-                    : `
-                      border-[#1a1d1d]
-                      bg-[#0b0d0d]/60
-                      backdrop-blur-xl
-                      hover:border-[#15E0ED]/10
-                    `
+                    ? "text-[#15E0ED]"
+                    : "text-[#eef2f2]"
                 }
               `}
             >
+              {faq.question}
+            </div>
 
-              <button
-                type="button"
-                onClick={() =>
-                  setOpenFaq(isOpen ? null : index)
-                }
+
+            {/* =================================================
+                ANSWER
+            ================================================== */}
+
+            {isOpen && (
+              <div
                 className="
-                  flex
-                  w-full
-                  items-start
-                  gap-5
-                  px-6
-                  py-6
-                  text-left
-                  sm:px-7
+                  mt-4
+                  max-w-2xl
+                  border-t
+                  border-[#15E0ED]/10
+                  pt-4
                 "
               >
-
-                {/* =================================================
-                    NUMBER
-                ================================================== */}
-
-                <div
-                  className={`
-                    mt-0.5
-                    flex
-                    h-8
-                    w-8
-                    shrink-0
-                    items-center
-                    justify-center
-                    rounded-xl
-                    border
-                    text-[10px]
-                    font-black
-                    transition-all
-                    duration-300
-
-                    ${
-                      isOpen
-                        ? `
-                          border-[#15E0ED]/20
-                          bg-[#15E0ED]/10
-                          text-[#15E0ED]
-                        `
-                        : `
-                          border-[#1a1d1d]
-                          bg-white/[0.015]
-                          text-[#3f4949]
-                          group-hover:border-[#15E0ED]/10
-                          group-hover:text-[#687272]
-                        `
-                    }
-                  `}
+                <p
+                  className="
+                    text-sm
+                    leading-7
+                    text-[#687272]
+                  "
                 >
-                  0{index + 1}
-                </div>
+                  {faq.answer}
+                </p>
+              </div>
+            )}
+
+          </div>
 
 
-                {/* =================================================
-                    QUESTION + ANSWER
-                ================================================== */}
+          {/* =================================================
+              CHEVRON
+          ================================================== */}
 
-                <div className="flex-1">
+          <div
+            className={`
+              flex
+              h-8
+              w-8
+              shrink-0
+              items-center
+              justify-center
+              rounded-xl
+              border
+              transition-all
+              duration-300
 
-                  <div
-                    className={`
-                      text-sm
-                      font-bold
-                      transition-colors
-                      duration-300
-                      sm:text-[15px]
-
-                      ${
-                        isOpen
-                          ? "text-[#15E0ED]"
-                          : "text-[#eef2f2]"
-                      }
-                    `}
-                  >
-                    {faq.question}
-                  </div>
-
-
-                  {/* Answer */}
-                  {isOpen && (
-                    <div
-                      className="
-                        mt-4
-                        max-w-2xl
-                        border-t
-                        border-[#1a1d1d]
-                        pt-4
-                      "
-                    >
-                      <p
-                        className="
-                          text-sm
-                          leading-7
-                          text-[#687272]
-                        "
-                      >
-                        {faq.answer}
-                      </p>
-                    </div>
-                  )}
-
-                </div>
-
-
-                {/* =================================================
-                    CHEVRON
-                ================================================== */}
-
-                <div
-                  className={`
-                    flex
-                    h-8
-                    w-8
-                    shrink-0
-                    items-center
-                    justify-center
-                    rounded-xl
-                    border
-                    transition-all
-                    duration-300
-
-                    ${
-                      isOpen
-                        ? `
-                          rotate-180
-                          border-[#15E0ED]/20
-                          bg-[#15E0ED]/10
-                        `
-                        : `
-                          border-[#1a1d1d]
-                          bg-white/[0.015]
-                        `
-                    }
-                  `}
-                >
-                  <ChevronDown
-                    className={`
-                      h-3.5
-                      w-3.5
-                      transition-colors
-
-                      ${
-                        isOpen
-                          ? "text-[#15E0ED]"
-                          : "text-[#4e5959]"
-                      }
-                    `}
-                  />
-                </div>
-
-              </button>
-
-            </div>
-          );
-        })}
-
-
-        {/* =====================================================
-            BOTTOM HINT
-        ====================================================== */}
-
-        <div className="flex items-center gap-3 px-2 pt-5">
-
-          <div className="h-px flex-1 bg-[#1a1d1d]" />
-
-          <span
-            className="
-              text-[9px]
-              font-medium
-              uppercase
-              tracking-[0.18em]
-              text-[#3f4949]
-            "
+              ${
+                isOpen
+                  ? `
+                    rotate-180
+                    border-[#15E0ED]/20
+                    bg-[#15E0ED]/10
+                    shadow-[0_0_15px_rgba(21,224,237,0.08)]
+                  `
+                  : `
+                    border-[#1a1d1d]
+                    bg-white/[0.015]
+                  `
+              }
+            `}
           >
-            More questions? Let's talk.
-          </span>
+            <ChevronDown
+              className={`
+                h-3.5
+                w-3.5
+                transition-colors
 
-          <div className="h-px flex-1 bg-[#1a1d1d]" />
+                ${
+                  isOpen
+                    ? "text-[#15E0ED]"
+                    : "text-[#4e5959]"
+                }
+              `}
+            />
+          </div>
 
-        </div>
+        </button>
 
       </div>
+    );
+  })}
 
-    </div>
+
+  {/* =====================================================
+      BOTTOM HINT
+  ====================================================== */}
+
+  <div className="flex items-center gap-3 px-2 pt-5">
+
+    <div className="h-px flex-1 bg-[#1a1d1d]" />
+
+    <span
+      className="
+        text-[9px]
+        font-medium
+        uppercase
+        tracking-[0.18em]
+        text-[#3f4949]
+      "
+    >
+      More questions? Let's talk.
+    </span>
+
+    <div className="h-px flex-1 bg-[#1a1d1d]" />
+
+  </div>
+  </div>
+  </div>
   </div>
 </section>
-  {/* =========================================================
+ 
+
+{/* =========================================================
     CONTACT
 ========================================================= */}
 
 <section
   id="contact"
-  className="scroll-mt-24 border-t border-[#1a1d1d]"
+  className="
+    relative
+    z-[1]
+    scroll-mt-24
+    py-[100px]
+  "
 >
-  <div className="mx-auto max-w-7xl px-6 py-24 sm:px-8 lg:px-10 lg:py-32">
+  <div className="mx-auto max-w-[1180px] px-8">
 
-    {/* Header */}
-    <div className="max-w-3xl">
+    {/* =====================================================
+        HEADER
+    ====================================================== */}
 
-     
-
-      <h2 className="mt-6 text-4xl font-black leading-[1.02] tracking-[-0.045em] text-[#eef2f2] sm:text-5xl lg:text-[64px]">
-        Let's build something
-        <span className="block bg-gradient-to-r from-white via-[#15E0ED] to-white bg-clip-text text-transparent">
-          secure and scalable.
-        </span>
+    <div className="max-w-[640px]">
+      <h2
+        className="
+          text-[clamp(26px,3.6vw,40px)]
+          font-extrabold
+          tracking-[-1px]
+          text-[#eef2f2]
+        "
+      >
+        Build the future with us
       </h2>
 
-      <p className="mt-6 max-w-2xl text-sm leading-7 text-[#7a8585]">
-        Ceritakan kebutuhan, project, atau masalah yang sedang Anda hadapi.
-        Tim Centa akan membantu menentukan solusi yang paling tepat dari
-        sisi engineering, product, infrastructure, hingga security.
+      <p
+        className="
+          mt-4
+          max-w-[560px]
+          text-base
+          leading-relaxed
+          text-[#8a9494]
+        "
+      >
+        Have a project in mind, need professional cybersecurity, or want to
+        work with Centa? Tell us what you need and our team will get back to
+        you.
       </p>
-
     </div>
 
 
-    {/* Contact Layout */}
-    <div className="mt-14 grid gap-6 lg:grid-cols-[1.4fr_0.6fr]">
+    {/* =====================================================
+        CONTACT FORM WRAPPER
+    ====================================================== */}
 
+    <div
+      className="
+        mt-7
+        grid
+        overflow-hidden
+        rounded-[14px]
+        border
+        border-[#1a1d1d]
+        bg-[#0b0d0d]
+        lg:grid-cols-[1.05fr_0.95fr]
+      "
+    >
 
       {/* =====================================================
           FORM
       ====================================================== */}
 
-      <div className="relative overflow-hidden rounded-[2rem] border border-[#1a1d1d] bg-[#0b0d0d]/90 p-6 shadow-[0_30px_100px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8">
+      <form
+        onSubmit={handleSubmit}
+        className="
+          flex
+          flex-col
+          gap-5
+          border-[#1a1d1d]
+          p-[30px]
+          lg:border-r
+        "
+      >
 
-        {/* Ambient glow */}
-        <div className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-[#15E0ED]/[0.045] blur-[100px]" />
+        {/* Name */}
 
-        <div className="relative">
-
-          {/* Form Header */}
-          <div className="mb-8">
-
-            <div className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-[#4f5959]">
-              PROJECT INQUIRY
-            </div>
-
-            <h3 className="mt-2 text-xl font-bold text-[#eef2f2]">
-              Tell us about your project
-            </h3>
-
-            <p className="mt-2 text-xs leading-6 text-[#687272]">
-              Isi form berikut, tim Centa akan menerima pesan Anda.
-            </p>
-
-          </div>
-
-
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-5"
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="name"
+            className="text-xs font-bold text-[#eef2f2]"
           >
-
-            {/* Name + Email */}
-            <div className="grid gap-5 sm:grid-cols-2">
-
-              {/* Name */}
-              <div>
-
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-[10px] font-bold uppercase tracking-[0.16em] text-[#899393]"
-                >
-                  Name *
-                </label>
-
-                <div className="relative">
-
-                  <User className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#4f5959]" />
-
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="Your name"
-                    className="w-full rounded-xl border border-[#1a1d1d] bg-[#0f1212] py-3.5 pl-10 pr-4 text-sm text-white outline-none transition-all placeholder:text-[#3f4848] focus:border-[#15E0ED]/30 focus:bg-[#15E0ED]/[0.018] focus:ring-1 focus:ring-[#15E0ED]/10"
-                  />
-
-                </div>
-              </div>
-
-
-              {/* Email */}
-              <div>
-
-                <label
-                  htmlFor="email"
-                  className="mb-2 block text-[10px] font-bold uppercase tracking-[0.16em] text-[#899393]"
-                >
-                  Email *
-                </label>
-
-                <div className="relative">
-
-                  <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#4f5959]" />
-
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="you@company.com"
-                    className="w-full rounded-xl border border-[#1a1d1d] bg-[#0f1212] py-3.5 pl-10 pr-4 text-sm text-white outline-none transition-all placeholder:text-[#3f4848] focus:border-[#15E0ED]/30 focus:bg-[#15E0ED]/[0.018] focus:ring-1 focus:ring-[#15E0ED]/10"
-                  />
-
-                </div>
-              </div>
-
-            </div>
-
-
-            {/* Phone + Company */}
-            <div className="grid gap-5 sm:grid-cols-2">
-
-              {/* Phone */}
-              <div>
-
-                <label
-                  htmlFor="phone"
-                  className="mb-2 block text-[10px] font-bold uppercase tracking-[0.16em] text-[#899393]"
-                >
-                  Phone / WhatsApp
-                </label>
-
-                <div className="relative">
-
-                  <Phone className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#4f5959]" />
-
-                  <input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="+62-812-3456-7890"
-                    className="w-full rounded-xl border border-[#1a1d1d] bg-[#0f1212] py-3.5 pl-10 pr-4 text-sm text-white outline-none transition-all placeholder:text-[#3f4848] focus:border-[#15E0ED]/30 focus:bg-[#15E0ED]/[0.018] focus:ring-1 focus:ring-[#15E0ED]/10"
-                  />
-
-                </div>
-              </div>
-
-
-              {/* Company */}
-              <div>
-
-                <label
-                  htmlFor="company"
-                  className="mb-2 block text-[10px] font-bold uppercase tracking-[0.16em] text-[#899393]"
-                >
-                  Company
-                </label>
-
-                <input
-                  id="company"
-                  name="company"
-                  type="text"
-                  value={formData.company}
-                  onChange={handleInputChange}
-                  placeholder="Company name"
-                  className="w-full rounded-xl border border-[#1a1d1d] bg-[#0f1212] px-4 py-3.5 text-sm text-white outline-none transition-all placeholder:text-[#3f4848] focus:border-[#15E0ED]/30 focus:bg-[#15E0ED]/[0.018] focus:ring-1 focus:ring-[#15E0ED]/10"
-                />
-
-              </div>
-
-            </div>
-
-
-            {/* Service */}
-            <div>
-
-              <label
-                htmlFor="service"
-                className="mb-2 block text-[10px] font-bold uppercase tracking-[0.16em] text-[#899393]"
-              >
-                Service
-              </label>
-
-              <select
-                id="service"
-                name="service"
-                value={formData.service}
-                onChange={handleInputChange}
-                className="w-full rounded-xl border border-[#1a1d1d] bg-[#0f1212] px-4 py-3.5 text-sm text-[#dce2e2] outline-none transition-all hover:border-[#2a3030] focus:border-[#15E0ED]/30 focus:bg-[#15E0ED]/[0.018] focus:ring-1 focus:ring-[#15E0ED]/10"
-              >
-
-                <option
-                  value=""
-                  className="bg-[#080e0e] text-[#687272]"
-                >
-                  Select a service
-                </option>
-
-                <option value="Software Development">
-                  Software Development
-                </option>
-
-                <option value="Web Development">
-                  Web Development
-                </option>
-
-                <option value="Application Development">
-                  Application Development
-                </option>
-
-                <option value="Cyber Security">
-                  Cyber Security
-                </option>
-
-                <option value="Infrastructure & Cloud">
-                  Infrastructure & Cloud
-                </option>
-
-                <option value="Security Advisory">
-                  Security Advisory
-                </option>
-
-                <option value="Other">
-                  Other
-                </option>
-
-              </select>
-
-            </div>
-
-
-            {/* Message */}
-            <div className="group/message">
-
-              <div className="mb-2 flex items-end justify-between">
-
-                <label
-                  htmlFor="message"
-                  className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-[#899393]"
-                >
-                  Project Details
-                  <span className="ml-1 text-[#15E0ED]">*</span>
-                </label>
-
-                <span className="font-mono text-[7px] uppercase tracking-[0.15em] text-[#414949]">
-                  SECURE INPUT
-                </span>
-
-              </div>
-
-
-              <div className="relative">
-
-                {/* Glow */}
-                <div className="pointer-events-none absolute -inset-px rounded-2xl bg-[#15E0ED]/0 blur-xl transition-all duration-500 focus-within:bg-[#15E0ED]/[0.04]" />
-
-
-                {/* Textarea */}
-                <div className="relative overflow-hidden rounded-2xl border border-[#1a1d1d] bg-[#080d0d]/90 backdrop-blur-xl transition-all duration-500 focus-within:border-[#15E0ED]/30 focus-within:bg-[#15E0ED]/[0.012] focus-within:shadow-[0_0_35px_rgba(21,224,237,0.04)]">
-
-                  {/* Grid */}
-                  <div className="pointer-events-none absolute inset-0 opacity-[0.018] [background-image:linear-gradient(rgba(21,224,237,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(21,224,237,0.5)_1px,transparent_1px)] [background-size:22px_22px]" />
-
-
-                  {/* Scanline */}
-                  <div className="pointer-events-none absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-[#15E0ED] to-transparent opacity-0 transition-opacity duration-500 group-focus-within/message:opacity-40" />
-
-
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={6}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder="Tell us about your project, requirements, timeline, or the problem you want to solve..."
-                    className="relative z-10 w-full resize-none bg-transparent px-4 py-4 text-sm leading-6 text-white outline-none placeholder:text-[#3f4848]"
-                  />
-
-
-                  {/* Telemetry */}
-                  <div className="relative z-10 flex items-center justify-between border-t border-[#1a1d1d] px-4 py-2.5">
-
-                    <div className="flex items-center gap-2">
-
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#15E0ED]/30 transition-all duration-300 group-focus-within/message:bg-[#15E0ED] group-focus-within/message:shadow-[0_0_8px_rgba(21,224,237,0.8)]" />
-
-                      <span className="font-mono text-[7px] uppercase tracking-[0.18em] text-[#414949]">
-                        Input Channel
-                      </span>
-
-                    </div>
-
-                    <span className="font-mono text-[7px] uppercase tracking-[0.15em] text-[#414949]">
-                      Encrypted
-                    </span>
-
-                  </div>
-
-
-                  {/* HUD */}
-                  <span className="pointer-events-none absolute left-0 top-0 h-5 w-5 border-l border-t border-[#15E0ED]/20" />
-
-                  <span className="pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-[#15E0ED]/20" />
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            {/* Submit */}
-            <button
-              type="submit"
-              className="group relative isolate flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl border border-[#15E0ED]/25 bg-[#15E0ED] px-6 py-4 text-sm font-bold text-[#030707] shadow-[0_10px_40px_rgba(21,224,237,0.12)] transition-all duration-500 hover:-translate-y-1 hover:bg-[#49e8f2] hover:shadow-[0_18px_55px_rgba(21,224,237,0.22)] active:translate-y-0"
-            >
-
-              {/* Moving energy */}
-              <span className="pointer-events-none absolute inset-y-0 left-[-60%] w-[45%] skew-x-[-20deg] bg-white/35 blur-md transition-all duration-700 group-hover:left-[120%]" />
-
-              <span className="relative z-10 h-1.5 w-1.5 rounded-full bg-[#030707]/60 transition-all duration-300 group-hover:bg-[#030707] group-hover:shadow-[0_0_8px_rgba(3,7,7,0.7)]" />
-
-              <span className="relative z-10">
-                Send Project Inquiry
-              </span>
-
-              <Send className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
-
-            </button>
-
-
-            {/* Privacy */}
-            <div className="flex items-center justify-center gap-2">
-
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/60 shadow-[0_0_7px_rgba(52,211,153,0.5)]" />
-
-              <p className="text-center font-mono text-[7px] uppercase tracking-[0.15em] leading-5 text-[#414949]">
-                Project information is used only for secure inquiry response
-              </p>
-
-            </div>
-
-          </form>
-
+            Name
+          </label>
+
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="e.g. John Smith"
+            autoComplete="name"
+            required
+            value={formData.name}
+            onChange={handleInputChange}
+            className="
+              w-full
+              rounded-lg
+              border
+              border-[#1a1d1d]
+              bg-[#0a0c0c]
+              px-[13px]
+              py-3
+              text-[13px]
+              text-[#eef2f2]
+              outline-none
+              transition-all
+              duration-200
+              placeholder:text-[#667070]
+              focus:border-[#15E0ED]/25
+              focus:ring-4
+              focus:ring-[#15E0ED]/[0.12]
+            "
+          />
         </div>
-      </div>
-
-
-      {/* =====================================================
-          CONTACT CHANNELS
-      ====================================================== */}
-
-      <div className="space-y-4">
-
-
-        {/* WhatsApp */}
-        <a
-          href="https://wa.me/6287867738173"
-          target="_blank"
-          rel="noreferrer"
-          className="group block rounded-3xl border border-[#1a1d1d] bg-[#0b0d0d]/80 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/20 hover:bg-emerald-400/[0.02]"
-        >
-
-          <div className="flex items-start justify-between">
-
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-emerald-400/15 bg-emerald-400/[0.05]">
-              <MessageCircle className="h-5 w-5 text-emerald-400" />
-            </div>
-
-            <ArrowRight className="h-4 w-4 text-[#414949] transition-all group-hover:translate-x-1 group-hover:text-emerald-400" />
-
-          </div>
-
-          <div className="mt-6">
-
-            <div className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-[#4f5959]">
-              WhatsApp
-            </div>
-
-            <h3 className="mt-2 text-sm font-bold text-[#eef2f2]">
-              Chat with Centa
-            </h3>
-
-            <p className="mt-2 text-xs leading-6 text-[#687272]">
-              Diskusikan kebutuhan project secara langsung dengan tim Centa.
-            </p>
-
-          </div>
-
-        </a>
 
 
         {/* Email */}
-        <a
-          href="mailto:centalimited@gmail.com"
-          className="group block rounded-3xl border border-[#1a1d1d] bg-[#0b0d0d]/80 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#15E0ED]/20 hover:bg-[#15E0ED]/[0.02]"
-        >
 
-          <div className="flex items-start justify-between">
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="email"
+            className="text-xs font-bold text-[#eef2f2]"
+          >
+            Email address
+          </label>
 
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[#15E0ED]/15 bg-[#15E0ED]/[0.05]">
-              <Mail className="h-5 w-5 text-[#15E0ED]" />
-            </div>
-
-            <ArrowRight className="h-4 w-4 text-[#414949] transition-all group-hover:translate-x-1 group-hover:text-[#15E0ED]" />
-
-          </div>
-
-          <div className="mt-6">
-
-            <div className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-[#4f5959]">
-              Email
-            </div>
-
-            <h3 className="mt-2 text-sm font-bold text-[#eef2f2]">
-              centalimited@gmail.com
-            </h3>
-
-            <p className="mt-2 text-xs leading-6 text-[#687272]">
-              Untuk project inquiry, partnership, atau kebutuhan bisnis.
-            </p>
-
-          </div>
-
-        </a>
-
-
-        {/* Instagram */}
-        <a
-          href="https://instagram.com/centa.ltd"
-          target="_blank"
-          rel="noreferrer"
-          className="group block rounded-3xl border border-[#1a1d1d] bg-[#0b0d0d]/80 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/20 hover:bg-violet-400/[0.02]"
-        >
-
-          <div className="flex items-start justify-between">
-
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-violet-400/15 bg-violet-400/[0.05]">
-              <Globe2 className="h-5 w-5 text-violet-400" />
-            </div>
-
-            <ArrowRight className="h-4 w-4 text-[#414949] transition-all group-hover:translate-x-1 group-hover:text-violet-400" />
-
-          </div>
-
-          <div className="mt-6">
-
-            <div className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-[#4f5959]">
-              Instagram
-            </div>
-
-            <h3 className="mt-2 text-sm font-bold text-[#eef2f2]">
-              Follow Centa
-            </h3>
-
-            <p className="mt-2 text-xs leading-6 text-[#687272]">
-              Ikuti update, project, dan aktivitas terbaru dari Centa.
-            </p>
-
-          </div>
-
-        </a>
-
-
-        {/* Availability */}
-        <div className="rounded-3xl border border-[#1a1d1d] bg-[#0b0d0d]/60 p-5">
-
-          <div className="flex items-center gap-2">
-
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.7)]" />
-
-            <span className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-400">
-              Open for new projects
-            </span>
-
-          </div>
-
-          <p className="mt-3 text-xs leading-6 text-[#687272]">
-            Software engineering, web development, application development,
-            infrastructure, dan cyber security.
-          </p>
-
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="e.g. name@company.com"
+            autoComplete="email"
+            required
+            value={formData.email}
+            onChange={handleInputChange}
+            className="
+              w-full
+              rounded-lg
+              border
+              border-[#1a1d1d]
+              bg-[#0a0c0c]
+              px-[13px]
+              py-3
+              text-[13px]
+              text-[#eef2f2]
+              outline-none
+              transition-all
+              duration-200
+              placeholder:text-[#667070]
+              focus:border-[#15E0ED]/25
+              focus:ring-4
+              focus:ring-[#15E0ED]/[0.12]
+            "
+          />
         </div>
 
+
+        {/* Service */}
+
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="service"
+            className="text-xs font-bold text-[#eef2f2]"
+          >
+            Service
+          </label>
+
+          <select
+            id="service"
+            name="service"
+            required
+            value={formData.service}
+            onChange={handleInputChange}
+            className="
+              w-full
+              appearance-auto
+              rounded-lg
+              border
+              border-[#1a1d1d]
+              bg-[#0a0c0c]
+              px-[13px]
+              py-3
+              text-[13px]
+              text-[#eef2f2]
+              outline-none
+              transition-all
+              duration-200
+              focus:border-[#15E0ED]/25
+              focus:ring-4
+              focus:ring-[#15E0ED]/[0.12]
+            "
+          >
+            <option
+              value=""
+              disabled
+              className="bg-[#0a0c0c]"
+            >
+              Select a service
+            </option>
+
+            <option value="Cybersecurity Services">
+              Cybersecurity Services
+            </option>
+
+            <option value="Penetration Testing">
+              Penetration Testing
+            </option>
+
+            <option value="Software Development">
+              Software Development
+            </option>
+
+            <option value="Web Development">
+              Web Development
+            </option>
+
+            <option value="App Development">
+              App Development
+            </option>
+
+            <option value="Game Development">
+              Game Development
+            </option>
+
+            <option value="Technology Consulting">
+              Technology Consulting
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+          </select>
+        </div>
+
+
+        {/* Message */}
+
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="message"
+            className="text-xs font-bold text-[#eef2f2]"
+          >
+            Message
+          </label>
+
+          <textarea
+            id="message"
+            name="message"
+            rows={7}
+            placeholder="Tell us a little about your project or requirements."
+            required
+            value={formData.message}
+            onChange={handleInputChange}
+            className="
+              w-full
+              resize-y
+              rounded-lg
+              border
+              border-[#1a1d1d]
+              bg-[#0a0c0c]
+              px-[13px]
+              py-3
+              text-[13px]
+              leading-relaxed
+              text-[#eef2f2]
+              outline-none
+              transition-all
+              duration-200
+              placeholder:text-[#667070]
+              focus:border-[#15E0ED]/25
+              focus:ring-4
+              focus:ring-[#15E0ED]/[0.12]
+            "
+          />
+        </div>
+
+
+        {/* Submit */}
+
+        <button
+          type="submit"
+          className="
+            inline-flex
+            w-fit
+            items-center
+            gap-2
+            rounded-md
+            border-0
+            bg-[#15E0ED]
+            px-[22px]
+            py-[11px]
+            text-sm
+            font-bold
+            text-[#00171a]
+            transition-all
+            duration-200
+            hover:-translate-y-[1px]
+            hover:shadow-[0_0_26px_rgba(21,224,237,0.55)]
+          "
+        >
+          Send message
+        </button>
+
+      </form>
+
+
+      {/* =====================================================
+          CONTACT SIDE
+      ====================================================== */}
+
+      <div
+        className="
+          relative
+          min-h-full
+          overflow-hidden
+          bg-[#090b0b]
+        "
+      >
+
+      {/* Ambient Glow */}
+
+<div
+  className="
+    pointer-events-none
+    absolute
+    -bottom-[170px]
+    -right-[150px]
+    h-[340px]
+    w-[340px]
+    rounded-full
+    bg-[#15E0ED]
+    opacity-[0.07]
+    blur-[70px]
+  "
+/>
+
+
+        {/* Side Content */}
+
+        <div
+          className="
+            relative
+            z-10
+            flex
+            h-full
+            flex-col
+            justify-center
+            px-9
+            py-[42px]
+          "
+        >
+
+          <div
+            className="
+              mb-[18px]
+              text-xs
+              font-extrabold
+              uppercase
+              tracking-[0.7px]
+              text-[#15E0ED]
+            "
+          >
+            LET'S CONNECT
+          </div>
+
+
+          <h3
+            className="
+              mb-[18px]
+              max-w-[360px]
+              text-[30px]
+              font-extrabold
+              leading-[1.1]
+              tracking-[-0.7px]
+              text-[#eef2f2]
+            "
+          >
+            Let's build something that matters.
+          </h3>
+
+
+          <p
+            className="
+              max-w-[390px]
+              text-sm
+              leading-[1.7]
+              text-[#8a9494]
+            "
+          >
+            Whether you need a security assessment, a custom application,
+            a website, a game, or a complete digital solution, our team is
+            ready to help.
+          </p>
+
+
+          {/* Accent Line */}
+
+          <div
+            className="
+              my-7
+              h-px
+              w-[54px]
+              bg-[#15E0ED]
+            "
+          />
+
+
+          <span
+            className="
+              text-[11px]
+              uppercase
+              tracking-[0.7px]
+              text-[#7e8888]
+            "
+          >
+            Creating products people love.
+          </span>
+
+        </div>
       </div>
 
     </div>
-  </div>
-</section>
-      </main>
 
-    
+{/* =====================================================
+    CONTACT CHANNELS
+====================================================== */}
 
-     
+<div
+  ref={contactReveal.ref}
+  className="mt-6 flex flex-wrap gap-4"
+>
+
+  {/* =====================================================
+      WHATSAPP — LEFT → RIGHT
+  ====================================================== */}
+
+  <a
+    style={{
+      transitionDelay: contactReveal.visible
+        ? "0ms"
+        : "0ms",
+    }}
+    href="https://wa.me/6287867738173"
+    target="_blank"
+    rel="noreferrer"
+    className={`
+      group
+      flex
+      w-[250px]
+      items-center
+      gap-3
+      rounded-xl
+      border
+      border-[#1a1d1d]
+      bg-[#0b0d0d]
+      px-4
+      py-3.5
+
+      transition-all
+      duration-700
+      ease-[cubic-bezier(0.22,1,0.36,1)]
+
+      hover:-translate-y-0.5
+      hover:border-emerald-400/25
+      hover:bg-emerald-400/[0.02]
+
+      ${
+        contactReveal.visible
+          ? "translate-x-0 opacity-100 blur-0"
+          : "-translate-x-12 opacity-0 blur-[5px]"
+      }
+    `}
+  >
+
+    <div
+      className="
+        flex
+        h-9
+        w-9
+        shrink-0
+        items-center
+        justify-center
+        rounded-lg
+        border
+        border-emerald-400/15
+        bg-emerald-400/[0.05]
+      "
+    >
+      <FaWhatsapp
+        className="h-[17px] w-[17px] text-emerald-400"
+      />
     </div>
-  );
+
+    <div className="min-w-0 flex-1">
+
+      <div
+        className="
+          font-mono
+          text-[8px]
+          font-bold
+          uppercase
+          tracking-[0.16em]
+          text-[#4f5959]
+        "
+      >
+        WhatsApp
+      </div>
+
+      <div className="mt-1 text-xs font-semibold text-[#eef2f2]">
+        Chat with us
+      </div>
+
+    </div>
+
+    <ArrowRight
+      className="
+        h-3.5
+        w-3.5
+        shrink-0
+        text-[#414949]
+        transition-all
+        group-hover:translate-x-1
+        group-hover:text-emerald-400
+      "
+    />
+
+  </a>
+
+
+  {/* =====================================================
+      EMAIL — RIGHT → LEFT
+  ====================================================== */}
+
+  <a
+    style={{
+      transitionDelay: contactReveal.visible
+        ? "100ms"
+        : "0ms",
+    }}
+    href="mailto:centalimited@gmail.com"
+    className={`
+      group
+      flex
+      w-[250px]
+      items-center
+      gap-3
+      rounded-xl
+      border
+      border-[#1a1d1d]
+      bg-[#0b0d0d]
+      px-4
+      py-3.5
+
+      transition-all
+      duration-700
+      ease-[cubic-bezier(0.22,1,0.36,1)]
+
+      hover:-translate-y-0.5
+      hover:border-[#15E0ED]/25
+      hover:bg-[#15E0ED]/[0.02]
+
+      ${
+        contactReveal.visible
+          ? "translate-x-0 opacity-100 blur-0"
+          : "translate-x-12 opacity-0 blur-[5px]"
+      }
+    `}
+  >
+
+    <div
+      className="
+        flex
+        h-9
+        w-9
+        shrink-0
+        items-center
+        justify-center
+        rounded-lg
+        border
+        border-[#15E0ED]/15
+        bg-[#15E0ED]/[0.05]
+      "
+    >
+      <FaEnvelope
+        className="h-[17px] w-[17px] text-[#15E0ED]"
+      />
+    </div>
+
+    <div className="min-w-0 flex-1">
+
+      <div
+        className="
+          font-mono
+          text-[8px]
+          font-bold
+          uppercase
+          tracking-[0.16em]
+          text-[#4f5959]
+        "
+      >
+        Email
+      </div>
+
+      <div className="mt-1 truncate text-xs font-semibold text-[#eef2f2]">
+        Email us
+      </div>
+
+    </div>
+
+    <ArrowRight
+      className="
+        h-3.5
+        w-3.5
+        shrink-0
+        text-[#414949]
+        transition-all
+        group-hover:translate-x-1
+        group-hover:text-[#15E0ED]
+      "
+    />
+
+  </a>
+
+
+  {/* =====================================================
+      INSTAGRAM — LEFT → RIGHT
+  ====================================================== */}
+
+  <a
+    style={{
+      transitionDelay: contactReveal.visible
+        ? "200ms"
+        : "0ms",
+    }}
+    href="https://instagram.com/centa.ltd"
+    target="_blank"
+    rel="noreferrer"
+    className={`
+      group
+      flex
+      w-[250px]
+      items-center
+      gap-3
+      rounded-xl
+      border
+      border-[#1a1d1d]
+      bg-[#0b0d0d]
+      px-4
+      py-3.5
+
+      transition-all
+      duration-700
+      ease-[cubic-bezier(0.22,1,0.36,1)]
+
+      hover:-translate-y-0.5
+      hover:border-violet-400/25
+      hover:bg-violet-400/[0.02]
+
+      ${
+        contactReveal.visible
+          ? "translate-x-0 opacity-100 blur-0"
+          : "-translate-x-12 opacity-0 blur-[5px]"
+      }
+    `}
+  >
+
+    <div
+      className="
+        flex
+        h-9
+        w-9
+        shrink-0
+        items-center
+        justify-center
+        rounded-lg
+        border
+        border-violet-400/15
+        bg-violet-400/[0.05]
+      "
+    >
+      <FaInstagram
+        className="h-[17px] w-[17px] text-violet-400"
+      />
+    </div>
+
+    <div className="min-w-0 flex-1">
+
+      <div
+        className="
+          font-mono
+          text-[8px]
+          font-bold
+          uppercase
+          tracking-[0.16em]
+          text-[#4f5959]
+        "
+      >
+        Instagram
+      </div>
+
+      <div className="mt-1 text-xs font-semibold text-[#eef2f2]">
+        Follow us
+      </div>
+
+    </div>
+
+    <ArrowRight
+      className="
+        h-3.5
+        w-3.5
+        shrink-0
+        text-[#414949]
+        transition-all
+        group-hover:translate-x-1
+        group-hover:text-violet-400
+      "
+    />
+
+  </a>
+
+
+  {/* =====================================================
+      GITHUB — RIGHT → LEFT
+  ====================================================== */}
+
+  <a
+    style={{
+      transitionDelay: contactReveal.visible
+        ? "300ms"
+        : "0ms",
+    }}
+    href="https://github.com/Centa-Limited"
+    target="_blank"
+    rel="noreferrer"
+    className={`
+      group
+      flex
+      w-[250px]
+      items-center
+      gap-3
+      rounded-xl
+      border
+      border-[#1a1d1d]
+      bg-[#0b0d0d]
+      px-4
+      py-3.5
+
+      transition-all
+      duration-700
+      ease-[cubic-bezier(0.22,1,0.36,1)]
+
+      hover:-translate-y-0.5
+      hover:border-white/20
+      hover:bg-white/[0.02]
+
+      ${
+        contactReveal.visible
+          ? "translate-x-0 opacity-100 blur-0"
+          : "translate-x-12 opacity-0 blur-[5px]"
+      }
+    `}
+  >
+
+    <div
+      className="
+        flex
+        h-9
+        w-9
+        shrink-0
+        items-center
+        justify-center
+        rounded-lg
+        border
+        border-white/10
+        bg-white/[0.03]
+      "
+    >
+      <FaGithub
+        className="h-[17px] w-[17px] text-[#c7cece]"
+      />
+    </div>
+
+    <div className="min-w-0 flex-1">
+
+      <div
+        className="
+          font-mono
+          text-[8px]
+          font-bold
+          uppercase
+          tracking-[0.16em]
+          text-[#4f5959]
+        "
+      >
+        GitHub
+      </div>
+
+      <div className="mt-1 truncate text-xs font-semibold text-[#eef2f2]">
+        Centa Limited
+      </div>
+
+    </div>
+
+    <ArrowRight
+      className="
+        h-3.5
+        w-3.5
+        shrink-0
+        text-[#414949]
+        transition-all
+        group-hover:translate-x-1
+        group-hover:text-white
+      "
+    />
+
+  </a>
+
+</div>
+
+</div>
+</section>
+</main>
+
+</div>
+);
 }

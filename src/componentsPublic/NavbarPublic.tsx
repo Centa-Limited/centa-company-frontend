@@ -389,26 +389,26 @@ export default function Navbar() {
           {/* ABOUT */}
 
           <button
-            type="button"
-            onClick={() => handleSectionClick("about")}
-            className="
-              flex
-              h-full
-              items-center
-              border-0
-              bg-transparent
-              p-0
-              text-[14px]
-              font-semibold
-              tracking-[-0.01em]
-              text-[#8a9494]
-              transition-colors
-              duration-200
-              hover:text-[#eef2f2]
-            "
-          >
-            About
-          </button>
+  type="button"
+  onClick={() => handleSectionClick("why")}
+  className="
+    flex
+    h-full
+    items-center
+    border-0
+    bg-transparent
+    p-0
+    text-[14px]
+    font-semibold
+    tracking-[-0.01em]
+    text-[#8a9494]
+    transition-colors
+    duration-200
+    hover:text-[#eef2f2]
+  "
+>
+  About
+</button>
 
 
           {/* FAQ */}
@@ -677,25 +677,25 @@ export default function Navbar() {
 
           {/* ABOUT */}
 
-          <button
-            type="button"
-            onClick={() => handleSectionClick("about")}
-            className="
-              w-full
-              rounded-2xl
-              px-4
-              py-3.5
-              text-left
-              text-[15px]
-              font-semibold
-              text-[#8a9494]
-              transition-all
-              hover:bg-[#0b0d0d]
-              hover:text-[#eef2f2]
-            "
-          >
-            About
-          </button>
+<button
+  type="button"
+  onClick={() => handleSectionClick("why")}
+  className="
+    w-full
+    rounded-2xl
+    px-4
+    py-3.5
+    text-left
+    text-[15px]
+    font-semibold
+    text-[#8a9494]
+    transition-all
+    hover:bg-[#0b0d0d]
+    hover:text-[#eef2f2]
+  "
+>
+  About
+</button>
 
 
           {/* FAQ */}
