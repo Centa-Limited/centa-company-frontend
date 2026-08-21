@@ -134,7 +134,7 @@ export default function Team() {
             gap-5
           "
         >
-          {teamMembers.slice(0, 2).map((member, index) => (
+          {teamMembers.slice(0, 2).map((member,) => (
             <Link
               key={member.name}
               to={`/team/${member.slug}`}
