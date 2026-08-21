@@ -36,7 +36,7 @@ export const teamMembers = [
   {
     slug: "goestaf-nurhidayat",
     name: "Goestaf Nurhidayat",
-    role: "Cyber Security,Oversees engineering, infrastructure, and technical innovation.",
+    role: "Cyber security,Oversees engineering, infrastructure, and technical innovation.",
     image: "/Media/goestaf.jpg",
 
     about:
