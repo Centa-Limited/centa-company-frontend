@@ -331,7 +331,7 @@ export default function FooterPublic() {
               ================================================== */}
 
          <a
-  href="https://wa.me/628786773817"
+  href="https://wa.me/6287867738173"
   target="_blank"
   rel="noopener noreferrer"
   aria-label="WhatsApp Centa Limited"
@@ -367,7 +367,7 @@ export default function FooterPublic() {
   />
 
   <span>
-    +62 878-6773-817
+    +62 878-6773-8173
   </span>
 </a>
             </div>

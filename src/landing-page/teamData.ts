@@ -26,7 +26,7 @@ export const teamMembers = [
         year: "2022",
         text: "Founded Devsec, taking the first step toward building and leading an independent technology initiative focused on digital solutions.",
       },
-    {
+      {
         year: "2026",
         text: "Founded Centa Limited, bringing together software engineering and cybersecurity to build secure, scalable, and impactful digital solutions.",
       },
