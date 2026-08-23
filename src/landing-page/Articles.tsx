@@ -7,6 +7,7 @@ import type { Category } from "../types/category";
 
 interface Article {
   id: string;
+  slug: string;
   title: string;
   excerpt?: string | null;
   thumbnail?: string | null;
@@ -595,7 +596,7 @@ export default function Articles() {
                           </span>
 
                           <Link
-                            to={`/articles/${article.id}`}
+                           to={`/articles/${article.slug}`}
                             className="
                               text-xs
                               font-bold

@@ -181,10 +181,10 @@ export const ArticleSection: React.FC = () => {
                   className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] transition-all duration-500 hover:-translate-y-1 hover:border-[#00BFFF]/30 hover:bg-white/[0.04] hover:shadow-[0_25px_80px_rgba(0,191,255,0.07)]"
                 >
                   {/* Image */}
-                  <Link
-                    to={`/articles/${item.id}`}
-                    className="relative block h-56 overflow-hidden bg-[#080d1d]"
-                  >
+                 <Link
+  to={`/articles/${item.slug}`}
+  className="relative block h-56 overflow-hidden bg-[#080d1d]"
+>
                     <img
                       src={imgUrl}
                       alt={item.title}
@@ -234,9 +234,9 @@ export const ArticleSection: React.FC = () => {
                     {/* Read More */}
                     <div className="mt-auto pt-7">
                       <Link
-                        to={`/articles/${item.id}`}
-                        className="group/link inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.12em] text-slate-400 transition-colors hover:text-[#00BFFF]"
-                      >
+  to={`/articles/${item.slug}`}
+  className="group/link inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.12em] text-slate-400 transition-colors hover:text-[#00BFFF]"
+>
                         Read Article
 
                         <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 text-sm transition-all duration-300 group-hover/link:border-[#00BFFF]/30 group-hover/link:bg-[#00BFFF]/5 group-hover/link:text-[#00BFFF]">
