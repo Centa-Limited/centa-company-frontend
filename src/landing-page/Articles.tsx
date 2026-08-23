@@ -4,6 +4,7 @@ import { getArticles } from "../services/article.service";
 import { getAllCategories } from "../services/category.service";
 import { API_BASE_URL } from "../config/env";
 import type { Category } from "../types/category";
+import SEO from "../components/SEO";
 
 interface Article {
   id: string;
@@ -80,6 +81,12 @@ export default function Articles() {
   }, [articles, selectedCategory]);
 
   return (
+    <>
+    <SEO
+      title="Articles & Insights — Centa Limited"
+      description="Explore articles, insights, cybersecurity knowledge, software engineering, technology, and digital security updates from Centa Limited."
+      canonical="https://centa.ltd/articles"
+    />
     <main
       className="
         relative
@@ -638,5 +645,6 @@ export default function Articles() {
         </div>
       </section>
     </main>
+ </>
   );
 }

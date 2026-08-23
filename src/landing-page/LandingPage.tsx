@@ -6,6 +6,7 @@ import {
   FaGithub,
 } from "react-icons/fa6";
 import toast from "react-hot-toast";
+import SEO from "../components/SEO";
 
 import {
   sendContactMessage,
@@ -312,7 +313,14 @@ ${formData.message}
     isDeleting,
   ]);
 
-  return (
+return (
+  <>
+    <SEO
+      title="Centa Limited — Engineering Meets Cybersecurity"
+      description="Centa Limited provides software development, web development, application development, cybersecurity, and secure digital infrastructure solutions."
+      canonical="https://centa.ltd/"
+    />
+
     <div className="min-h-screen overflow-hidden text-white">
 
       {/* =====================================================
@@ -464,6 +472,7 @@ any
     />
 
   </div>
+  
 
   {/* =====================================================
       DESCRIPTION
@@ -683,6 +692,7 @@ any
 
 </div>
 </div>
+
 </section>
 
      
@@ -2577,5 +2587,6 @@ any
 </main>
 
 </div>
+ </>
 );
 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getArticleById } from "../services/article.service";
 import { API_BASE_URL } from "../config/env";
+import SEO from "../components/SEO";
 
 interface Article {
   id: string;
@@ -167,6 +168,23 @@ const response =
     article.createdAt ||
     "";
 
+    const canonicalUrl =
+  `https://centa.ltd/articles/${slug}`;
+
+const seoTitle =
+  `${article.title} | Centa Limited`;
+
+const seoDescription =
+  article.excerpt ||
+  `Read ${article.title} on Centa Limited.`;
+
+const seoImage =
+  article.thumbnail
+    ? article.thumbnail.startsWith("http")
+      ? article.thumbnail
+      : `${API_BASE_URL}${article.thumbnail}`
+    : "https://centa.ltd/og-image.png";
+
   /*
    * =====================================================
    * MAIN
@@ -174,6 +192,15 @@ const response =
    */
 
   return (
+  <>
+    <SEO
+      title={seoTitle}
+      description={seoDescription}
+      canonical={canonicalUrl}
+      image={seoImage}
+      type="article"
+    />
+
     <main
       className="
         relative
@@ -560,5 +587,6 @@ const response =
         </div>
       </section>
     </main>
+    </>
   );
 }

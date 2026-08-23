@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { teamMembers } from "./teamData";
+import SEO from "../components/SEO";
 
 export default function TeamProfile() {
   const { slug } = useParams();
@@ -16,7 +17,30 @@ export default function TeamProfile() {
     );
   }
 
+  const canonicalUrl =
+  `https://centa.ltd/team/${member.slug}`;
+
+const seoTitle =
+  `${member.name} — ${member.role} | Centa Limited`;
+
+const seoDescription =
+  member.about ||
+  `Learn more about ${member.name}, ${member.role} at Centa Limited.`;
+
+const seoImage =
+  member.image?.startsWith("http")
+    ? member.image
+    : `https://centa.ltd${member.image}`;
+
   return (
+  <>
+    <SEO
+      title={seoTitle}
+      description={seoDescription}
+      canonical={canonicalUrl}
+      image={seoImage}
+    />
+
     <section className="
       min-h-screen
      bg-black
@@ -276,5 +300,6 @@ export default function TeamProfile() {
 
 
     </section>
+    </>
   );
 }

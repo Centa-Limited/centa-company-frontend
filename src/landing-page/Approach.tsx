@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import SEO from "../components/SEO";
 const process = [
   {
     step: "01",
@@ -59,7 +60,15 @@ useEffect(() => {
 }, []);
 
   return (
-    <section className="relative scroll-mt-24 overflow-hidden">
+<>
+
+ <SEO
+        title="Our Approach — Engineering Meets Cybersecurity | Centa Limited"
+        description="Discover how Centa Limited combines software engineering, cybersecurity, infrastructure, and strategic thinking to build secure, scalable digital solutions."
+        canonical="https://centa.ltd/approach"
+      />
+
+<section className="relative scroll-mt-24 overflow-hidden">
       {/* =========================================================
           AMBIENT BACKGROUND
       ========================================================== */}
@@ -728,5 +737,6 @@ useEffect(() => {
         </div>
       </div>
     </section>
+  </>
   );
 }

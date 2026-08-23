@@ -1,9 +1,16 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { teamMembers } from "./teamData";
+import SEO from "../components/SEO";
 
 export default function Team() {
   return (
+   <>
+   <SEO
+  title="Lead Of Team — Centa Limited"
+  description="Meet the team behind Centa Limited, combining software engineering, cybersecurity, infrastructure, and digital innovation."
+  canonical="https://centa.ltd/team"
+/>
     <section
       id="team"
       className="
@@ -686,5 +693,6 @@ export default function Team() {
         </div>
       </div>
     </section>
+    </>
   );
 }
