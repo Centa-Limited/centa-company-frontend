@@ -80,10 +80,10 @@ export default function AppRouter() {
           />
 
 
-          <Route
-            path="articles/:id"
-            element={<ArticleDetail />}
-          />
+       <Route
+  path="articles/:slug"
+  element={<ArticleDetail />}
+/>
 
 
           <Route

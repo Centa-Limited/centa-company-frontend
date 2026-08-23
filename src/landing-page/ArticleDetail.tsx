@@ -22,7 +22,7 @@ interface Article {
 }
 
 export default function ArticleDetail() {
-  const { id } = useParams();
+ const { slug } = useParams();
 
   const [article, setArticle] =
     useState<Article | null>(null);
@@ -33,10 +33,10 @@ export default function ArticleDetail() {
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        if (!id) return;
+      if (!slug) return;
 
-        const response =
-          await getArticleById(id);
+const response =
+  await getArticleById(slug);
 
         setArticle(response.data);
       } catch (error) {
@@ -50,7 +50,7 @@ export default function ArticleDetail() {
     };
 
     fetchArticle();
-  }, [id]);
+ }, [slug]);
 
   /*
    * =====================================================
