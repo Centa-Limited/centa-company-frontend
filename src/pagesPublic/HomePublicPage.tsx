@@ -48,9 +48,7 @@ export const HomePublicPage: React.FC = () => {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#050816] text-white">
-      {/* =========================================================
-          BACKGROUND
-      ========================================================== */}
+     
 
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/2 top-[-250px] h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-[#00BFFF]/10 blur-[150px]" />
@@ -70,9 +68,7 @@ export const HomePublicPage: React.FC = () => {
         }}
       />
 
-      {/* =========================================================
-          HERO
-      ========================================================== */}
+
 
       <section className="relative">
         <div className="mx-auto max-w-7xl px-6 pb-20 pt-20 sm:px-8 lg:px-10 lg:pb-28 lg:pt-28">
@@ -246,9 +242,7 @@ export const HomePublicPage: React.FC = () => {
         </div>
       </section>
 
-      {/* =========================================================
-          STATS
-      ========================================================== */}
+
 
       <section className="relative border-y border-white/5 bg-white/[0.015]">
         <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-white/5 sm:grid-cols-4 sm:divide-y-0">
@@ -269,9 +263,6 @@ export const HomePublicPage: React.FC = () => {
         </div>
       </section>
 
-      {/* =========================================================
-          SERVICES
-      ========================================================== */}
 
       <section className="relative">
         <div className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10 lg:py-28">
@@ -350,9 +341,7 @@ export const HomePublicPage: React.FC = () => {
         </div>
       </section>
 
-      {/* =========================================================
-          CAPABILITIES
-      ========================================================== */}
+     
 
       <section className="relative border-y border-white/5 bg-white/[0.015]">
         <div className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10 lg:py-28">

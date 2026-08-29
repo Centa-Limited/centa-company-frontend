@@ -62,10 +62,7 @@ export default function AppRouter() {
 
       <Routes>
 
-        {/* =====================================================
-            PUBLIC WEBSITE
-        ====================================================== */}
-
+      
     <Route element={<PublicLayout />}>
 
           <Route
