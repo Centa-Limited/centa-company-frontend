@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Homepage -->
   <url>
     <loc>https://centa.ltd/</loc>
     <lastmod>2026-08-23</lastmod>
@@ -9,7 +8,7 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Approach -->
+
   <url>
     <loc>https://centa.ltd/approach</loc>
     <lastmod>2026-08-23</lastmod>
@@ -17,7 +16,6 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- Articles -->
   <url>
     <loc>https://centa.ltd/articles</loc>
     <lastmod>2026-08-23</lastmod>
@@ -25,7 +23,7 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- Team -->
+  
   <url>
     <loc>https://centa.ltd/team</loc>
     <lastmod>2026-08-23</lastmod>
@@ -33,7 +31,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Team Profiles -->
+  
   <url>
     <loc>https://centa.ltd/team/yudi-ardata</loc>
     <lastmod>2026-08-23</lastmod>
